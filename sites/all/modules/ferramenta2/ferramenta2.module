@@ -1,0 +1,666 @@
+<?php
+//require_once('includes/pdf.php');
+
+function converte_utf8_html($string='') {
+    $acentos = array ( 'u00e1', 'u00e9', 'u00ed', 'u00f3', 'u00fa', 'u00c1', 'u00c9', 'u00cd', 'u00d3', 'u00da', 'u00e7', 'u00c7','u00e3', 'u1ebd',
+                      'u0129', 'u00f5', 'u0169', 'u00c3', 'u1ebc', 'u0128', 'u00d5', 'u0168', 'u00e0', 'u00c0', 'u00e2', 'u00ea', 'u00ee', 'u00f4',
+                      'u00fb', 'u00c2', 'u00ca', 'u00ce', 'u00d4', 'u00db', 'u000a');
+    $conversao = array( '&aacute;', '&eacute;', '&iacute;', '&oacute;', '&uacute;', '&Aacute;', '&Eacute;', '&Iacute;', '&Oacute;', '&Uacute;',
+                       '&ccedil;', '&Ccedil;', '&atilde;', '&etilde;', '&itilde;', '&otilde;', '&utilde;', '&Atilde;', '&Etilde;', '&Itilde;',
+                       '&Otilde;', '&Utilde;', '&agrave;', '&agrave;', '&acirc;', '&ecirc;', '&icirc;', '&ocirc;', '&ucirc;',
+                        '&Acirc;', '&Ecirc;', '&Icirc;', '&Ocirc;', '&Ucirc;', '');
+
+    $correto = str_replace($acentos,$conversao,$string);
+
+    return $correto;
+}
+
+function converte_utf8_especial($string='') {
+    $acentos = array ( 'u00e1', 'u00e9', 'u00ed', 'u00f3', 'u00fa', 'u00c1', 'u00c9', 'u00cd', 'u00d3', 'u00da', 'u00e7', 'u00c7','u00e3', 'u1ebd',
+                      'u0129', 'u00f5', 'u0169', 'u00c3', 'u1ebc', 'u0128', 'u00d5', 'u0168', 'u00e0', 'u00c0', 'u00e2', 'u00ea', 'u00ee', 'u00f4',
+                      'u00fb', 'u00c2', 'u00ca', 'u00ce', 'u00d4', 'u00db', 'u000a');
+    $conversao = array( 'á', 'é', 'í', 'ó', 'ú', 'Á', 'É', 'Í', 'Ó', 'Ú',
+                       'ç', 'Ç', 'ã', '&etilde;', '&itilde;', 'õ', '&utilde;', 'Ã;', '&Etilde;', '&Itilde;',
+                       'Õ', '&Utilde;', 'À', '&agrave;', 'â', 'ê', '&icirc;', '&ocirc;', '&ucirc;',
+                        'Â', 'Ê', '&Icirc;', 'Ô', '&Ucirc;', '');
+
+    $correto = str_replace($conversao, $acentos,$string);
+
+    return $correto;
+}
+
+/**
+     *Implementation of hook_perm - Obrigatório
+     * Método que verifica a seguranca do bloco
+     * vai aparecer em http://200.222.48.13/cta6/?q=admin/user/permissions
+     */
+
+function ferramenta2_perm() {
+    return array ('Abertura', 'Criar questionarios', 'Aplicar questionarios',  'Responder questionario');
+}
+
+/**
+ * Implementation of hook_menu().  - Obrigatório
+*/
+function ferramenta2_menu() {
+    $items = array ();
+    $items['ferramenta2/inicio'] = array(                                        // O endereço da página
+       'title' => 'Principal',                                     //  Titulo do modulo
+       'page callback' =>'abertura',                          //    Como ele irá recuperar a informação para construir a página
+       'description' => 'Página inicial',     //   Um texto de explicação que será exibido
+       'access arguments' => array('Abertura'),               //      Qual a permissão que deverá estar marcada para o usuário acessar a página
+       'type' => MENU_NORMAL_ITEM,                                //       Tipo de menu normal
+    );
+    
+$items['ferramenta2/criacao'] = array(                                        // O endereço da página
+       'title' => 'Crie seu questionário',                                     //  Titulo do modulo
+       'page callback' =>'cria_questionarios',                          //    Como ele irá recuperar a informação para construir a página
+       'description' => 'Criação de questionários',     //   Um texto de explicação que será exibido
+       'access arguments' => array('Criar questionarios'),               //      Qual a permissão que deverá estar marcada para o usuário acessar a página
+       'type' => MENU_NORMAL_ITEM,                                //       Tipo de menu normal
+    );
+
+    $items['ferramenta2/servidor'] = array(                                        // O endereço da página
+       'title' => 'Servidor',                                     //  Titulo do modulo
+       'page callback' =>'servidor',                          //    Como ele irá recuperar a informação para construir a página
+       'description' => 'acoes do servidor',     //   Um texto de explicação que será exibido
+       'access arguments' => array('Criar questionarios'),               //      Qual a permissão que deverá estar marcada para o usuário acessar a página
+       'type' => MENU_CALLBACK,                                //       Tipo de menu normal
+    );
+    
+    $items['ferramenta2/visualiza'] = array(                                        // O endereço da página
+       'title' => 'Visualiza o questionário',                                     //  Titulo do modulo
+       'page callback' =>'visualiza()',                          //    Como ele irá recuperar a informação para construir a página
+       'description' => 'funcao para visualizar o questionario',     //   Um texto de explicação que será exibido
+       'access arguments' => array('Criar questionarios'),               //      Qual a permissão que deverá estar marcada para o usuário acessar a página
+       'type' => MENU_CALLBACK,                                //       Tipo de menu normal
+       'file' => 'ferramenta2.visualiza.inc',
+    );
+
+    $items['ferramenta2/gerar'] = array(                                        // O endereço da página
+       'title' => 'Gerar Questionario',                                     //  Titulo do modulo
+       'page callback' =>'gera_questionario',                          //    Como ele irá recuperar a informação para construir a página
+       'description' => 'monta a tabela e prepara o questionário para avaliar',     //   Um texto de explicação que será exibido
+       'access arguments' => array('Criar questionarios'),               //      Qual a permissão que deverá estar marcada para o usuário acessar a página
+       'type' => MENU_LOCAL_TASK,                                //       Tipo de menu normal
+    );
+
+    $items['avaliacao'] = array(                                        // O endereço da página
+       'title' => 'Responder ao questionário',                                     //  Titulo do modulo
+       'page callback' =>'aplica_questionario',                          //    Como ele irá recuperar a informação para construir a página
+       'description' => 'Abre um link para o questionário ser respondido',     //   Um texto de explicação que será exibido
+       'access arguments' => array('Responder questionario'),               //      Qual a permissão que deverá estar marcada para o usuário acessar a página
+        'type' => MENU_CALLBACK,
+        'file' => 'ferramenta2.aplica.inc',
+    );
+     $items['avaliacao/salvar'] = array(                                        // O endereço da página
+       'title' => 'Aplica o questionário',                                     //  Titulo do modulo
+       'page callback' =>'salva_questionario',                          //    Como ele irá recuperar a informação para construir a página
+       'description' => 'Recebe os dados do usuario para avaliar ',     //   Um texto de explicação que será exibido
+       'access arguments' => array('Aplicar questionarios'),               //      Qual a permissão que deverá estar marcada para o usuário acessar a página
+        'type' => MENU_CALLBACK,
+        'file' => 'ferramenta2.aplica.inc',
+    );
+
+return $items;      //  retorna o menu para o controlador
+
+} // function ferramenta2_menu()
+
+/*
+delete from item_secao;
+delete from parte_formulario;
+delete from item_questao;
+delete from item_formulario;
+delete from formulario;
+delete from secao;
+delete from questao;
+delete from resposta;
+delete from pergunta;
+*/
+function abertura() {
+    global $user;
+    drupal_add_css(drupal_get_path('module', 'ferramenta2') . "/js/css/start/jquery-ui-1.8.1.custom.css");
+    drupal_add_css(drupal_get_path('module', 'ferramenta2') . "/css/principal.css");
+
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/js/jquery-1.4.2.min.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/js/jquery-ui-1.8.1.custom.min.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/development-bundle/ui/jquery.ui.core.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/development-bundle/ui/jquery.ui.draggable.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/development-bundle/ui/jquery.ui.resizable.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/inc/jquery.metadata.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/jquery.draggableList.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/principal2.js");
+    
+     //cria  a variavel de caminho do servidor ajax
+    $opts = array('absolute' => TRUE);
+    $url_padrao = url('', $opts);
+    
+    if ($user->uid<=0) { //aparece a tela principal
+
+    $saida .= "<div class=container_8><div class=grid_4>";    
+    $saida .= monta_box("<a href='$url_padrao/user/register'><center><h1 class='laconic'>1 - cadastre-se</h1></center></a>", '300px','red', 'left:300px;');
+    $saida .="</div><div class=grid_4><br /></div><div class=grid_4>";
+    $saida .= monta_box("<a href='$url_padrao/user'><center><h1 class='laconic'> <---- 2 - conecte-se </h1></center></a>", '400px','blue'  );
+    $saida .="</div></div>";
+      }else { //aparece o menu 
+           $saida .= "<div class=container_8><div class=grid_4>";    
+        $saida .= monta_box("<a href='$url_padrao/ferramenta2/criacao'><center><h1 class='laconic'> 3 - Crie seu questionario </h1></center></a>", '500px','green', 'left:100px;' );
+        $saida .="</div></div>";
+        
+      }
+    return $saida;
+}
+
+function cria_questionarios() {
+    /*
+     
+     Nesta funcao sera montada a div de tabulacao para o jquery.
+     Cada ABA sera montada atraves de uma funcao.     
+       */
+       
+    drupal_add_css(drupal_get_path('module', 'ferramenta2') . "/js/css/start/jquery-ui-1.8.1.custom.css");
+    drupal_add_css(drupal_get_path('module', 'ferramenta2') . "/css/principal.css");
+
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/js/jquery-1.4.2.min.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/js/jquery-ui-1.8.1.custom.min.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/development-bundle/ui/jquery.ui.core.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/development-bundle/ui/jquery.ui.draggable.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/development-bundle/ui/jquery.ui.resizable.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/inc/jquery.metadata.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/jquery.draggableList.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/principal2.js");
+   
+    
+   $saida .= "<div id='tabs'>
+			<ul>
+				<li><a href='#tabs-1'>Crie seu questionário</a></li>
+				<li><a href='#tabs-2'>Visualize</a></li>
+				
+			</ul>
+			<div id='tabs-1'>";
+    $saida .= principal_questionarios();
+    $saida.= "
+            </div>
+			<div id='tabs-2'>
+            teste
+            </div>
+			
+		</div>"; 
+    return $saida;
+}
+
+function principal_questionarios() {
+
+/*
+PARA DEIXAR FORA DA TABULACAO BASTA RENOMEAR ESTA FUNCAO PARA cria_questinario()
+e a comentar a funcao anterior 
+*/
+
+    drupal_add_css(drupal_get_path('module', 'ferramenta2') . "/js/css/start/jquery-ui-1.8.1.custom.css");
+    drupal_add_css(drupal_get_path('module', 'ferramenta2') . "/css/principal.css");
+
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/js/jquery-1.4.2.min.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/js/jquery-ui-1.8.1.custom.min.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/development-bundle/ui/jquery.ui.core.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/development-bundle/ui/jquery.ui.draggable.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/development-bundle/ui/jquery.ui.resizable.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/inc/jquery.metadata.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/jquery.draggableList.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/principal2.js");
+    
+
+ //cria  a variavel de caminho absoluto
+    $opts = array('absolute' => TRUE);
+    $url_padrao = url('', $opts);
+    drupal_add_js(array('ferramenta2' => array("url" => $url_padrao)), 'setting');
+
+   //cria  a variavel de caminho do servidor ajax
+    $opts = array('absolute' => TRUE);
+    $url_padrao = url('ferramenta2/servidor', $opts);
+    drupal_add_js(array('ferramenta2' => array("servidor" => $url_padrao)), 'setting');
+ 
+   //cria  a variavel de caminho do servidor ajax
+    $opts = array('absolute' => TRUE);
+    $url_padrao = url('ferramenta2/gerar', $opts);
+    drupal_add_js(array('ferramenta2' => array("gerar" => $url_padrao)), 'setting');
+ 
+ //cria  a variavel de caminho do servidor ajax
+    $opts = array('absolute' => TRUE);
+    $url_padrao = url('avaliacao', $opts);
+    drupal_add_js(array('ferramenta2' => array("avaliacao" => $url_padrao)), 'setting');
+    
+     //cria  a variavel de caminho do servidor ajax
+    $opts = array('absolute' => TRUE);
+    $url_padrao = url('ferramenta2/configuracao', $opts);
+    drupal_add_js(array('ferramenta2' => array("configuracao" => $url_padrao)), 'setting');
+
+   // echo "-$saida-";
+   //inicio da tabulacao do jquery
+   
+    $saida .="<input id='servidor' type=hidden value='".drupal_get_path('module', 'ferramenta2') . "' />";
+    $saida .='
+        <div id="busca" class="ui-widget">
+            <label for="tags">Digite o título: </label>
+                <input id="tags">
+            <input type="button" id="buscar" value="Buscar" />
+            <hr />         
+            
+            <div id="tabela_criada"> </div><br />
+            <div id="link_avaliacao"> </div>
+             
+        </div>
+            
+        ';
+        $saida .= '
+           <button id=\'adiciona-formulario\' type=\'button\'> Novo Questionário</button>
+           <button id=\'excluir-formulario\' type=\'button\'>Excluir o questionário</button>
+            <hr />';
+
+    $saida .='<div id="mensagem" class=\'message\'></div>';
+ 
+  $saida .= "<div id=\"controle\">
+                <center>
+               <button id='adiciona-secao' type='button'>+ Se&ccedil;&atilde;o</button> 
+               <button id='adiciona-pergunta' type='button'>+ Pergunta</button>
+               <button id='adiciona-resposta' type='button'>+ Resposta</button>
+               <button id='excluir' type='button'>- Excluir</button>
+               <button id='salvar' type='button'>Salvar</button>
+               <hr/>
+                <input type=\"button\" id=\"gerar\" value=\"Visualizar\" />
+            
+               </div>
+               ";
+/*controles extras
+    <button id='marcar-todas' type='button'>Marcar tudo</button>
+               <button id='desmarcar-todas' type='button'>Desmarcar tudo </button>
+               <button id='diminuir-recuo' type='button'><< Recuo</button>
+               <button id='teste' type='button'>teste >></button>
+               </center>
+               <hr/>
+                          */
+$saida .='
+
+    <div id="dialog-pergunta" title="Adicionando uma Pergunta">
+    <form>
+        <fieldset>
+            <label for="pergunta_texto">Digite pergunta.</label>
+            <input type="text" name="pergunta_texto" id="pergunta_texto" class="text ui-widget-content ui-corner-all" />
+        </fieldset>
+        <p>Digite a pergunta do question&aacute;rio que dever&aacute; ser respondida pelo avaliado.</p>
+    </form>
+    </div>
+                ';
+                
+                /*
+                  <label for="resposta_texto">Digite resposta:</label>
+            <input type="text" name="reposta_texto" id="resposta_texto" class="text ui-widget-content ui-corner-all" />
+            <br />
+  */
+            // <option value="0">Sem resposta</option>
+$saida .='
+
+    <div id="dialog-resposta" title="Adicionando tipo de Resposta">
+    <form>
+        <fieldset>
+           
+            <label for="tipo_resposta"><h3>Esta questão possui uma resposta do tipo:</h3></label>
+            <select id="seleciona_resposta">
+                 
+                  <option value="1">Lista com m&uacute;ltiplas escolhas</option>
+                  <option value="2">Lista com resposta &uacute;nica </option>
+                  <option value="3">Resposta aberta objetiva</option>
+                  <option value="4">Escala de Likert</option>
+                  <option value="5">Resposta aberta detalhada</option>
+            </select>
+            <br />
+            <label id="mensagem_resposta" for="tabela" class="nobile2" style="color:red">
+            
+            <textarea rows="4" cols="30" name="tabela" id="tabela" class="text ui-widget-content ui-corner-all"></textarea></p>
+        </fieldset>
+    </form>
+    </div>
+                ';
+/*
+ <p class="nobile2" style="color:red;">As poss&iacute;veis op&ccedil;&otilde;es  de respostas devem ser separadas por (<b>;</b>)</p>
+            
+            <p class="nobile2" style="color:red;"> Exemplo: Op&ccedil;&atilde;o 1<b>;</b>Op&ccedil;&atilde;o 2<b>;</b> Op&ccedil;&atilde;o 3</p></label><p>
+                                                                          */
+$saida .='
+
+    <div id="dialog-secao" title="Adicionando uma se&ccedil;&atilde;o">
+    <form>
+        <fieldset>
+            <label for="secao_texto">Digite texto para se&ccedil;&atilde;o de quest&otilde;es</label>
+            <input type="text" name="secao_texto" id="secao_texto" class="text ui-widget-content ui-corner-all" />
+        </fieldset>
+        <p>Entende-se que uma Se&ccedil;&atilde;o &eacute; um grupo de quest&otilde;es relacionadas a um objetivo, como por exemplo "Dados Familiares".</p>
+    </form>
+    </div>
+                ';
+
+$saida .='
+
+    <div id="dialog-formulario" title="Novo Question&aacute;rio">
+    <form>
+        <fieldset>
+            <label for="formulario_texto">Digite o título do question&aacute;rio.</label>
+            <br />
+            <textarea name="formulario_texto" id="formulario_texto" rows="2" cols="40" class="text ui-widget-content ui-corner-all" />  </textarea>
+            <br />
+            <label for="formulario_mensagem">Digite um texto informativo sobre o question&aacute;rio.</label>
+            <br />
+            <textarea name="formulario_mensagem" id="formulario_mensagem" rows="3" cols="40" class="text ui-widget-content ui-corner-all" />  </textarea>
+        </fieldset>
+    </form>
+    </div>
+                ';
+
+$array["formulario"]=array("titulo"=>"titulo", "texto"=>"texto do titulo");
+$array["pergunta"]="titulo";
+$array["secao"]="secao";
+$array["resposta"]=array("titulo"=>"titulo", "tipo"=>"codigo do tipo", "tabela"=>"resposta");
+//$json = drupal_json($array);
+
+for ($x=0;$x<10;$x++){
+    $branco.="<br />";
+}
+$saida .="  <div class='container-formulario'>
+             <div id='conteudo-formulario'>
+                  <!-- aqui serao incluidas as questoes do questionario -->
+                <ul id='linhas' class='linhas'>
+                
+                </ul>
+$branco
+              </div>
+            </div>
+        ";
+
+return $saida;
+//return $json;
+}
+
+
+function servidor () {
+global $user;
+
+$acao = $_POST[acao];
+$string = $_POST[json];
+$json = json_decode($string, true); //controle do json
+//print_r($json);
+if ($acao=='ExcluiQuestionario'){
+    $titulo = $_POST[titulo];
+    if (trim($titulo) != 'undefined') {
+    $sql = "delete from ferramenta2.formulario where trim(titulo)=trim('$titulo') and uid=$user->uid";
+   //echo $sql;
+    db_query($sql);
+    echo "Questionário excluído";
+    }else {
+        echo "Título do questionário não existe";
+    }
+}
+if ($acao == 'GravaQuestionario') {
+    
+    foreach ($json as $registro) { //percorre os registros
+         
+        if ($registro[identificador]=='f') { //pesquisa se o registro ja existe
+          if ( strlen(trim($registro[titulo])) >0 ) {
+            $titulo=$registro[titulo];
+            //formatando o json
+            
+            $string = str_replace('{','',$string);
+            $string = str_replace('}','',$string); //grava texto puro sem [] e {} 
+            $string = substr($string,1);
+            $string = substr($string,0,strlen($string)-1);
+       
+            $string = str_replace('[','',$string);
+            $string = str_replace(']','',$string); //grava texto puro sem [] e {}
+            //$string = htmlspecialchars ($string);
+           //echo $string;
+           if (pesquisa_formulario($titulo)) {
+           
+            $sql = "update ferramenta2.formulario set json='$string' where trim(titulo)=trim('$titulo')  "; //atualiza questionario
+            
+           }else {
+            $sql = "insert into ferramenta2.formulario(uid,titulo,json) values($user->uid, '$titulo', '$string')"; //insere questionario
+           }
+         // echo $sql;
+           if ( db_query($sql) ) {
+                $retorno = "Questionário salvo com o nome: $titulo";
+           }else {
+                $retorno = "Erro ao gravar o questionario, contacte o administrador";
+           }
+          }else {
+            $retorno="O campo título é obrigatório";
+          }
+        }
+        
+    }
+    
+    echo $retorno;
+}
+
+//carrega o autocomplete da busca
+if ($acao=="AutoFormulario") {
+    $saida = array();
+    $sql="select distinct titulo from ferramenta2.formulario where uid=$user->uid";
+    //echo $sql;
+    $rst = db_query($sql);
+     if($rst)  {
+        if (pg_num_rows($rst)!=0 ) { //verifica se e vazio
+             while ( $linha = pg_fetch_array($rst) ) {
+              $saida[]=$linha[0];
+             }
+        }else {
+            $saida=0;
+        }
+     }
+     
+echo json_encode($saida);
+}
+
+//carraga o instrumento na tela
+if ($acao=="CarregaInstrumento") {
+    $titulo= $_POST[titulo];
+    
+    $saida = array();
+    $sql="select distinct json from ferramenta2.formulario where trim(titulo)=trim('$titulo') and uid=$user->uid";
+   //echo $sql;
+    $rst = db_query($sql);
+     if($rst)  {
+        $linha = pg_fetch_object($rst);
+        $saida=converte_utf8_html($linha->json);
+     }
+  //   print_r($saida);
+  
+    $saida =  str_replace('","','||',$saida);
+   $saida= explode("||", $saida); //pega cada linha e divide em um array assim=> "identificador": "f", pegando cada linha individualmente
+   $saida =  str_replace('":"','||',$saida);
+    $saida =  str_replace('"','',$saida);
+  // print_r($saida);
+    
+    foreach($saida as $linha) { 
+        $registro = explode("||",$linha); //pega a linha ("identificador": "f") e divide em um array [0]="identificador" e [1]= "f"
+    //   print_r($registro);
+        //pode acontecer que o texto contenha ":" entao vou remontar o array
+        $x=1;
+        $array_restante='';
+        $primeiro_array = $registro[0];
+
+            while ( $x<=count($registro) ) {
+                $array_restante .= $registro[$x];
+                $x++;
+             }
+       
+        $monta_json[]= array($primeiro_array =>$array_restante);
+    }
+    
+     //print_r($monta_json);
+   //$saida  = array("identificador"=>"f","titulo"=>"f");
+   //print_r($saida);
+echo json_encode($monta_json); //retorna texto puro sem {} 
+    
+}
+
+return;
+} //fim de servidor
+
+function monta_box($titulo='', $comprimento='', $cor= '' , $posicao='') {
+   
+     $saida = "<div id='monta_box' class='caixa_css'  style='background:$cor; width:$comprimento; position:relative; $posicao'>
+            <b class='rtop' >
+            <b class='r1'  style='background:$cor;'></b><b class='r2' style='background:$cor;'></b>
+            <b class='r3' style='background:$cor;' ></b> <b class='r4' style='background:$cor;' ></b></b>
+            $titulo
+            <b class='rbottom'>
+            <b class='r4' style='background:$cor;'></b> <b class='r3' style='background:$cor;'></b>
+            <b class='r2'  style='background:$cor;'></b> <b class='r1'  style='background:$cor;'></b></b>
+            </div>";
+return $saida;
+}
+
+function pesquisa_formulario($registro) {
+    global $user;
+    $sql = "select titulo from ferramenta2.formulario where uid=$user->uid and trim(titulo)=trim('$registro')";
+   // echo $sql."<p>";
+    $retorno = db_query($sql);
+    if (pg_num_rows($retorno) >0 ) {
+        $existe =1;
+    }else {
+        $existe=0;
+    }
+    
+return $existe;
+}
+
+function gera_questionario($titulo= '') {
+    /* esta funcao cria a tabela para armazenamento da avaliacao */
+
+    global $user;
+    //http://localhost:9093/?q=ferramenta2/questionario/
+    
+    $titulo=$_POST[titulo];
+    if (strlen($titulo) <=0 ){
+        echo "Título em branco";
+        return;
+    }
+    $saida = array();
+    $sql="select distinct json, codigo_formulario from ferramenta2.formulario where trim(titulo)=trim($titulo) and uid=$user->uid";
+    //echo $sql;
+    $rst = db_query($sql);
+     if($rst)  {
+        $linha = pg_fetch_object($rst);
+        $saida=$linha->json;
+        $codigo_formulario=$linha->codigo_formulario;
+     }
+   //  print_r($saida);
+     
+    $saida =  str_replace('","','||',$saida);
+    $saida= explode("||", $saida); //pega cada linha e divide em um array assim=> "identificador": "f", pegando cada linha individualmente
+    $saida =  str_replace('":"','||',$saida);
+    $saida =  str_replace('"','',$saida);
+    //print_r($saida);
+    foreach($saida as $linha) { 
+        $registro = explode("||",$linha); //pega a linha ("identificador": "f") e divide em um array [0]="identificador" e [1]= "f"
+       // print_r($registro);
+        //pode acontecer que o texto contenha ":" entao vou remontar o array
+        $array_restante='';
+        $x=1;
+        $primeiro_array = $registro[0];
+        while ( $x<=strlen($registro) ) {
+         $array_restante .= $registro[$x];
+         $x++;
+        }
+        $monta_json[]= array($primeiro_array =>$array_restante);
+       
+    }
+    //echo "<p>";
+    // print_r($monta_json);
+     $tabela= "usuario_$codigo_formulario";
+     $corpo = "create table tabelas.$tabela";
+     $corpo .="( uid integer, matricula varchar(100), email varchar(500),cursobase varchar(200), unidade varchar(10), turno varchar(10) ";
+     $resposta=0;
+     foreach($monta_json as $array ) {
+       // echo "<p>$array[identificador] -  $array[codigo]";
+        if ($array[identificador]=='r') {
+            $resposta=1;
+            
+        }else if ($resposta==1) { //colocar campo memo
+            $codigo=$array[codigo];
+            $resposta=2;
+            
+        }else if($resposta==2 and $array[tipo]=='Resposta MEMO') {
+            $corpo .= ", q$codigo  text";
+            $resposta=0;
+        }else if($resposta==2 ) {
+            $corpo .= ", q$codigo varchar(200)";
+            $resposta=0;
+        }
+        
+        
+     } //fim foreach
+     $corpo .=" );";
+     
+   echo $corpo;
+     
+     db_query("drop table tabelas.$tabela;");
+     if ( db_query($corpo)) {
+        $sql = "update ferramenta2.formulario set nometabela='tabelas.$tabela' where codigo_formulario=$codigo_formulario";
+     //   echo $sql;
+        db_query ($sql);
+        $saida = "Tabela criada com sucesso: tabelas.$tabela";
+     }else {
+        $saida = "Erro na criação da tabela tabelas.$tabela";
+     }
+     
+ echo $saida;
+   
+}
+/*
+
+function gerencia_questionario($titulo= '') {
+      global $user;
+    //http://localhost:9093/?q=ferramenta2/questionario/
+    
+    $titulo=$_POST[titulo];
+    if (strlen($titulo) <=0 ){
+        echo "Título em branco";
+        return;
+    }
+    $saida = array();
+    $sql="select distinct f.codigo_formulario, data_inicio, data_termino, link_avaliacao, em_andamento from ferramenta2.formulario f, ferramenta2.gerencia g where trim(titulo)=trim($titulo) and uid=$user->uid
+    and f.codigo_formulario=g.codigo_formulario ";
+    //echo $sql;
+    $rst = db_query($sql);
+     if($rst)  {
+        $linha = pg_fetch_object($rst);
+        $saida=$linha->json;
+        $codigo_formulario=$linha->codigo_formulario;
+        $datainicial=$linha->data_inicio;
+        $datafinal=$linha->data_termino;
+        $link_avaliacao=$linha->link_avaliacao;
+        $em_andamento=$linha->em_andamento;
+     }
+     
+    $saida = "<form id=gerenciaForm>";
+    $saida .= "<fieldset>
+            <legend> Gerenciamento de Avaliações</legend>
+            <label for='datainicial'> Data de início da avaliação:</label>
+            <input type='text' value='$datainicial' class='title' \>
+            < br/>
+            <label for='datafinal'> Data de término da avaliação:</label>
+            <input type='text' value='$datafinal' class='title' \>
+            < br/>";
+    if ($em_andamento==1){
+        $saida .="Em andamento:<input type='button' value='Fechar avaliação' \>";
+    }else {
+        $saida .="Este questionario não está em funcionamento.";
+    }
+    
+    $saida .="< br/>Link para a avaliação: $link_avaliacao < br/>";
+    
+
+}*/
+        
+        
+        
+?>

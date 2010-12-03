@@ -1,0 +1,1466 @@
+/*
+Theme Name: mestrado
+Description: mestrado, Artisteer-generated Drupal theme.
+Version: 1.0
+Author: Artisteer
+Author URI: http://artisteer.com/
+*/
+
+/* begin Page */
+
+/* Generated with Artisteer version 2.1.0.15838, file checksum is AC8D1CCB. */
+
+body
+{
+	margin: 0 auto;
+	padding: 0;
+	background-color: #FFFFFF;
+}
+
+.Main
+{
+	position: relative;
+	width: 100%;
+	overflow:hidden;
+	left: 0;
+	top: 0;
+}
+
+
+
+
+.PageBackgroundSimpleGradient
+{
+	position: absolute;
+	z-index:-1;
+	background-image: url('images/Page-BgSimpleGradient.jpg');
+	background-repeat: repeat-x;
+	width: 100%;
+	height: 1px;
+}
+
+.cleared
+{
+	float: none;
+	clear: both;
+	margin: 0;
+	padding: 0;
+	border: none;
+	font-size:1px;
+}
+
+
+form
+{
+	padding:0 !important;
+	margin:0 !important;
+}
+
+table.position
+{
+	position: relative;
+	width: 100%;
+	table-layout: fixed;
+}
+/* end Page */
+
+/* begin Box, Sheet */
+.Sheet
+{
+	position:relative;
+	z-index:0;
+	margin:0 auto;
+	width: 900px;
+	min-width:35px;
+	min-height:35px;
+}
+
+.Sheet-body
+{
+	position: relative;
+	z-index:1;
+	padding: 13px;
+}
+
+.Sheet-tr, .Sheet-tl, .Sheet-br, .Sheet-bl, .Sheet-tc, .Sheet-bc,.Sheet-cr, .Sheet-cl
+{
+	position:absolute;
+	z-index:-1;
+}
+
+.Sheet-tr, .Sheet-tl, .Sheet-br, .Sheet-bl
+{
+	width: 34px;
+	height: 34px;
+	background-image: url('images/Sheet-s.png');
+}
+
+.Sheet-tl
+{
+	top:0;
+	left:0;
+	clip: rect(auto, 17px, 17px, auto);
+}
+
+.Sheet-tr
+{
+	top: 0;
+	right: 0;
+	clip: rect(auto, auto, 17px, 17px);
+}
+
+.Sheet-bl
+{
+	bottom: 0;
+	left: 0;
+	clip: rect(17px, 17px, auto, auto);
+}
+
+.Sheet-br
+{
+	bottom: 0;
+	right: 0;
+	clip: rect(17px, auto, auto, 17px);
+}
+
+.Sheet-tc, .Sheet-bc
+{
+	left: 17px;
+	right: 17px;
+	height: 34px;
+	background-image: url('images/Sheet-h.png');
+}
+
+.Sheet-tc
+{
+	top: 0;
+	clip: rect(auto, auto, 17px, auto);
+}
+
+.Sheet-bc
+{
+	bottom: 0;
+	clip: rect(17px, auto, auto, auto);
+}
+
+.Sheet-cr, .Sheet-cl
+{
+	top: 17px;
+	bottom: 17px;
+	width: 34px;
+	background-image: url('images/Sheet-v.png');
+}
+
+.Sheet-cr
+{
+	right:0;
+	clip: rect(auto, auto, auto, 17px);
+}
+
+.Sheet-cl
+{
+	left:0;
+	clip: rect(auto, 17px, auto, auto);
+}
+
+.Sheet-cc
+{
+	position:absolute;
+	z-index:-1;
+	top: 17px;
+	left: 17px;
+	right: 17px;
+	bottom: 17px;
+	background-color: #FFFFFF;
+}
+
+
+.Sheet
+{
+	margin-top: -13px !important;
+}
+/* end Box, Sheet */
+
+/* begin Header */
+div.Header
+{
+	margin: 0 auto;
+	position: relative;
+	z-index:0;
+	width: 874px;
+	height: 100px;
+}
+
+
+div.Header-jpeg
+{
+	position: absolute;
+	z-index:-1;
+	top: 0;
+	left: 0;
+	width: 874px;
+	height: 100px;
+	background-image: url('images/Header.jpg');
+	background-repeat: no-repeat;
+	background-position: center center;
+}
+/* end Header */
+
+/* begin Logo */
+.logo
+{
+	display : block;
+	position: absolute;
+	left: 10px;
+	top: 10px;
+	width: 854px;
+}
+
+h1.logo-name
+{
+	display: block;
+	text-align: left;
+}
+
+h1.logo-name, h1.logo-name a, h1.logo-name a:link, h1.logo-name a:visited, h1.logo-name a:hover
+{
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-size: 40px;
+	text-decoration: none;
+	padding:0;
+	margin:0;
+	color: #134C5E !important;
+}
+
+.logo-text
+{
+	display: block;
+	text-align: left;
+}
+
+.logo-text, .logo-text a
+{
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-size: 22px;
+	padding:0;
+	margin:0;
+	color: #000000 !important;
+}
+/* end Logo */
+
+/* begin ContentLayout */
+.contentLayout
+{
+	position: relative;
+	margin-bottom: 1px;
+	width: 874px;
+}
+/* end ContentLayout */
+
+/* begin Box, Block */
+.Block
+{
+	position:relative;
+	z-index:0;
+	margin:0 auto;
+	min-width:13px;
+	min-height:13px;
+}
+
+.Block-body
+{
+	position: relative;
+	z-index:1;
+	padding: 7px;
+}
+
+.Block-tr, .Block-tl, .Block-br, .Block-bl, .Block-tc, .Block-bc,.Block-cr, .Block-cl
+{
+	position:absolute;
+	z-index:-1;
+}
+
+.Block-tr, .Block-tl, .Block-br, .Block-bl
+{
+	width: 12px;
+	height: 12px;
+	background-image: url('images/Block-s.png');
+}
+
+.Block-tl
+{
+	top:0;
+	left:0;
+	clip: rect(auto, 6px, 6px, auto);
+}
+
+.Block-tr
+{
+	top: 0;
+	right: 0;
+	clip: rect(auto, auto, 6px, 6px);
+}
+
+.Block-bl
+{
+	bottom: 0;
+	left: 0;
+	clip: rect(6px, 6px, auto, auto);
+}
+
+.Block-br
+{
+	bottom: 0;
+	right: 0;
+	clip: rect(6px, auto, auto, 6px);
+}
+
+.Block-tc, .Block-bc
+{
+	left: 6px;
+	right: 6px;
+	height: 12px;
+	background-image: url('images/Block-h.png');
+}
+
+.Block-tc
+{
+	top: 0;
+	clip: rect(auto, auto, 6px, auto);
+}
+
+.Block-bc
+{
+	bottom: 0;
+	clip: rect(6px, auto, auto, auto);
+}
+
+.Block-cr, .Block-cl
+{
+	top: 6px;
+	bottom: 6px;
+	width: 12px;
+	background-image: url('images/Block-v.png');
+}
+
+.Block-cr
+{
+	right:0;
+	clip: rect(auto, auto, auto, 6px);
+}
+
+.Block-cl
+{
+	left:0;
+	clip: rect(auto, 6px, auto, auto);
+}
+
+.Block-cc
+{
+	position:absolute;
+	z-index:-1;
+	top: 6px;
+	left: 6px;
+	right: 6px;
+	bottom: 6px;
+	background-color: #EAE9E1;
+}
+
+
+.Block
+{
+	margin: 7px;
+}
+
+/* end Box, Block */
+
+/* begin BlockHeader */
+.BlockHeader
+{
+	position:relative;
+	z-index:0;
+	height: 30px;
+	padding: 0 7px;
+	margin-bottom: 7px;
+}
+
+.BlockHeader .t
+{
+	height: 30px;
+	color: #000000;
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-size: 14px;
+	white-space : nowrap;
+	padding: 0 7px;
+	line-height: 30px;
+}
+
+.BlockHeader .l, .BlockHeader .r
+{
+	display:block;
+	position:absolute;
+	z-index:-1;
+	height: 30px;
+	background-image: url('images/BlockHeader.png');
+}
+
+.BlockHeader .l
+{
+	left:0;
+	right:6px;
+}
+
+.BlockHeader .r
+{ 
+	width:894px;
+	right:0;
+	clip: rect(auto, auto, auto, 888px);
+}
+
+
+
+
+/* end BlockHeader */
+
+/* begin Box, BlockContent */
+.BlockContent
+{
+	position:relative;
+	z-index:0;
+	margin:0 auto;
+	min-width:1px;
+	min-height:1px;
+}
+
+.BlockContent-body
+{
+	position: relative;
+	z-index:1;
+	padding: 7px;
+}
+
+
+
+.BlockContent-body
+{
+	color:#2A281E;
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-size: 14px;
+}
+
+.BlockContent-body a:link
+{
+	color: #1A6B84;
+	font-family: Arial, Helvetica, Sans-Serif;
+}
+
+.BlockContent-body a:visited, .BlockContent-body a.visited
+{
+	color: #97926D;
+	font-family: Arial, Helvetica, Sans-Serif;
+	text-decoration: none;
+}
+
+.BlockContent-body a:hover, .BlockContent-body a.hover
+{
+	color: #238EAF;
+	font-family: Arial, Helvetica, Sans-Serif;
+	text-decoration: none;
+}
+
+.BlockContent-body ul
+{
+	list-style-type: none;
+	color: #3F3C2C;
+	margin:0;
+	padding:0;
+}
+
+.BlockContent-body li
+{
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-size: 14px;
+}
+
+.BlockContent-body ul li
+{
+	padding:0px 0 0px 13px;
+	background-image: url('images/BlockContentBullets.png');
+	background-repeat:no-repeat;
+	margin:0.5em 0 0.5em 0;
+	line-height:1.2em;
+}
+
+/* end Box, BlockContent */
+
+/* begin Box, Post */
+.Post
+{
+	position:relative;
+	z-index:0;
+	margin:0 auto;
+	min-width:15px;
+	min-height:15px;
+}
+
+.Post-body
+{
+	position: relative;
+	z-index:1;
+	padding: 11px;
+}
+
+.Post-tr, .Post-tl, .Post-br, .Post-bl, .Post-tc, .Post-bc,.Post-cr, .Post-cl
+{
+	position:absolute;
+	z-index:-1;
+}
+
+.Post-tr, .Post-tl, .Post-br, .Post-bl
+{
+	width: 14px;
+	height: 14px;
+	background-image: url('images/Post-s.png');
+}
+
+.Post-tl
+{
+	top:0;
+	left:0;
+	clip: rect(auto, 7px, 7px, auto);
+}
+
+.Post-tr
+{
+	top: 0;
+	right: 0;
+	clip: rect(auto, auto, 7px, 7px);
+}
+
+.Post-bl
+{
+	bottom: 0;
+	left: 0;
+	clip: rect(7px, 7px, auto, auto);
+}
+
+.Post-br
+{
+	bottom: 0;
+	right: 0;
+	clip: rect(7px, auto, auto, 7px);
+}
+
+.Post-tc, .Post-bc
+{
+	left: 7px;
+	right: 7px;
+	height: 14px;
+	background-image: url('images/Post-h.png');
+}
+
+.Post-tc
+{
+	top: 0;
+	clip: rect(auto, auto, 7px, auto);
+}
+
+.Post-bc
+{
+	bottom: 0;
+	clip: rect(7px, auto, auto, auto);
+}
+
+.Post-cr, .Post-cl
+{
+	top: 7px;
+	bottom: 7px;
+	width: 14px;
+	background-image: url('images/Post-v.png');
+}
+
+.Post-cr
+{
+	right:0;
+	clip: rect(auto, auto, auto, 7px);
+}
+
+.Post-cl
+{
+	left:0;
+	clip: rect(auto, 7px, auto, auto);
+}
+
+.Post-cc
+{
+	position:absolute;
+	z-index:-1;
+	top: 7px;
+	left: 7px;
+	right: 7px;
+	bottom: 7px;
+	background-color: #F2F2ED;
+}
+
+
+.Post
+{
+	margin: 10px;
+}
+
+/* Start images */
+a img
+{
+	border: 0;
+}
+
+.article img, img.article
+{
+	border: solid 1px #CAC7B4;
+	margin: 1em;
+}
+
+.metadata-icons img
+{
+	border: none;
+	vertical-align: middle;
+	margin:2px;
+}
+/* Finish images */
+
+/* Start tables */
+
+.article table, table.article
+{
+	border-collapse: collapse;
+	margin: 1px;
+	width:auto;
+}
+
+.article table, table.article .article tr, .article th, .article td
+{
+	background-color:Transparent;
+}
+
+.article th, .article td
+{
+	padding: 2px;
+	border: solid 1px #7A7657;
+	vertical-align: top;
+	text-align:left;
+}
+
+.article th
+{
+	text-align:center;
+	vertical-align:middle;
+	padding: 7px;
+}
+
+/* Finish tables */
+/* end Box, Post */
+
+/* begin PostMetadata */
+.PostMetadataHeader
+{
+	padding:1px;
+	background-color: #E3E2D8;
+	border-color: #CAC7B4;
+	border-style: solid;
+	border-width: 1px;
+}
+/* end PostMetadata */
+
+/* begin PostHeaderIcon */
+.PostHeaderIcon-wrapper
+{
+	text-decoration:none;
+	margin: 0.2em 0;
+	padding: 0;
+	font-weight:normal;
+	font-style:normal;
+	letter-spacing:normal;
+	word-spacing:normal;
+	font-variant:normal;
+	text-decoration:none;
+	font-variant:normal;
+	text-transform:none;
+	text-align:left;
+	text-indent:0;
+	line-height:inherit;
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-size: 26px;
+	color: #104251;
+}
+
+.PostHeaderIcon-wrapper, .PostHeaderIcon-wrapper a, .PostHeaderIcon-wrapper a:link, .PostHeaderIcon-wrapper a:visited, .PostHeaderIcon-wrapper a:hover
+{
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-size: 26px;
+	color: #104251;
+}
+
+/* end PostHeaderIcon */
+
+/* begin PostHeader */
+.PostHeader a:link
+{
+  font-family: Arial, Helvetica, Sans-Serif;
+  text-decoration: none;
+  text-align: left;
+  color: #145366;
+}
+
+.PostHeader a:visited, .PostHeader a.visited
+{
+  font-family: Arial, Helvetica, Sans-Serif;
+  text-decoration: none;
+  text-align: left;
+  color: #484533;
+}
+
+.PostHeader a:hover, .PostHeader a.hovered
+{
+  font-family: Arial, Helvetica, Sans-Serif;
+  text-decoration: none;
+  text-align: left;
+  color: #228AAA;
+}
+/* end PostHeader */
+
+/* begin PostIcons */
+.PostHeaderIcons
+{
+	padding:1px;
+}
+
+.PostHeaderIcons, .PostHeaderIcons a, .PostHeaderIcons a:link, .PostHeaderIcons a:visited, .PostHeaderIcons a:hover
+{
+	font-family: Arial, Helvetica, Sans-Serif;
+	color: #4E4B37;
+}
+
+.PostHeaderIcons a, .PostHeaderIcons a:link, .PostHeaderIcons a:visited, .PostHeaderIcons a:hover
+{
+	margin:0;
+}
+
+.PostHeaderIcons a:link
+{
+	font-family: Arial, Helvetica, Sans-Serif;
+	text-decoration: none;
+	color: #196880;
+}
+
+.PostHeaderIcons a:visited, .PostHeaderIcons a.visited
+{
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-style: italic;
+	font-weight: normal;
+	text-decoration: none;
+	color: #196880;
+}
+
+.PostHeaderIcons a:hover, .PostHeaderIcons a.hover
+{
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-style: italic;
+	font-weight: normal;
+	text-decoration: underline;
+	color: #228AAA;
+}
+/* end PostIcons */
+
+/* begin PostContent */
+/* Content Text Font & Color (Default) */
+body
+{
+  font-family: Arial, Helvetica, Sans-Serif;
+  font-size: 14px;
+  color: #2D2B20;
+}
+
+.PostContent
+{
+  font-family: Arial, Helvetica, Sans-Serif;
+  color: #2D2B20;
+}
+
+
+/* Start Content link style */
+/*
+The right order of link pseudo-classes: Link-Visited-Hover-Focus-Active.
+http://www.w3schools.com/CSS/css_pseudo_classes.asp
+http://meyerweb.com/eric/thoughts/2007/06/11/who-ordered-the-link-states/
+*/
+a
+{
+  font-family: Arial, Helvetica, Sans-Serif;
+  text-decoration: none;
+  color: #1B6F88;
+}
+
+/* Adds special style to an unvisited link. */
+a:link
+{
+  font-family: Arial, Helvetica, Sans-Serif;
+  text-decoration: none;
+  color: #1B6F88;
+}
+
+/* Adds special style to a visited link. */
+a:visited, a.visited
+{
+  font-family: Arial, Helvetica, Sans-Serif;
+  text-decoration: none;
+  color: #5F5C44;
+}
+
+/* :hover - adds special style to an element when you mouse over it. */
+a:hover, a.hover
+{
+  font-family: Arial, Helvetica, Sans-Serif;
+  text-decoration: none;
+  color: #2495B7;
+}
+
+/* Finish Content link style */
+
+/* Resert some headings default style & links default style for links in headings*/
+h1, h2, h3, h4, h5, h6,
+h1 a, h2 a, h3 a, h4 a, h5 a, h6 a
+h1 a:hover, h2 a:hover, h3 a:hover, h4 a:hover, h5 a:hover, h6 a:hover
+h1 a:visited, h2 a:visited, h3 a:visited, h4 a:visited, h5 a:visited, h6 a:visited
+{
+  font-weight: normal;
+  font-style: normal;
+  text-decoration: none;
+}
+
+
+/* Start Content headings Fonts & Colors  */
+h1, h1 a, h1 a:link, h1 a:visited, h1 a:hover
+{
+  font-family: Arial, Helvetica, Sans-Serif;
+  font-size: 35px;
+  color: #1B6F88;
+}
+
+h2, h2 a, h2 a:link, h2 a:visited, h2 a:hover
+{
+  font-family: Arial, Helvetica, Sans-Serif;
+  font-size: 26px;
+  color: #1B6F88;
+}
+
+h3, h3 a, h3 a:link, h3 a:visited, h3 a:hover
+{
+  font-family: Arial, Helvetica, Sans-Serif;
+  font-size: 21px;
+  color: #5F5C44;
+}
+
+h4, h4 a, h4 a:link, h4 a:visited, h4 a:hover
+{
+  font-family: Arial, Helvetica, Sans-Serif;
+  font-size: 18px;
+  color: #2D2B20;
+}
+
+h5, h5 a, h5 a:link, h5 a:visited, h5 a:hover
+{
+  font-family: Arial, Helvetica, Sans-Serif;
+  font-size: 14px;
+  color: #2D2B20;
+}
+
+h6, h6 a, h6 a:link, h6 a:visited, h6 a:hover
+{
+  font-family: Arial, Helvetica, Sans-Serif;
+  font-size: 12px;
+  color: #2D2B20;
+}
+/* Finish Content headings Fonts & Colors  */
+/* end PostContent */
+
+/* begin PostBullets */
+/* Start Content list */
+ol, ul
+{
+	color: #423F2F;
+	margin:1em 0 1em 2em;
+	padding:0;
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-size: 14px;
+}
+
+li ol, li ul
+{
+	margin:0.5em 0 0.5em 2em;
+	padding:0;
+}
+
+li 
+{
+	margin:0.2em 0;
+	padding:0;
+}
+
+ul
+{
+	list-style-type: none;
+}
+
+ol
+{
+	list-style-position:inside;
+	
+}
+
+
+
+.Post li
+{
+	padding:0px 0 0px 13px;
+	line-height:1.2em;
+}
+
+.Post ol li, .Post ul ol li
+{
+	background: none;
+	padding-left:0;
+}
+
+.Post ul li, .Post ol ul li 
+{
+	background-image: url('images/PostBullets.png');
+	background-repeat:no-repeat;
+	padding-left:13px;
+}
+
+
+/* Finish Content list */
+/* end PostBullets */
+
+/* begin PostQuote */
+/* Start blockquote */
+blockquote p
+{
+	color:#12110D;
+	font-family: Arial, Helvetica, Sans-Serif;
+}
+
+blockquote
+{
+		border:solid 1px #CAC7B4; 
+		margin:10px 10px 10px 50px;
+	padding:5px 5px 5px 41px;
+	background-color:#E3E2D8;
+	background-image:url('images/PostQuote.png');
+	background-position:left top;
+	background-repeat:no-repeat;
+}
+
+
+/* Finish blockuote */
+/* end PostQuote */
+
+/* begin PostMetadata */
+.PostMetadataFooter
+{
+	padding:1px;
+	background-color: #E3E2D8;
+	border-color: #CAC7B4;
+	border-style: solid;
+	border-width: 1px;
+}
+/* end PostMetadata */
+
+/* begin PostIcons */
+.PostFooterIcons
+{
+	padding:1px;
+}
+
+.PostFooterIcons, .PostFooterIcons a, .PostFooterIcons a:link, .PostFooterIcons a:visited, .PostFooterIcons a:hover
+{
+	font-family: Arial, Helvetica, Sans-Serif;
+	color: #625F46;
+}
+
+.PostFooterIcons a, .PostFooterIcons a:link, .PostFooterIcons a:visited, .PostFooterIcons a:hover
+{
+	margin:0;
+}
+
+.PostFooterIcons a:link
+{
+	font-family: Arial, Helvetica, Sans-Serif;
+	text-decoration: none;
+	color: #196880;
+}
+
+.PostFooterIcons a:visited, .PostFooterIcons a.visited
+{
+	font-family: Arial, Helvetica, Sans-Serif;
+	text-decoration: none;
+	color: #196880;
+}
+
+.PostFooterIcons a:hover, .PostFooterIcons a.hover
+{
+	font-family: Arial, Helvetica, Sans-Serif;
+	text-decoration: none;
+	color: #228AAA;
+}
+/* end PostIcons */
+
+/* begin Button */
+.Button
+{
+	position:relative;
+	display:inline-block;
+	width: auto;
+	outline:none;
+	border:none;
+	background:none;
+	line-height:36px;
+	margin:0;
+	padding:0;
+	overflow: visible;
+	cursor: default;
+	text-decoration: none !important;
+	z-index:0;
+}
+
+/*This HACK needed for ie7 (button position)*/
+*:first-child+html .Button
+{
+	display:list-item;
+	list-style-type:none;
+	float:left;
+}
+
+.Button .btn
+{
+	display:block;
+	position:relative;
+	float:left;
+	height: 36px;
+	overflow:hidden;
+	white-space: nowrap;
+	width: auto;
+	color: #000000;
+}
+
+.Button .btn .t
+{
+	display:block;
+	height: 36px;
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-size: 14px;
+	white-space: nowrap;
+	text-align: left;
+	padding: 0 21px;
+	line-height: 36px;
+	text-decoration: none !important;
+}
+
+input, select
+{
+	font-family: Arial, Helvetica, Sans-Serif;
+	font-size: 14px;
+}
+
+.Button .hover, .Button:hover
+{
+	color: #000000;
+	text-decoration: none !important;
+}
+
+.Button .active
+{
+	color: #F9F6E2;
+}
+
+.Button .btn .l, .Button .btn .r
+{
+	display:block;
+	position:absolute;
+	z-index:-1;
+	height: 108px;
+	background-image: url('images/Button.png');
+}
+
+.Button .btn .l
+{
+	left:0;
+	right:11px;
+}
+
+.Button .btn .r
+{
+	width:411px;
+	right:0;
+	clip: rect(auto, auto, auto, 400px);
+}
+
+.Button .btn.hover .l, .Button .btn.hover .r, .Button .btn:hover .l, .Button .btn:hover .r
+{
+	top: -36px;
+}
+
+.Button .btn.active .l, .Button .btn.active .r
+{
+	top: -72px;
+}
+
+
+/* end Button */
+
+/* begin Footer */
+.Footer
+{
+	position:relative;
+	z-index:0;
+	overflow:hidden;
+	width: 874px;
+	margin: 5px auto 0px auto;
+}
+
+.Footer .Footer-inner
+{
+	height:1%;
+	position: relative;
+	z-index: 0;
+	padding: 8px;
+	text-align: center;
+}
+
+.Footer .Footer-background
+{
+	position:absolute;
+	z-index:-1;
+	background-repeat:no-repeat;
+	background-image: url('images/Footer.png');
+	width: 874px;
+	height: 150px;
+	bottom:0;
+	left:0;
+}
+
+
+.rss-tag-icon
+{
+	position: relative;
+	display:block;
+	float:left;
+	background-image: url('images/rssIcon.png');
+	background-position: center right;
+	background-repeat: no-repeat;
+	margin: 0 5px 0 0;
+	height: 25px;
+	width: 25px;
+}
+
+
+
+
+.Footer .Footer-text p
+{
+	margin: 0;
+}
+
+.Footer .Footer-text
+{
+	display:inline-block;
+	color:#081F26;
+	font-family: Arial, Helvetica, Sans-Serif;
+}
+
+.Footer .Footer-text a:link
+{
+	text-decoration: none;
+	color: #196880;
+	font-family: Arial, Helvetica, Sans-Serif;
+	text-decoration: none;
+}
+
+.Footer .Footer-text a:visited
+{
+	text-decoration: none;
+	color: #000000;
+	font-family: Arial, Helvetica, Sans-Serif;
+	text-decoration: none;
+}
+
+.Footer .Footer-text a:hover
+{
+	text-decoration: none;
+	color: #08232B;
+	font-family: Arial, Helvetica, Sans-Serif;
+	text-decoration: none;
+}
+/* end Footer */
+
+/* begin PageFooter */
+.page-footer, .page-footer a, .page-footer a:link, .page-footer a:visited, .page-footer a:hover
+{
+	font-family:Arial;
+	font-size:10px;
+	letter-spacing:normal;
+	word-spacing:normal;
+	font-style:normal;
+	font-weight:normal;
+	text-decoration:underline;
+	color:#228AAA;
+}
+
+.page-footer
+{
+	margin:1em;
+	text-align:center;
+	text-decoration:none;
+	color:#777355;
+}
+/* end PageFooter */
+
+/* begin LayoutCell */
+.contentLayout .sidebar1
+{
+	position: relative;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	float: left;
+	overflow: hidden;
+	width: 174px;
+}
+/* end LayoutCell */
+
+/* begin LayoutCell */
+.contentLayout .content
+{
+	position: relative;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	float: left;
+	overflow: hidden;
+	width: 525px;
+}
+.contentLayout .content-sidebar1
+{
+	position: relative;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	float: left;
+	overflow: hidden;
+	width: 699px;
+}
+.contentLayout .content-sidebar2
+{
+	position: relative;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	float: left;
+	overflow: hidden;
+	width: 699px;
+}
+.contentLayout .content-wide
+{
+	position: relative;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	float: left;
+	overflow: hidden;
+	width: 873px;
+}
+/* end LayoutCell */
+
+/* begin LayoutCell */
+.contentLayout .sidebar2
+{
+	position: relative;
+	margin: 0;
+	padding: 0;
+	border: 0;
+	float: left;
+	overflow: hidden;
+	width: 174px;
+}
+/* end LayoutCell */
+
+
+
+/*
+** HTML elements
+*/
+#footer
+{
+	text-align: center;
+}
+
+ul li 
+{
+	text-align: left;
+	background-image: none;
+	display: block;
+}
+
+li.expanded, li.leaf, li.collapsed
+{
+	list-style-type: none;
+	list-style-image: none;
+	background-image: none;
+}
+
+.tabs, .links, .service-links img, service-links img
+{
+	padding-left: 0px;
+	margin: 0px;
+}
+
+.tabs li, .links li
+{
+	float: left;
+	display: block;
+	padding: 0 0 0 1em;
+}
+
+#user-login-form 
+{
+	text-align: left;
+}
+
+#user-login-form ul li
+{
+	background-image: none;
+	padding-left:0;
+}
+
+fieldset
+{
+	margin: 1em 0;
+	padding: 1em;
+	border: 1px solid ;
+	width: 95%;
+}
+
+fieldset legend 
+{
+	/* Fix disappearing legend in FFox */
+	display: block;
+}
+
+.breadcrumb 
+{
+	display: block; 
+	padding-bottom: .7em;
+}
+
+.form-text, .form-textarea
+{
+	width: 95%;
+	text-align: left;
+}
+
+.tags
+{
+	float: left;
+}
+
+.messages
+{
+	padding: 5px;
+	margin: 5px 0;
+}
+
+.status
+{
+	border: 1px solid #090;
+	background:#C9FBC8;
+	margin: 5px 0;
+}
+
+.messages li
+{
+	margin: 5px 0;
+}
+
+tr.even, tr.odd
+{
+	background-color: transparent;
+}
+
+#forum table
+{
+	width: 99%;
+	margin-top: 15px;
+}
+
+#forum td.container
+{
+	padding-top: 15px;
+	border-left: none;
+	border-right: none;
+}
+
+#forum td.active
+{
+	background-color: transparent;
+}
+
+#forum td.forum, #forum td.topics, #forum td.posts, #forum td.last-reply
+{
+	padding-top: 4px;
+	padding-bottom: 4px;
+}
+
+#forum td.container
+{
+	font-weight: bold;
+}
+
+#forum td.active
+{
+	background-color: transparent;
+}
+
+.forum-topic-navigation
+{
+	border-top: 0px transparent;
+	border-bottom: 0px transparent;
+}
+
+.forum-topic-navigation .topic-previous
+{
+	text-align: left;
+	float: left;
+}
+
+.forum-topic-navigation .topic-next
+{
+	text-align: right;
+	float: right;
+}
+
+.read_more
+{
+	margin: 5px 0px;
+	text-align:left;
+}
+
+.sticky-table H2
+{
+	font-size: 10px;
+}
+
+.Footer .Footer-inner
+{
+	float: left;
+	width: 100%;
+}

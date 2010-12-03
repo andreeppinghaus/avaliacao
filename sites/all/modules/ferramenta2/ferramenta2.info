@@ -1,0 +1,8 @@
+;$id$
+name = Ferramenta para construcao de Sites 2
+description = Ferramenta para sites 2.
+package = Desenvolvimento
+core = 6.x
+version = "6.16"
+
+
