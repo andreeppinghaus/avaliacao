@@ -140,26 +140,30 @@ background:#8b94ec;
 
 h1.laconic {font: 40px/48px 'LaconicRegular', Arial, sans-serif;letter-spacing: 0;}
 
-        p.laconic1 {font: 18px/27px 'LaconicLight', Arial, sans-serif;}
-        p.laconic2 {font: 18px/27px 'LaconicRegular', Arial, sans-serif;}
-        p.laconic3 {font: 18px/27px 'LaconicBold', Arial, sans-serif;}
-        p.laconic4 {font: 18px/27px 'LaconicShadow', Arial, sans-serif;}
+.laconic1 {font: 18px/27px 'LaconicLight', Arial, sans-serif;}
+.laconic2 {font: 18px/27px 'LaconicRegular', Arial, sans-serif;}
+.laconic3 {font: 18px/27px 'LaconicBold', Arial, sans-serif;}
+.laconic4 {font: 18px/27px 'LaconicShadow', Arial, sans-serif;}
                                         
 
 h1.nobile {font: 60px/68px 'NobileRegular', Arial, sans-serif;letter-spacing: 0;}
 h1.lafayette {font: 60px/68px 'LaffayetteComicProRegular', Arial, sans-serif;letter-spacing: 0;}
+.lafayette1 {font: 18px/27px 'LaffayetteComicProRegular', Arial, sans-serif;letter-spacing: 0;}
 h1.lilly {font: 60px/68px 'LillyRegular', Arial, sans-serif;letter-spacing: 0;}
-//div.title {font: 20px/28px 'LillyRegular', Arial, sans-serif;letter-spacing: 0;}
+.lilly1 {font: 18px/27px 'LillyRegular', Arial, sans-serif;letter-spacing: 0;}
+
 
 p {font: 18px/27px 'NobileRegular', Arial, sans-serif;}
-p.nobile2 {font: 18px/27px 'NobileItalic', Arial, sans-serif;}
-p.nobile3 {font: 18px/27px 'NobileBold', Arial, sans-serif;}
-p.nobile4 {font: 18px/27px 'NobileBoldItalic', Arial, sans-serif;}
+.nobile1 {font: 18px/27px 'NobileRegular', Arial, sans-serif;}
+.nobile2 {font: 18px/27px 'NobileItalic', Arial, sans-serif;}
+.nobile3 {font: 18px/27px 'NobileBold', Arial, sans-serif;}
+.nobile4 {font: 18px/27px 'NobileBoldItalic', Arial, sans-serif;}
+		
 
 
 a.classe1:link {text-decoration: none}
-  a.classe1:visited {text-decoration: none}
-  a.classe1:hover {
+a.classe1:visited {text-decoration: none}
+a.classe1:hover {
   text-decoration: underline; 
   
   }

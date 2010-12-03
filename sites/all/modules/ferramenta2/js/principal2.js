@@ -47,7 +47,8 @@ $("#linhas").mouseover(function(){ //resolve a movimentacao da caixa
 
 
 $("#controle").dialog({ position: 'right' });
-
+  $("#controle").dialog("close");
+  $("#excluir-formulario").hide();
     //carga do autoearch
 
 $.ajax({
@@ -196,8 +197,11 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
 
     //botao para exibir o questinario
     $("#salvar").button().click(function(){
-      //  $( "#salvar" ).button({ disabled: true }); //desabilita o botao antes de salvar
-        exibe_elementos();
+             
+        exibe_elementos(); //recebe os elementos arrumados para armazenar no banco
+        
+       //alert(JSON.stringify(objetoQuestionario)); //exibe json apartir do objeto
+       
         $("#busca").show();
         $("#excluir-formulario").show();
     });
@@ -271,13 +275,14 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
             }
         }); //fim li.each
         var jsonQuestionario = JSON.stringify(objetoQuestionario);
-        var acao = "acao=GravaQuestionario&json="+jsonQuestionario;
-       //alert(JSON.stringify(objetoQuestionario)); //exibe json apartir do objeto
+        
         if (verifica_titulo==0) {
-            alert("O título do questionário é obrigatório");
+             alert("O título do questionário é obrigatório");
         } else {
-            envia_servidor(acao);            
+                var acao = "acao=GravaQuestionario&json="+jsonQuestionario;
+                envia_servidor(acao);
         }
+        
         
     }//fim de funcao
     /*
