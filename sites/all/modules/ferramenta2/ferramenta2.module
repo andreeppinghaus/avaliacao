@@ -57,7 +57,7 @@ $items['ferramenta2/criacao'] = array(                                        //
        'page callback' =>'cria_questionarios',                          //    Como ele irá recuperar a informação para construir a página
        'description' => 'Criação de questionários',     //   Um texto de explicação que será exibido
        'access arguments' => array('Criar questionarios'),               //      Qual a permissão que deverá estar marcada para o usuário acessar a página
-       'type' => MENU_NORMAL_ITEM,                                //       Tipo de menu normal
+       'type' => MENU_CALLBACK,                                //       Tipo de menu normal
     );
 
     $items['ferramenta2/servidor'] = array(                                        // O endereço da página
@@ -170,20 +170,29 @@ function cria_questionarios() {
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/jquery.draggableList.js");
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/principal2.js");
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/visualiza.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/pre_teste.js");
    
-    
+   //$saida .="<div id=aviso_salvar> Salv</div>";    
    $saida .= "<div id='tabs'>
 			<ul>
 				<li><a href='#tabs-1'>Crie seu questionário</a></li>
 				<li><a href='#tabs-2'>Visualize</a></li>
+                                <li><a href='#tabs-3'>Pré-teste</a></li>
 				
 			</ul>
 			<div id='tabs-1'>";
     $saida .= principal_questionarios();
     $saida.= "
             </div>
-			<div id='tabs-2'>
-            <div id='monta_html'> </div>
+	    <div id='tabs-2'>
+                            <div id='monta_html'> </div>
+            </div>
+            <div id='tabs-3'>
+                    <div id='pre_teste'>
+                    
+                    
+                    </div>
+                    <div id='mensagem_pre'></div>
             </div>
 			
 		</div>"; 
@@ -269,7 +278,7 @@ e a comentar a funcao anterior
                <button id='salvar' type='button'>Salvar</button>
                <hr/>
                 <input type=\"button\" id=\"visualizar\" value=\"Visualizar\" />
-            
+                <input type=\"button\" id=\"voltar\" value=\"Voltar para o questionário\" />
                </div>
                ";
 /*controles extras
@@ -317,7 +326,11 @@ $saida .='
             <br />
             <label id="mensagem_resposta" for="tabela" class="nobile2" style="color:red">
             
-            <textarea rows="4" cols="30" name="tabela" id="tabela" class="text ui-widget-content ui-corner-all"></textarea></p>
+            <textarea rows="4" cols="30" name="tabela" id="tabela" class="text ui-widget-content ui-corner-all">
+            opção1;
+            opção2;
+            opção3;
+            </textarea></p>
         </fieldset>
     </form>
     </div>
@@ -534,20 +547,33 @@ function pesquisa_formulario($registro) {
 return $existe;
 }
 
-function gera_questionario($titulo= '') {
+function gera_questionario() {
     /* esta funcao cria a tabela para armazenamento da avaliacao */
+/*
+drop table ferramenta2.formulario;
+create table ferramenta2.formulario (
+uid integer,
+codigo_formulario serial,
+titulo varchar(400),
+json text,
+nometabela text
+);
 
+
+          */
     global $user;
     //http://localhost:9093/?q=ferramenta2/questionario/
     
     $titulo=$_POST[titulo];
+    $email=$_POST[email];
+    
     if (strlen($titulo) <=0 ){
         echo "Título em branco";
         return;
     }
     $saida = array();
     $sql="select distinct json, codigo_formulario from ferramenta2.formulario where trim(titulo)=trim($titulo) and uid=$user->uid";
-    //echo $sql;
+    
     $rst = db_query($sql);
      if($rst)  {
         $linha = pg_fetch_object($rst);
@@ -555,7 +581,7 @@ function gera_questionario($titulo= '') {
         $codigo_formulario=$linha->codigo_formulario;
      }
    //  print_r($saida);
-     
+    // pega as questoes do instrumento e retorna em colunas para o bd.
     $saida =  str_replace('","','||',$saida);
     $saida= explode("||", $saida); //pega cada linha e divide em um array assim=> "identificador": "f", pegando cada linha individualmente
     $saida =  str_replace('":"','||',$saida);
@@ -577,8 +603,10 @@ function gera_questionario($titulo= '') {
     }
     //echo "<p>";
     // print_r($monta_json);
-     $tabela= "usuario_$codigo_formulario";
-     $corpo = "create table tabelas.$tabela";
+     $uid=$user->uid;
+     $md5= md5("$uid-$codigo_formulario");
+     $tabela= "usuario_$md5";
+     $corpo = "create table tabelas.$tabela"; //cria uma tabela "irreconhecivel"
      $corpo .="( uid integer, matricula varchar(100), email varchar(500),cursobase varchar(200), unidade varchar(10), turno varchar(10) ";
      $resposta=0;
      foreach($monta_json as $array ) {
@@ -601,20 +629,28 @@ function gera_questionario($titulo= '') {
         
      } //fim foreach
      $corpo .=" );";
-     
-   echo $corpo;
-     
-     db_query("drop table tabelas.$tabela;");
+   
+       $saida= '';
+     db_query("drop table tabelas.$tabela;"); //dropa  e recria tabela
      if ( db_query($corpo)) {
         $sql = "update ferramenta2.formulario set nometabela='tabelas.$tabela' where codigo_formulario=$codigo_formulario";
      //   echo $sql;
         db_query ($sql);
-        $saida = "Tabela criada com sucesso: tabelas.$tabela";
+        $saida[] = "Tabela criada com sucesso: tabelas.$tabela";
      }else {
-        $saida = "Erro na criação da tabela tabelas.$tabela";
+        $saida[] = "Erro na criação da tabela tabelas.$tabela";
      }
+     $saida[] = "$md5";
+     // envio de email
      
- echo $saida;
+     $module= "ferramenta2";
+     $key = 'notice';
+     $language = "teste de email";
+     $from = NULL;
+     $send = TRUE;
+     
+     drupal_mail($module, $key, $to, $language, $params = array(), $from = NULL, $send = TRUE) ;
+ echo json_encode($saida);
    
 }
 /*

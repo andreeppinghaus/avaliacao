@@ -88,32 +88,6 @@ $('#buscar').button().click(function(event) {
         
 }); //fim 
 
-$('#gerar').button().click(function(event) {
-        
- var titulo=$("#tags").attr("value") ;
-               $("#linhas").empty();
-                var acao =  "titulo='"+titulo+"'"; //pega o instrumento todo
-                 $.ajax({
-                    type: "POST",
-                    //dataType: "json",
-                    url: Drupal.settings.ferramenta2.gerar,
-                    data: acao,
-                    success: function(retorno){
-                        alert(retorno);
-                        var posicao_codigo = retorno.search("_");
-                        var codigo_formulario = retorno.substring(posicao_codigo+1);
-                        
-                        $("#tabela_criada").empty();
-                        $("#tabela_criada").append(retorno);
-                        $("#link_avaliacao").empty();
-                        $("#link_avaliacao").append("<a href="+Drupal.settings.ferramenta2.avaliacao+"/"+codigo_formulario+">Link para testar o questionario</a>");
-                      // console.log(retorno);
-                       // alert(retorno);
-                        //console.log(ultimo_identificador, identificador,ultimo_identificador.length);
-                    } //fim de sucesso
-                });//fim de ajax
-        
-}); //fim
 
 function sortNumber(a, b)
 {
@@ -150,6 +124,7 @@ function busca_instrumento() {
                         identificador; //atualiza o identificador para o ultimo
                         //alert(identificador);
                         //console.log(ultimo_identificador, identificador,ultimo_identificador.length);
+                         $("#controle").dialog("open");
                     } //fim de sucesso
                 });//fim de ajax
 }
@@ -350,6 +325,7 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
 
        //controla a mensagem do campo resposta
       $("#seleciona_resposta").change(function(){
+      /*
             var conteudo = $("#seleciona_resposta").attr("value");
          $("#mensagem_resposta").empty();
   
@@ -377,7 +353,7 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
               $("#mensagem_resposta").append("Texto Livre");
               $("#tabela").hide();
          }
-       
+*/
      
       });
 
