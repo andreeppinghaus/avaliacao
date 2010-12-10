@@ -165,7 +165,7 @@
         <div id="content" >
           <?php if (!empty($title)): ?><h1 class="title" id="page-title"><?php print $title; ?></h1><?php endif; ?>
           <?php if (!empty($tabs)): ?><div class="tabs grid_6"><?php print $tabs; ?></div><?php endif; ?>
-          <?php if (!empty($messages)): print "<div class='grid_6 messages status'>$messages</div>"; endif; ?>
+          <?php if (!empty($messages)): print "<div class='grid_6 messages error'>$messages</div>"; endif; ?>
           <?php if (!empty($help)): print "<div class='grid_6'>$help</div>"; endif; ?>
           <div id="content-content" class="clear-block grid_6 title"><br />
             <?php print $content; ?>

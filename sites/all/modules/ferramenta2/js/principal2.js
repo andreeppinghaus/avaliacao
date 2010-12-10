@@ -49,8 +49,9 @@ $("#linhas").mouseover(function(){ //resolve a movimentacao da caixa
 $("#controle").dialog({ position: 'right' });
   $("#controle").dialog("close");
   $("#excluir-formulario").hide();
-    //carga do autoearch
 
+
+//carga do autoearch
 $.ajax({
          type: "POST",
          dataType: "json",//necessario este parametro para retorno do json
@@ -152,11 +153,12 @@ function Pergunta(codigo, titulo){
 }
 var exibePergunta = new Pergunta(); //monta objeto para resgatar o formulario do banco
 
-function Resposta(codigo, titulo, tipo, tabela){
+function Resposta(codigo_objeto, codigo_resposta, tipo,  tabela){
     this.identificador = "r";
-    this.codigo = codigo;
-    this.titulo = titulo;
+    this.codigo_objeto = codigo_objeto;
+    this.codigo_resposta=codigo_resposta;
     this.tipo = tipo;
+    
     this.tabela = tabela;
 }
 var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do banco
@@ -203,6 +205,7 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
                var texto=$("#"+pega_conteudo).children("textarea#texto").attr("value");
                //var form1=new Object;
               // form1 = { 'formulario' : [ { 'identificador':'f', 'codigo':codformulario,'titulo':titulo, 'texto':texto }  ] };
+            //  console.log("formulario"+codformulario+"titulo"+titulo);
                 objetoQuestionario.push( new Formulario(codformulario,titulo,texto ) );
                // objetoQuestionario.push( "identificador|f","codigo|"+codformulario,"titulo|"+titulo,"texto|"+texto  );
                 verifica_titulo=1; 
@@ -219,6 +222,7 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
                // alert(titulo+"/"+codsecao); //pega texto da secao
                // var secao1=new Object;
                // var secao1={ 'secao' : [ { 'identificador':'s', 'codigo':codsecao,'titulo':titulo }  ] };
+              // console.log("secao"+codsecao+"titulo"+titulo);
                objetoQuestionario.push(new Secao(codsecao,titulo ) );
                //objetoQuestionario.push( "identificador|s","codigo|"+codsecao,"titulo|"+titulo );
               
@@ -230,27 +234,28 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
               //  alert(titulo+"/"+codpergunta); //pega texto da secao
               //var pergunta1=new Object;
               //pergunta1={ 'secao' : [ { 'identificador':'p', 'codigo':codpergunta,'titulo':titulo }  ] };
+             // console.log("pergunta"+codpergunta+"titulo"+titulo);
              objetoQuestionario.push(new Pergunta(codpergunta,titulo ));
              //objetoQuestionario.push( "identificador|p","codigo|"+codpergunta,"titulo|"+titulo );
             }
             
             if(objeto.substring(0,1)=="r") { //pega o primeiro bit do id e verifica se e resposta
-                var titulo=$("#"+objeto).children("input#titulo").attr("value"); //pega o titulo da resposta              
-                var cod_objeto=objeto.substring(1);//pega o codigo da resposta
+                var codigo_objeto=objeto.substring(1);//pega o codigo da resposta
                 var id_resposta=$("#"+objeto).children("input#titulo").attr("id");
-                var tipo=$("#tipo"+cod_objeto+" option:selected").text();
-                var tabela=$("#tabela"+cod_objeto).attr("value");
-                var codresposta = $("#tipo"+cod_objeto+" option:selected").val();
+                var tipo=$("#tipo"+codigo_objeto+" option:selected").text();
+                var tabela=$("#tabela"+codigo_objeto).attr("value");
+                var codigo_resposta = $("#tipo"+codigo_objeto+" option:selected").val();
                 //var resposta1=new Object;
                 //resposta1={ 'resposta' : [ { 'identificador':'r', 'codigo':codresposta,'titulo':titulo, 'tipo':tipo, 'tabela':tabela }  ] };
                                 
              //  alert(titulo+"/"+tipo+"/"+tabela+"/"+codresposta); //pega texto da secao
-               objetoQuestionario.push(new Resposta(codresposta,titulo, tipo, tabela ));
+             //console.log("resposta"+codresposta+"titulo"+titulo+"tipo"+tipo+"tabela"+tabela);
+               objetoQuestionario.push(new Resposta(codigo_objeto, codigo_resposta, tipo, tabela ));
               //objetoQuestionario.push( "identificador|r","codigo|"+codresposta,"titulo|"+titulo, "tipo|"+tipo,"tabela|"+tabela );
             }
         }); //fim li.each
         var jsonQuestionario = JSON.stringify(objetoQuestionario);
-        
+      //  alert(jsonQuestionario);
         if (verifica_titulo==0) {
              alert("O título do questionário é obrigatório");
         } else {
@@ -325,35 +330,6 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
 
        //controla a mensagem do campo resposta
       $("#seleciona_resposta").change(function(){
-      /*
-            var conteudo = $("#seleciona_resposta").attr("value");
-         $("#mensagem_resposta").empty();
-  
-         if (conteudo=='1') { //multiplas escolhas
-            $("#mensagem_resposta").append("Esta resposta pode ter várias op&ccedil;&otilde;es separadas por (<b>;</b>) ex.:(Acesso a internet<b>;</b>Acesso a Livro<b>;</b> etc)");
-            $("#tabela").show();        
-          }
-  
-         if (conteudo=='2') { //lista  com resposta unica
-            $("#mensagem_resposta").append("Esta resposta pode ter várias op&ccedil;&otilde;es separadas por (<b>;</b>) ex.:(Acesso a internet<b>;</b>Acesso a Livro<b>;</b> etc)");    
-            $("#tabela").show();
-         }
-  
-        if (conteudo=='3') { // aberta e objetiva
-            $("#mensagem_resposta").append("Resposta para quest&otilde;es breves e objetivas como (n&uacute;mero de filhos, por exemplo) ");
-            $("#tabela").hide(); 
-         }
-
-        if (conteudo=='4') {
-            $("#mensagem_resposta").append("Escolha &uacute;nica por um <i>continuum</i> de \"concordo inteiramente-discordo inteiramente\" ");
-            $("#tabela").hide();
-         }
-  
-         if (conteudo=='5') {
-              $("#mensagem_resposta").append("Texto Livre");
-              $("#tabela").hide();
-         }
-*/
      
       });
 
@@ -546,26 +522,33 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
                 exibeResposta.titulo=conteudo;
             //    console.log(exibeFormulario.titulo);//firebird
             }
-            if (registro=='codigo') {
+            if (registro=='codigo_objeto') {
                 
-                exibeResposta.codigo=conteudo;
-              //  alert(exibeResposta.codigo);
+                exibeResposta.codigo_objeto=conteudo;
+                //console.log(exibeResposta.codigo_objeto);
             }
+            if (registro=='codigo_resposta') {
+                
+                exibeResposta.codigo_resposta=conteudo;
+                //console.log(exibeResposta.codigo_objeto);
+            }
+            
+            
             if (registro=='tipo') {
       //        alert(exibeResposta.codigo);
-                if (exibeResposta.codigo==1) {
+                if (exibeResposta.codigo_resposta==1) {
                      exibeResposta.tipo="Lista com m&uacute;ltiplas escolhas";
                 }
-                if (exibeResposta.codigo==2) {
+                if (exibeResposta.codigo_resposta==2) {
                      exibeResposta.tipo="Lista com resposta &uacute;nica";
                 }
-                if (exibeResposta.codigo==3) {
+                if (exibeResposta.codigo_resposta==3) {
                      exibeResposta.tipo="Resposta aberta objetiva";
                 }
-                if (exibeResposta.codigo==4) {
-                     exibeResposta.tipo="Escala de Likert";
+                if (exibeResposta.codigo_resposta==4) {
+                     exibeResposta.tipo="Escala de níveis";
                 }
-                if (exibeResposta.codigo==5) {
+                if (exibeResposta.codigo_resposta==5) {
                      exibeResposta.tipo="Resposta aberta detalhada";
                 }
                 
@@ -574,13 +557,13 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
             }  
             if (registro=='tabela') {
                 exibeResposta.tabela=conteudo; //ultimo campo apos devera imprimir na tela
-                adiciona_resposta( exibeResposta.codigo, exibeResposta.titulo, exibeResposta.tipo, exibeResposta.tabela );
-                $("#li"+exibeResposta.codigo).focus();
+                adiciona_resposta( exibeResposta.codigo_objeto, exibeResposta.codigo_resposta, exibeResposta.tipo, exibeResposta.tabela );
+                $("#li"+exibeResposta.codigo_objeto).focus();
              //   adiciona_formulario(exibeFormulario.codigo, exibeFormulario.titulo, exibeFormulario.texto);
             }//fim do ultimo campo
 
             //guarda os codigo em um array para pegar o ultimo
-            if (registro=='codigo') {
+            if (registro=='codigo_objeto') {
                 ultimo_identificador.push(conteudo);
             }
         }//fim de controle de funcao
@@ -640,58 +623,58 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
     */
     } //fim de adiciona pergunta
     
-    function adiciona_resposta(codigo, titulo, tipo, tabela ) { //titulo  nao usado no momento
-        var nivel = "<div id=r" + codigo + " style=\"padding-left :100px; font-family : tahoma; font-size : 12px;\" >";
+    function adiciona_resposta(codigo_objeto, codigo_resposta, tipo, tabela ) { //titulo  nao usado no momento
+        var nivel = "<div id=r" + codigo_objeto + " style=\"padding-left :100px; font-family : tahoma; font-size : 12px;\" >";
        //alert(codigo);
        
        //controle do select
       // alert(exibeResposta.codigo);
        $opcao="";
-          if (exibeResposta.codigo==0) {
+          if (exibeResposta.codigo_resposta==0) {
                      $opcao += "<option value='0' selected='selected'>Sem resposta</option>";
            }else {
                    $opcao += "<option value='0'>Sem resposta</option>";
            }
-           if (exibeResposta.codigo==1) {
+           if (exibeResposta.codigo_resposta==1) {
                      $opcao += "<option value='1' selected='selected'>Lista com m&uacute;ltiplas escolhas</option>";
            }else {
                    $opcao += "<option value='1'>Lista com m&uacute;ltiplas escolhas</option>";
            }
-           if (exibeResposta.codigo==2) {
+           if (exibeResposta.codigo_resposta==2) {
                      $opcao += "<option value='2' selected='selected'>Lista com resposta &uacute;nica</option>";
            }else {
                    $opcao += "<option value='2'>Lista com resposta &uacute;nica</option>";
            }
-           if (exibeResposta.codigo==3) {
+           if (exibeResposta.codigo_resposta==3) {
                      $opcao += "<option value='3' selected='selected'>Resposta aberta objetiva</option>";
            }else {
                    $opcao += "<option value='3'>Resposta aberta objetiva</option>";
            }
-           if (exibeResposta.codigo==4) {
-                     $opcao += "<option value='4' selected='selected'>Escala de Likert</option>";
+           if (exibeResposta.codigo_resposta==4) {
+                     $opcao += "<option value='4' selected='selected'>Escala de níveis</option>";
            }else {
-                   $opcao += "<option value='4'>Escala de Likert</option>";
+                   $opcao += "<option value='4'>Escala de níveis</option>";
            }
-           if (exibeResposta.codigo==5) {
+           if (exibeResposta.codigo_resposta==5) {
                      $opcao += "<option value='5' selected='selected'>Resposta aberta detalhada</option>";
            }else {
                    $opcao += "<option value='5'>Resposta aberta detalhada</option>";
            }
        
-        $("#linhas").append("<li id=li" + codigo + ">" + nivel +
+        $("#linhas").append("<li id=li" + codigo_objeto + ">" + nivel +
                             "<img src='"+Drupal.settings.ferramenta2.url+"sites/default/files/arrow.png' alt='move' width='16' height='16' class='handle' />"+
-                            "<input type=checkbox id='escolhe-check" + codigo + "' value='" + codigo + "' />" +
+                            "<input type=checkbox id='escolhe-check" + codigo_objeto + "' value='" + codigo_resposta + "' />" +
                          //   "<input type=text id='titulo' size='40'  value='" + titulo + "'/>"+
                         //    "Resposta " +
                             "Tipo:" +
-                            "<select id='tipo" + codigo + "' >"+
+                            "<select id='tipo" + codigo_objeto + "' >"+
                             $opcao +
                             "</select>" +
                             "<p> Conteúdo:" +
-                            "<textarea rows='3' cols='30' id='tabela" + codigo + "' >" + tabela + "</textarea> </p> " +
+                            "<textarea rows='3' cols='30' id='tabela" + codigo_objeto + "' >" + tabela + "</textarea> </p> " +
                             " </div></li>");
         
-        $("#tipo"+codigo).attr("selected","selected");
+        $("#tipo"+codigo_objeto).attr("selected","selected");
         
      //  console.log(tipo);
     }//fim de adiciona resposta

@@ -117,8 +117,34 @@ delete from questao;
 delete from resposta;
 delete from pergunta;
 */
-function abertura() {
-    global $user;
+
+function ferramenta2_carrega_variaveis_javascript(){
+
+ //cria  a variavel de caminho absoluto
+    $opts = array('absolute' => TRUE);
+    $url_padrao = url('', $opts);
+    drupal_add_js(array('ferramenta2' => array("url" => $url_padrao)), 'setting');
+
+   //cria  a variavel de caminho do servidor ajax
+    $opts = array('absolute' => TRUE);
+    $url_padrao = url('ferramenta2/servidor', $opts);
+    drupal_add_js(array('ferramenta2' => array("servidor" => $url_padrao)), 'setting');
+ 
+   //cria  a variavel de caminho do servidor ajax
+    $opts = array('absolute' => TRUE);
+    $url_padrao = url('ferramenta2/gerar', $opts);
+    drupal_add_js(array('ferramenta2' => array("gerar" => $url_padrao)), 'setting');
+ 
+ //cria  a variavel de caminho do servidor ajax
+    $opts = array('absolute' => TRUE);
+    $url_padrao = url('avaliacao', $opts);
+    drupal_add_js(array('ferramenta2' => array("avaliacao" => $url_padrao)), 'setting');
+    
+     //cria  a variavel de caminho do servidor ajax
+    $opts = array('absolute' => TRUE);
+    $url_padrao = url('ferramenta2/configuracao', $opts);
+    drupal_add_js(array('ferramenta2' => array("configuracao" => $url_padrao)), 'setting');
+    
     drupal_add_css(drupal_get_path('module', 'ferramenta2') . "/js/css/start/jquery-ui-1.8.1.custom.css");
     drupal_add_css(drupal_get_path('module', 'ferramenta2') . "/css/principal.css");
 
@@ -130,6 +156,14 @@ function abertura() {
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/inc/jquery.metadata.js");
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/jquery.draggableList.js");
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/principal2.js");
+}   
+
+function abertura() {
+    global $user;
+    
+    ferramenta2_carrega_variaveis_javascript();
+
+   
     
      //cria  a variavel de caminho do servidor ajax
     $opts = array('absolute' => TRUE);
@@ -158,17 +192,8 @@ function cria_questionarios() {
      Cada ABA sera montada atraves de uma funcao.     
        */
        
-    drupal_add_css(drupal_get_path('module', 'ferramenta2') . "/js/css/start/jquery-ui-1.8.1.custom.css");
-    drupal_add_css(drupal_get_path('module', 'ferramenta2') . "/css/principal.css");
+    ferramenta2_carrega_variaveis_javascript();
 
-    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/js/jquery-1.4.2.min.js");
-    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/js/jquery-ui-1.8.1.custom.min.js");
-    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/development-bundle/ui/jquery.ui.core.js");
-    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/development-bundle/ui/jquery.ui.draggable.js");
-    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/development-bundle/ui/jquery.ui.resizable.js");
-    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/inc/jquery.metadata.js");
-    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/jquery.draggableList.js");
-    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/principal2.js");
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/visualiza.js");
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/pre_teste.js");
    
@@ -188,11 +213,12 @@ function cria_questionarios() {
                             <div id='monta_html'> </div>
             </div>
             <div id='tabs-3'>
+                    <div id='mensagem_preteste'></div>
                     <div id='pre_teste'>
                     
                     
                     </div>
-                    <div id='mensagem_pre'></div>
+                    
             </div>
 			
 		</div>"; 
@@ -206,6 +232,10 @@ PARA DEIXAR FORA DA TABULACAO BASTA RENOMEAR ESTA FUNCAO PARA cria_questinario()
 e a comentar a funcao anterior 
 */
 
+   // ferramenta2_carrega_variaveis_javascript();
+
+ 
+    
     drupal_add_css(drupal_get_path('module', 'ferramenta2') . "/js/css/start/jquery-ui-1.8.1.custom.css");
     drupal_add_css(drupal_get_path('module', 'ferramenta2') . "/css/principal.css");
 
@@ -217,33 +247,8 @@ e a comentar a funcao anterior
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/inc/jquery.metadata.js");
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/jquery.draggableList.js");
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/principal2.js");
-     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/visualiza.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/visualiza.js");
     
-
- //cria  a variavel de caminho absoluto
-    $opts = array('absolute' => TRUE);
-    $url_padrao = url('', $opts);
-    drupal_add_js(array('ferramenta2' => array("url" => $url_padrao)), 'setting');
-
-   //cria  a variavel de caminho do servidor ajax
-    $opts = array('absolute' => TRUE);
-    $url_padrao = url('ferramenta2/servidor', $opts);
-    drupal_add_js(array('ferramenta2' => array("servidor" => $url_padrao)), 'setting');
- 
-   //cria  a variavel de caminho do servidor ajax
-    $opts = array('absolute' => TRUE);
-    $url_padrao = url('ferramenta2/gerar', $opts);
-    drupal_add_js(array('ferramenta2' => array("gerar" => $url_padrao)), 'setting');
- 
- //cria  a variavel de caminho do servidor ajax
-    $opts = array('absolute' => TRUE);
-    $url_padrao = url('avaliacao', $opts);
-    drupal_add_js(array('ferramenta2' => array("avaliacao" => $url_padrao)), 'setting');
-    
-     //cria  a variavel de caminho do servidor ajax
-    $opts = array('absolute' => TRUE);
-    $url_padrao = url('ferramenta2/configuracao', $opts);
-    drupal_add_js(array('ferramenta2' => array("configuracao" => $url_padrao)), 'setting');
 
    // echo "-$saida-";
    //inicio da tabulacao do jquery
@@ -320,7 +325,7 @@ $saida .='
                   <option value="1">Lista com m&uacute;ltiplas escolhas</option>
                   <option value="2">Lista com resposta &uacute;nica </option>
                   <option value="3">Resposta aberta objetiva</option>
-                  <option value="4">Escala de Likert</option>
+                  <option value="4">Escala de níveis</option>
                   <option value="5">Resposta aberta detalhada</option>
             </select>
             <br />
@@ -516,6 +521,47 @@ echo json_encode($monta_json); //retorna texto puro sem {}
     
 }
 
+if ($acao=="VerificaPreTeste") {
+    $titulo= $_POST[titulo];
+    $sql = "select distinct link, situacao from ferramenta2.formulario where trim(titulo)=trim('$titulo') and uid=$user->uid ";
+    //echo $sql;
+    $retorno = db_query($sql);
+   // print pg_num_rows($retorno);
+    $saida["situacao"]=0;
+    if (pg_num_rows($retorno)>0) {
+        while ($linha = pg_fetch_object($retorno) ){
+           if (strlen($linha->link)>0){
+                $saida['link'] = "$linha->link";
+                $saida['situacao'] = "$linha->situacao";
+           }
+        }       
+   
+    }
+    
+    echo json_encode($saida);
+    
+}
+
+if ($acao=="EnviaEmail") {
+    
+    $to=explode(',',$_POST[email]);
+    $titulo=$_POST[titulo];
+    $message=$_POST[mensagem];
+    $link=$_POST[link];
+    
+    //$to      = 'nobody@example.com';
+    $subject = "Voce foi convidado para participar do preenchimento do pre-teste questionario online chamado: $titulo ";
+    $message .= "\r\nLink para o pre-teste:$link";
+    $headers = 'From: avaliacao.kinghost.net' . "\r\n" .
+        'Reply-To: avaliacao.kinghost.net' . "\r\n" .
+        'X-Mailer: PHP/' . phpversion();
+    foreach ($to as &$para) {
+        mail($para, $subject, $message, $headers);
+      //  echo "$para, $subject, $message, $headers";
+    }
+    
+    //echo "$to, $subject, $message, $headers";
+}
 return;
 } //fim de servidor
 
@@ -556,8 +602,12 @@ uid integer,
 codigo_formulario serial,
 titulo varchar(400),
 json text,
-nometabela text
+link text,
+situacao integer
 );
+situacao = 0 - nada foi feito
+situacao = 1 - em pre-teste
+situacao = 2 - avaliacao sendo respondida
 
 
           */
@@ -573,7 +623,7 @@ nometabela text
     }
     $saida = array();
     $sql="select distinct json, codigo_formulario from ferramenta2.formulario where trim(titulo)=trim($titulo) and uid=$user->uid";
-    
+//    echo $sql;
     $rst = db_query($sql);
      if($rst)  {
         $linha = pg_fetch_object($rst);
@@ -602,23 +652,23 @@ nometabela text
        
     }
     //echo "<p>";
-    // print_r($monta_json);
+     //print_r($monta_json);
      $uid=$user->uid;
      $md5= md5("$uid-$codigo_formulario");
-     $tabela= "usuario_$md5";
+     $tabela= "usuario_$md5"; 
      $corpo = "create table tabelas.$tabela"; //cria uma tabela "irreconhecivel"
-     $corpo .="( uid integer, matricula varchar(100), email varchar(500),cursobase varchar(200), unidade varchar(10), turno varchar(10) ";
+     $corpo .="( email text, alteracao timestamp ";
      $resposta=0;
      foreach($monta_json as $array ) {
-       // echo "<p>$array[identificador] -  $array[codigo]";
+      // echo "$array[identificador] -  $array[codigo]";
         if ($array[identificador]=='r') {
-            $resposta=1;
+            $resposta=1; //nivel 1
             
         }else if ($resposta==1) { //colocar campo memo
-            $codigo=$array[codigo];
-            $resposta=2;
+            $codigo=$array[codigo_objeto];
+            $resposta=2; //nivel 2
             
-        }else if($resposta==2 and $array[tipo]=='Resposta MEMO') {
+        }else if($resposta==2 and $array[codigo_resposta]==5 ) { //campo MEMO
             $corpo .= ", q$codigo  text";
             $resposta=0;
         }else if($resposta==2 ) {
@@ -629,30 +679,25 @@ nometabela text
         
      } //fim foreach
      $corpo .=" );";
-   
+  // echo "$corpo";
        $saida= '';
      db_query("drop table tabelas.$tabela;"); //dropa  e recria tabela
      if ( db_query($corpo)) {
-        $sql = "update ferramenta2.formulario set nometabela='tabelas.$tabela' where codigo_formulario=$codigo_formulario";
-     //   echo $sql;
+        $sql = "update ferramenta2.formulario set link='$md5', situacao=1 where codigo_formulario=$codigo_formulario";
+  //     echo $sql;
         db_query ($sql);
-        $saida[] = "Tabela criada com sucesso: tabelas.$tabela";
+         $saida['link'] = "$md5";
+        $saida['situacao'] = "1";
+        
      }else {
-        $saida[] = "Erro na criação da tabela tabelas.$tabela";
+      $saida['erro']   = "Erro";
      }
-     $saida[] = "$md5";
-     // envio de email
-     
-     $module= "ferramenta2";
-     $key = 'notice';
-     $language = "teste de email";
-     $from = NULL;
-     $send = TRUE;
-     
-     drupal_mail($module, $key, $to, $language, $params = array(), $from = NULL, $send = TRUE) ;
- echo json_encode($saida);
+    
+echo json_encode($saida);
    
 }
+
+
 /*
 
 function gerencia_questionario($titulo= '') {
@@ -698,7 +743,6 @@ function gerencia_questionario($titulo= '') {
     
 
 }*/
-        
-        
+
         
 ?>
