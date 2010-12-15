@@ -5,27 +5,43 @@ session_start();
 //escuro
 function aplica_questionario(){
 
-   
-    $diretorio = drupal_get_path('module', 'ferramenta2');
-    $opts = array('absolute' => TRUE);
-    $url_padrao = url('', $opts);
-    
-
-
+$diretorio = drupal_get_path('module', 'ferramenta2');
+$opts = array('absolute' => TRUE);
+$url_padrao = url('', $opts);
+ 
 $codigo=arg(1);
 $email=arg(2);
+
+ //armazena variaveis para identificar o usuario e o codigo do questionario
+echo "<input type='hidden' id='controle1' value='$codigo' /> "; 
+echo "<input type='hidden' id='controle2' value='$email' /> ";
+
 //echo "$codigo - $email";
 $_SESSION[codigo]=$codigo;
 $_SESSION[email]=$email;
-
+ ferramenta2_carrega_variaveis_javascript();
 echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
 <html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
 <head>
 <title>Sistema de Avalia&ccedil;&atilde;o Online Beta</title>";
-echo "<link rel='stylesheet' href='$url_padrao$diretorio/css/questionario/questionario.css' type='text/css' />";
-echo "</head>
+   echo "<link rel='stylesheet' href='$url_padrao$diretorio/css/questionario/questionario.css' type='text/css' />";
+    echo "<script src='$url_padrao$diretorio/js/js/jquery-1.4.2.min.js' type='text/javascript'></script>";
+    echo "<script src='$url_padrao$diretorio/js/js/jquery-ui-1.8.1.custom.min.js' type='text/javascript'></script>";
+    echo "<script src='$url_padrao$diretorio/js/development-bundle/ui/jquery.ui.core.js' type='text/javascript'></script>";
+    echo "<script src='$url_padrao$diretorio/js/development-bundle/ui/jquery.ui.core.js' type='text/javascript'></script>";	
+    echo "<script src='$url_padrao$diretorio/js/development-bundle/ui/jquery.ui.draggable.js' type='text/javascript'></script>";
+    echo "<script src='$url_padrao$diretorio/js/development-bundle/ui/jquery.ui.resizable.js' type='text/javascript'></script>";
+    echo "<script src='$url_padrao$diretorio/js/questionario.js' type='text/javascript'></script>";
+  echo "</head>
 <body>";
-
+  /* echo '
+        <div id="aviso-avaliacao" title="Avaliação Armazenada com sucesso.">
+	<h2> Sua avaliação foi Armazenada com sucesso</h2>
+	<br /> <h3>Agradecemos a sua  colaboração.</h3>
+    	</div>
+            
+        ';
+  */
    $sql = "select * from ferramenta2.formulario where link='$codigo'";
    // echo $sql;
    
@@ -167,21 +183,24 @@ $saida .= "
         }//fim de controle de funcao
        
     }//fim foreach $linhas
-    $saida.="<div class='span-2'><br /><br /><input id='salvar' type='button' value='Salvar questionario' /><br /><br /></div>";
+    $saida.="<div class='grid_6 alpha' ><br /><br />
+    <center><input id='salvar' type='button' value='Salvar questionario' /></center><br /><br /></div>";
+    $saida.="<div class='grid_6 omega' ><br /><br />
+    <center><input id='sair' type='button' value='Sair' /></center><br /><br /></div>";
+    
     $saida.="</div></div>"; //container  fecha div's de conteudo
-  $saida .="              
-
-<div id='footer' class='container_12 rodape'>
-
-<div id='' class='grid_12 dejavu6 '>
-<p> Sistema de cria&ccedil;&atilde;o de Question&aacute;rios onLine Beta 0.3
-</div>
+  $saida .="
+    <div id='footer' class='container_12 rodape'>
+	<div id='' class='grid_12 dejavu6 '>
+	    <a href='http://avaliacao.kinghost.net'><p> Sistema de cria&ccedil;&atilde;o de Question&aacute;rios onLine Beta 0.3</p></a>
+	</div>
 "  ;
     $saida .="</div></form>"; // fecha div principal
+   
+    $saida .="<div id='mensagem_aviso' class='aviso'>Salvando...</div>";
     echo $saida;
 
 }
-
 
 function adiciona_formulario($codigo="", $titulo="", $texto="") {
     $titulo=converte_utf8_html($titulo);
@@ -373,84 +392,17 @@ function existe($array,$string) {
     return $existe;
 }
 
-function lixoaplica_questionario($codigo="") {
-
-    /*
-    $sql = "select json from tabelas.usuario_$codigo where link=matricula='1'"; //verifica se atualiza ou insere
-	
-    $ret = db_query($sql);
-    if (pg_num_rows($ret)<=0){
-        echo "<input id='acao' type='hidden' value='insere'  /> ";
-    }else {
-        echo "<input id='acao' type='hidden' value='atualiza'  /> ";
-    }
-	
-    	
-       //cria  a variavel de caminho do servidor ajax
-    $opts = array('absolute' => TRUE);
-    $url_padrao = url('avaliacao/salvar', $opts);
-    //drupal_add_js(array('ferramenta2' => array("salvar" => $url_padrao)), 'setting');
-    echo "<input id='servidor' type='hidden' value=$url_padrao /> ";
-    echo "<input id='formulario' type='hidden' value=$codigo /> ";
-    
-    $diretorio = drupal_get_path('module', 'ferramenta2');
-    $opts = array('absolute' => TRUE);
-    $url_padrao = url('', $opts);
-    */
-  /*  drupal_add_css(drupal_get_path('module', 'ferramenta2') . "/js/css/start/jquery-ui-1.8.1.custom.css");
-    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/js/jquery-1.4.2.min.js");
-    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/js/jquery-ui-1.8.1.custom.min.js");
-    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/development-bundle/ui/jquery.ui.core.js");
-    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/development-bundle/ui/jquery.ui.draggable.js");
-    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/development-bundle/ui/jquery.ui.resizable.js");
-    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/inc/jquery.metadata.js");
-    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/jquery.draggableList.js");
-  */
-
-    echo '<link rel="stylesheet" href="'.$url_padrao.$diretorio.'/css/blueprint/screen.css" type="text/css" media="screen, projection"/>';
-    echo '<link rel="stylesheet" href="'.$url_padrao.$diretorio.'/css/blueprint/print.css" type="text/css" media="print"/>';
-    echo '<link rel="stylesheet" href="'.$url_padrao.$diretorio.'/css/blueprint/plugins/fancy-type/screen.css" type="text/css" media="screen, projection"/>';
-    
-    echo '<link rel="stylesheet" href="'.$url_padrao.$diretorio.'/js/css/start/jquery-ui-1.8.1.custom.css" type="text/css" />';
-
-   // echo '<script src="'.$url_padrao.$diretorio.'/js/jquery-validate/jquery.validate.js" type="text/javascript"></script>';
-    echo '<script src="'.$url_padrao.$diretorio.'/js/js/jquery-1.4.2.min.js" type="text/javascript"></script>';
-    echo '<script src="'.$url_padrao.$diretorio.'/js/js/jquery-ui-1.8.1.custom.min.js" type="text/javascript"></script>';
-    echo '<script src="'.$url_padrao.$diretorio.'"/js/development-bundle/ui/jquery.ui.core.js" type="text/javascript"></script>';
-    echo '<script src="'.$url_padrao.$diretorio.'"/js/development-bundle/ui/jquery.ui.core.js" type="text/javascript"></script>';	
-    echo '<script src="'.$url_padrao.$diretorio.'"/js/development-bundle/ui/jquery.ui.draggable.js" type="text/javascript"></script>';
-    echo '<script src="'.$url_padrao.$diretorio.'"/js/development-bundle/ui/jquery.ui.resizable.js" type="text/javascript"></script>';
-
-    echo '<script src="'.$url_padrao.$diretorio.'/js/controle_avaliacao.js" type="text/javascript"></script>';
-    echo '<script src="'.$url_padrao.$diretorio.'/js/validacao_avaliacao_'.$codigo.'.js" type="text/javascript"></script>';
-
-    echo '<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang="" class="js" debug="true"><head>';
-    echo '<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7"/>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>';
-    echo '<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>';
-  echo '<style type="text/css">
-	    body {  background-color:#aec8f4; }
-	    h3 {
-		font-size:1.3em;
-		line-height:2em;
-			
-		}
-		.gray {color: #a19292;} 
-    	</style>';
-
-    echo "</head><br /></br><body>";
-    echo '
-        <div id="aviso-avaliacao" title="Avaliação Armazenada com sucesso.">
-	<h2> Sua avaliação foi Armazenada com sucesso</h2>
-	<br /> <h3>Agradecemos a sua  colaboração.</h3>
-    	</div>
-            
-        ';
-				
-   // echo "<div id='mensagem' class='notice' style='position:relative;margin-top: 3px;float: right;height: 14px;'>ok</div>";
-    
-    //echo "teste$codigo";
- 
-}//fim de funcao
+function sair_questionario() {
+echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
+<html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
+<head>
+<title>Sistema de Avalia&ccedil;&atilde;o Online Beta</title>";
+   echo "<link rel='stylesheet' href='$url_padrao$diretorio/css/questionario/questionario.css' type='text/css' />";
+   echo "<script src='$url_padrao$diretorio/js/questionario.js' type='text/javascript'></script>";
+  echo "</head>
+<body>";
+echo "<div id='agradecimento' class='agradecimento'>Obrigado pela sua avaliacao!</div>";
+echo "</body></html>";
+}
 
 ?>

@@ -93,6 +93,14 @@ $items['ferramenta2/criacao'] = array(                                        //
         'type' => MENU_CALLBACK,
         'file' => 'ferramenta2.aplica.inc',
     );
+    $items['agradecimento'] = array(                                        // O endereço da página
+       'title' => 'Tela de fechamento',                                     //  Titulo do modulo
+       'page callback' =>'sair_questionario',                          //    Como ele irá recuperar a informação para construir a página
+       'description' => 'Abre uma pagina de agradecimento para o questionário ser respondido',     //   Um texto de explicação que será exibido
+       'access arguments' => array('Responder questionario'),               //      Qual a permissão que deverá estar marcada para o usuário acessar a página
+        'type' => MENU_CALLBACK,
+        'file' => 'ferramenta2.aplica.inc',
+    );
      $items['avaliacao/salvar'] = array(                                        // O endereço da página
        'title' => 'Aplica o questionário',                                     //  Titulo do modulo
        'page callback' =>'salva_questionario',                          //    Como ele irá recuperar a informação para construir a página
@@ -163,8 +171,6 @@ function abertura() {
     
     ferramenta2_carrega_variaveis_javascript();
 
-   
-    
      //cria  a variavel de caminho do servidor ajax
     $opts = array('absolute' => TRUE);
     $url_padrao = url('', $opts);
