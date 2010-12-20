@@ -93,6 +93,15 @@ $items['ferramenta2/criacao'] = array(                                        //
         'type' => MENU_CALLBACK,
         'file' => 'ferramenta2.aplica.inc',
     );
+    
+  $items['servidor_avaliacao'] = array(                                        // O endereço da página
+       'title' => 'Grava as respostas da avaliacao',                                     //  Titulo do modulo
+       'page callback' =>'grava_valores',                          //    Como ele irá recuperar a informação para construir a página
+       'description' => '',     //   Um texto de explicação que será exibido
+       'access arguments' => array('Responder questionario'),               //      Qual a permissão que deverá estar marcada para o usuário acessar a página
+        'type' => MENU_CALLBACK,
+        'file' => 'ferramenta2.aplica.inc',
+    );
     $items['agradecimento'] = array(                                        // O endereço da página
        'title' => 'Tela de fechamento',                                     //  Titulo do modulo
        'page callback' =>'sair_questionario',                          //    Como ele irá recuperar a informação para construir a página
@@ -197,7 +206,14 @@ function cria_questionarios() {
      Nesta funcao sera montada a div de tabulacao para o jquery.
      Cada ABA sera montada atraves de uma funcao.     
        */
-       
+    
+    //cria uma variavel global para email no javascript
+    global $user;
+    
+    $email = md5($user->email);
+    
+    drupal_add_js(array('ferramenta2' => array("email" => $email)), 'setting');
+    
     ferramenta2_carrega_variaveis_javascript();
 
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/visualiza.js");

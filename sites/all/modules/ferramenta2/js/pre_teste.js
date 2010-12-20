@@ -85,7 +85,7 @@ function exibe_mensagem(retorno) {
       link = retorno['link'];
       $("#mensagem_preteste").append(html);
       html +="<p>Este questionário já possui um  pré-teste:</p> ";
-      html += "<p><a href="+Drupal.settings.ferramenta2.avaliacao+"/"+retorno['link']+">Testar o questionario</a></p>";
+      html += "<p><a href="+Drupal.settings.ferramenta2.avaliacao+"/"+retorno['link']+"/"+Drupal.settings.ferramenta2.email+">Testar o questionario</a></p>";
   }else if(retorno['situacao']==2)  {
       html +="<p>Avaliação sendo aplicada</p>";
    }//fim if

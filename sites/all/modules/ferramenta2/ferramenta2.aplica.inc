@@ -11,10 +11,20 @@ $url_padrao = url('', $opts);
  
 $codigo=arg(1);
 $email=arg(2);
+$sql = "select email from tabelas.usuario_$codigo where email='$email'";//verifica se este email ja fez esta avaliacao
+$ret = db_query($sql);
+
 
  //armazena variaveis para identificar o usuario e o codigo do questionario
 echo "<input type='hidden' id='controle1' value='$codigo' /> "; 
 echo "<input type='hidden' id='controle2' value='$email' /> ";
+echo "<input type='hidden' id='padrao' value='$url_padrao' /> ";
+if ( pg_num_rows($ret) > 0 ) {
+    echo "<input type='hidden' id='acao' value='1' /> ";//1 atualizar
+}else {
+    echo "<input type='hidden' id='acao' value='0' /> ";//0 inserir 
+}
+
 
 //echo "$codigo - $email";
 $_SESSION[codigo]=$codigo;
@@ -234,7 +244,15 @@ function adiciona_pergunta($codigo="", $titulo="", $tamanho_pergunta=0, $cor='')
 
 
 function adiciona_resposta( $codigo_objeto="", $codigo_resposta="", $tipo="", $tabela="", $tamanho_pergunta=0, $cor='' ) {
-   
+/*
+$codigo_objeto= numero da questao
+$codigo_resposta= se resposta for combo, check, radio, text, etc...
+$tipo= descricao textual do objeto
+$tabela= conteudo do  radio, check, combo
+$tamanho_pergunta= tamanho em caracteres
+$cor= cor da questao
+*/
+   //echo "$codigo_objeto<; >$codigo_resposta;$tipo==; $tabela o; $tamanho_pergunta==; $cor=''  ";
    // $tabela = converte_utf8_html($tabela);
    if ($tamanho_pergunta>50 ){
     $posicao='span-6 last';
@@ -253,10 +271,10 @@ function adiciona_resposta( $codigo_objeto="", $codigo_resposta="", $tipo="", $t
             if (strlen($nivel)>0) {	
 		$exibe_nivel=converte_utf8_html($nivel);
 		$campo = pega_resultado_questao($codigo_objeto);
-		$campo = converte_utf8_especial($campo);
-		$array_campo = explode('|', $campo);
-		
-		//echo "<p>--$array_campo[3]==$nivel--".in_array($array_campo,$nivel);
+		$array_campo = explode(',', $campo);
+		$array_campo = converte_utf8_html($array_campo);
+		//print_r($array_campo);
+		//echo "<p>--$array_campo[1]==$nivel--".in_array($array_campo,$nivel);
 		if (existe($array_campo,$nivel)) {
 		    $saida .="<br /><input type='checkbox' name='$codigo_objeto"."[]' id='$codigo_objeto"."[]' value='$exibe_nivel' checked /> $exibe_nivel <br />";
 		}else {
@@ -274,7 +292,14 @@ function adiciona_resposta( $codigo_objeto="", $codigo_resposta="", $tipo="", $t
 	
         foreach($niveis as $nivel) {
             if (strlen($nivel)>0) {
-		$saida .="<input type='radio' name='$codigo_objeto' id='$codigo_objeto' value='$nivel' /> $nivel <br /> ";
+	        $exibe_nivel=converte_utf8_html($nivel);
+		$campo = pega_resultado_questao($codigo_objeto);
+		//echo "<p>--<pre>$campo=$nivel</pre>-->". iconv("UTF8",'ASCII',$campo);
+		if ($campo==$nivel ) {
+		    $saida .="<input type='radio' name='$codigo_objeto' id='$codigo_objeto' value='$nivel' checked='true' /> $nivel <br /> ";
+		}else {
+		    $saida .="<input type='radio' name='$codigo_objeto' id='$codigo_objeto' value='$nivel' /> $nivel <br /> ";
+		}//fim radio
 	    }
         }
          
@@ -282,7 +307,7 @@ function adiciona_resposta( $codigo_objeto="", $codigo_resposta="", $tipo="", $t
         //resposta TEXT
     if ($codigo_resposta==3){
        // $niveis=explode(";", $tabela);
-       $campo = pega_resultado_questao($codigo);
+       $campo = pega_resultado_questao($codigo_objeto);
         $saida .="<input type='TEXT' name='$codigo_objeto' id='$codigo_objeto' value='$campo' />  ";
     }
 
@@ -295,13 +320,9 @@ function adiciona_resposta( $codigo_objeto="", $codigo_resposta="", $tipo="", $t
             if (strlen($nivel)>0) {
 		$exibe_nivel=converte_utf8_html($nivel);
 		$campo = pega_resultado_questao($codigo_objeto);
-		//$campo=converte_utf8_html($campo);
-		//echo "<p>--<pre>$campo=$nivel</pre>-->". iconv("UTF8",'ASCII',$campo);
-		//if (strlen($campo)>0)
-		 //   echo "<p>".$campo. converte_utf8_especial ($campo)."--|". converte_utf8_especial ($nivel);
-		
-	//	if ($nivel==converte_utf8_especial($campo) ) {
-		if (converte_utf8_especial($nivel)==converte_utf8_especial($campo) ) {
+		$campo=converte_utf8_html($campo);
+//		echo "<p>--<pre>$campo=$nivel</pre>-->". iconv("UTF8",'ASCII',$campo);
+		if ($nivel==$campo ) {
 		    
 		    $saida .="<br /><option value='$exibe_nivel' selected> $exibe_nivel </option> ";
 		    
@@ -327,15 +348,14 @@ function adiciona_resposta( $codigo_objeto="", $codigo_resposta="", $tipo="", $t
 
 function pega_resultado_questao($codigo='', $nivel=''){
     
-    $sql = "select q$codigo from tabelas.usuario_".$_SESSION[codigo]." where email='".$_SESSION[registro]."'";
-    
+    $sql = "select q$codigo from tabelas.usuario_".$_SESSION[codigo]." where email='".$_SESSION[email]."'";
     
     $ret = db_query($sql);
     if ( $ret ) {
 	
 	$linha=db_fetch_array($ret);
     }
-//    echo "<p>".$sql;
+   // echo "<p>".$sql;
     $saida = $resposta=str_replace("&pound;",'', $linha["q$codigo"]);
     $saida = $resposta=str_replace("&iexcl;",'', $saida);
     return  $saida ;
@@ -405,4 +425,56 @@ echo "<div id='agradecimento' class='agradecimento'>Obrigado pela sua avaliacao!
 echo "</body></html>";
 }
 
+/*
+* Esta funcao pega toda a alteracao do usuario no questionario e grava no banco
+*/
+function grava_valores() {
+ $acao = explode(";",$_POST[acao]);
+ $questao=$acao[1];
+ $resposta=$acao[2];
+ $tipo=$acao[3];
+ $tabela=$acao[4];
+ $email=$acao[5];
+    
+ if ($acao[0]==0){ // insere
+    if ($tipo=='check'){
+       $posicao=strpos($questao,"[");
+       $questao=substr($questao, 0 , $posicao);
+    }
+ 
+    $sql = "insert into tabelas.usuario_$tabela(email, q$questao) values('$email','$resposta')";
+    $erro =db_query ($sql); 
+    if ( ! $erro ){
+    //erro
+    $erros=array ( '%tabela'=>$tabela, '%email'=>$email, '%questao'=>$questao);
+    $mensagem = "Erro na inclusao de dados da avaliacao de nome %tabela, do email %email, na questao %questao ";
+     watchdog("ferramenta2.aplica.inc", $mensagem,
+              $erros, WATCHDOG_ERROR);
+    }
+ }else {
+  
+    if ($tipo=='check'){
+       $posicao=strpos($questao,"[");
+       $questao=substr($questao, 0 , $posicao);
+    }
+ 
+    $sql = "update tabelas.usuario_$tabela set q$questao= '$resposta' where email='$email'";
+     $erro =db_query ($sql); 
+    if ( ! $erro ){
+    //erro
+    $erros=array ( '%tabela'=>$tabela, '%email'=>$email, '%questao'=>$questao);
+    $mensagem = "Erro na alteracao de dados da avaliacao de nome %tabela, do email %email, na questao %questao ";
+     watchdog("ferramenta2.aplica.inc", $mensagem,
+              $erros, WATCHDOG_ERROR);
+    }
+ // echo $sql;
+ }
+ 
+ if (! $erro) {
+   echo json_encode("erro");
+ }else{
+ echo json_encode("ok");
+ }
+ //print_r($acao);
+}
 ?>
