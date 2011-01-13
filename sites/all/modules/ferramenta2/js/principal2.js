@@ -101,7 +101,7 @@ function busca_instrumento() {
                 alert("Digite um título para carregar o questionário.")
      }
                $("#linhas").empty();
-                var acao =  "acao=CarregaInstrumento&titulo="+titulo+""; //pega o instrumento todo
+                var acao = "acao=CarregaInstrumento&titulo="+titulo+""; //pega o instrumento todo
                  $.ajax({
                     type: "POST",
                     dataType: "json",

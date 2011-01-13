@@ -66,6 +66,7 @@ $items['ferramenta2/criacao'] = array(                                        //
        'description' => 'acoes do servidor',     //   Um texto de explicação que será exibido
        'access arguments' => array('Criar questionarios'),               //      Qual a permissão que deverá estar marcada para o usuário acessar a página
        'type' => MENU_CALLBACK,                                //       Tipo de menu normal
+       'file' => 'ferramenta2.servidor.inc',
     );
     
     $items['ferramenta2/visualiza'] = array(                                        // O endereço da página
@@ -118,6 +119,7 @@ $items['ferramenta2/criacao'] = array(                                        //
         'type' => MENU_CALLBACK,
         'file' => 'ferramenta2.aplica.inc',
     );
+
 
 return $items;      //  retorna o menu para o controlador
 
@@ -211,13 +213,16 @@ function cria_questionarios() {
     global $user;
     
     $email = md5($user->email);
+    $uid_atual = $user->uid;
     
     drupal_add_js(array('ferramenta2' => array("email" => $email)), 'setting');
+    drupal_add_js(array('ferramenta2' => array("uid_atual" => $uid_atual)), 'setting');
     
     ferramenta2_carrega_variaveis_javascript();
 
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/visualiza.js");
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/pre_teste.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/coleta.js");
    
    //$saida .="<div id=aviso_salvar> Salv</div>";    
    $saida .= "<div id='tabs'>
@@ -225,6 +230,7 @@ function cria_questionarios() {
 				<li><a href='#tabs-1'>Crie seu questionário</a></li>
 				<li><a href='#tabs-2'>Visualize</a></li>
                                 <li><a href='#tabs-3'>Pré-teste</a></li>
+                                <li><a href='#tabs-4'>Iniciar Coleta da Avaliação</a></li>
 				
 			</ul>
 			<div id='tabs-1'>";
@@ -238,6 +244,14 @@ function cria_questionarios() {
                     <div id='mensagem_preteste'></div>
                     <div id='pre_teste'>
                     
+                    
+                    </div>
+                    
+            </div>
+            <div id='tabs-4'>
+                    <div id='mensagem_coleta'></div>
+                    <div id='coleta'>
+                   
                     
                     </div>
                     
@@ -256,7 +270,6 @@ e a comentar a funcao anterior
 
    // ferramenta2_carrega_variaveis_javascript();
 
- 
     
     drupal_add_css(drupal_get_path('module', 'ferramenta2') . "/js/css/start/jquery-ui-1.8.1.custom.css");
     drupal_add_css(drupal_get_path('module', 'ferramenta2') . "/css/principal.css");
@@ -271,7 +284,6 @@ e a comentar a funcao anterior
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/principal2.js");
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/visualiza.js");
     
-
    // echo "-$saida-";
    //inicio da tabulacao do jquery
    
@@ -584,6 +596,43 @@ if ($acao=="EnviaEmail") {
     
     //echo "$to, $subject, $message, $headers";
 }
+
+if ($acao=='VerificaColeta'){
+    $titulo = $_POST[titulo];
+   
+    if (trim($titulo) != 'undefined') {
+        $sql = "select codigo_formulario, link from ferramenta2.formulario where trim(titulo)=trim('$titulo') and uid=$user->uid";
+     //echo $sql;
+         $ret = db_query($sql);
+        if (pg_numrows($ret)>0){
+            $coleta = array();
+            $formulario = pg_fetch_object($ret); // pega o codigo do formulario + link
+            if ($formulario->codigo_formulario >0){
+                $sql = "select * from ferramenta2.gerencia where codigo_formulario=$formulario->codigo_formulario and uid=$user->uid";
+                $ret = db_query($sql);
+                if (pg_num_rows($ret)>0){
+                    $gerencia=pg_fetch_object($ret);
+                    $coleta = array('codigo'=>$gerencia->codigo_formulario,
+                                    "datainicio"=> $gerencia->datainicio,
+                                    "datafim"=>$gerencia->datafim,
+                                    "email_respondentes"=> $gerencia->email_respondentes,
+                                    "mensagem_avaliador"=> $gerencia->mensagem_avaliador );
+                }else {
+                    $coleta = array("aviso"=>"vazio");
+                }
+            }else {
+                $coleta = array("aviso"=>"instrumento inexistente");
+            }
+            echo json_encode($coleta);
+        }//fim numrows
+    }//fim  trim(titulo)
+ }//fim de verificacoleta
+ 
+ if ($acao=='Atualizaleta'){
+    $atualiza = $_POST[atualiza];
+    $dados = $_POST[dados];
+    echo $dados;
+ }//fim AtualizaColeta
 return;
 } //fim de servidor
 
@@ -674,7 +723,7 @@ situacao = 2 - avaliacao sendo respondida
        
     }
     //echo "<p>";
-     //print_r($monta_json);
+    //print_r($monta_json);
      $uid=$user->uid;
      $md5= md5("$uid-$codigo_formulario");
      $tabela= "usuario_$md5"; 

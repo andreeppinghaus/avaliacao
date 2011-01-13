@@ -12,7 +12,7 @@ var link=''; //link para o preteste
    $( "#tabs" ).bind( "tabsselect", function(event, ui) {
          
               if (ui.index==2) { //e a segunda tab
-              pega_dados();
+              pega_dados();//chma a funcao para montar o html
               }
    });
    
@@ -45,7 +45,7 @@ no DOM criados apos o carregamento da página
            url: Drupal.settings.ferramenta2.servidor,
            data: acao,
            success: function(retorno){
-              //exibe_mensagem(retorno);                      
+                exibe_mensagem(retorno);                      
           } //fim de sucesso
  });//fim de ajax
         
@@ -84,8 +84,8 @@ function exibe_mensagem(retorno) {
   if (retorno['situacao']==1){
       link = retorno['link'];
       $("#mensagem_preteste").append(html);
-      html +="<p>Este questionário já possui um  pré-teste:</p> ";
-      html += "<p><a href="+Drupal.settings.ferramenta2.avaliacao+"/"+retorno['link']+"/"+Drupal.settings.ferramenta2.email+">Testar o questionario</a></p>";
+      html +="<p>Este questionário já possui um  pré-teste: ";
+      html += "<a href="+Drupal.settings.ferramenta2.avaliacao+"/"+retorno['link']+"/"+Drupal.settings.ferramenta2.email+"><button type='button'>Testar o questionario</button></a></p>";
   }else if(retorno['situacao']==2)  {
       html +="<p>Avaliação sendo aplicada</p>";
    }//fim if
