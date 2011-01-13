@@ -3,9 +3,24 @@
  */
 // cria variaveis globais
 
-var atualiza=0;
+var atualiza=0, retorno=0;
 
 $(function(){
+$( "#dialog:ui-dialog" ).dialog( "destroy" );
+
+function validateEmail(field) {
+    var regex=/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i;
+    return (regex.test(field)) ? true : false;
+}
+
+function validateMultipleEmailsCommaSeparated(value) {
+    var result = value.split(",");
+    for(var i = 0;i < result.length;i++)
+    if(!validateEmail(result[i])) 
+            return false;               
+    return true;
+}
+
    $( "#tabs" ).bind( "tabsselect", function(event, ui) {
          
               if (ui.index==3) { //e a segunda tab
@@ -14,101 +29,141 @@ $(function(){
                 verifica_coleta();
               }
    });
-    $( "#datainicial" ).datepicker();
-    $( "#datafinal" ).datepicker();
+  
 
     function verifica_coleta() 	 {
-  
+         $("#mensagem_coleta").empty();
         var titulo =  $("#titulo").attr("value") ; //pega do titulo do instrumento e nao da busca
         var html;
-        var acao = "acao=VerificaColeta&titulo="+titulo;
-        $.ajax({
-           type: "POST",
-           dataType: "json",
-           url: Drupal.settings.ferramenta2.servidor,
-           data: acao,
-           success: function(retorno){
-                if (retorno['aviso']!='vazio') { //campos preenchidos update
-                    html = "<form><fieldset>";
-                    html += "<legend>Criando uma nova coleta</legend>";
-                    html += "<p><label for=data_inicial>Data de início:</label>";
-                    html += "<input type='text' id='datainicial' value='"+retorno['datainicial']+"' /></p>";
-                    html += "<p><label for=data_final>Data de término:</label>";
-                    html += "<input type='text' id='datafinal' value='"+retorno['datafinal']+"' /></p>";
-                    html += "<p><label for=email>Email dos respondentes:</label>";
-                    html += "<textarea id='email'>"+retorno['email_respondentes']+" </textarea></p>";
-                    html += "<p><label for=mensagem>Mensagem do avaliador:</label>";
-                    html += "<textarea id='mensagem_avaliador'>"+retorno['mensagem_avaliador']+"</textarea></p>";
-                    html += "<p><input type='submit' value='Iniciar coleta' /></p>";
-                    html += "</fieldset></form>";
-                    $("#coleta").append(html);
-                    atualiza=1; //insere
-                }else {
-                    html = "<form><fieldset>";
-                    html += "<legend>Criando uma nova coleta</legend>";
-                    html += "<p><label for=data_inicial>Data de início:</label>";
-                    html += "<input type='text' id='datainicial'  /></p>";
-                    html += "<p><label for=data_final>Data de término:</label>";
-                    html += "<input type='text' id='datafinal' /></p>";
-                    html += "<p><label for=email>Email dos respondentes:</label>";
-                    html += "<textarea id='email'> </textarea></p>";
-                    html += "<p><label for=mensagem>Mensagem do avaliador:</label>";
-                    html += "<textarea id='mensagem_avaliador'> </textarea></p>";
-                    html += "<p><input type='submit' value='Iniciar coleta' /></p>";
-                    html += "</fieldset></form>";
-                    $("#coleta").append(html);
-                    atualiza=0; //campos limpos insert
-                }
-            } //fim de sucesso
-        });//fim de ajax
+        if (titulo === undefined) {
+            $("#mensagem_coleta").append("<a href=''> <h2 class='error'>Carregue antes um questionário.</h2></a>");
+        }else {
+           var acao = "acao=VerificaColeta&titulo="+titulo;
+           $.ajax({
+              type: "POST",
+              dataType: "json",
+              url: Drupal.settings.ferramenta2.servidor,
+              data: acao,
+              success: function(retorno){
+              
+                   if (retorno['aviso']!='vazio') { //campos preenchidos update
+                       html = "<form><fieldset>";
+                       html += "<legend>Criando uma nova coleta</legend>";
+                       html += "<p><label for=data_inicial>Data de início:</label>";
+                        html += "<input type='text' id='datainicio' value='"+retorno['datainicio']+"' /></p>";
+                       html += "<p><label for=data_final>Data de término:</label>";
+                       html += "<input type='text' id='datafim' value='"+retorno['datafim']+"' /></p>";
+                       html += "<p><label for=email>Email dos respondentes:</label>";
+                       html += "<textarea id='email'>"+retorno['email_respondentes']+" </textarea></p>";
+                       html += "<p><label for=mensagem>Mensagem do avaliador:</label>";
+                       html += "<textarea id='mensagem_avaliador'>"+retorno['mensagem_avaliador']+"</textarea></p>";
+                       html += "<input type='hidden' value='"+retorno['codigo']+"' id='codigo_formulario' /></p>";
+                       html += "<input type='hidden' value='1' id='atualiza' /></p>";
+                       html += "<p style='right: static'><input type='submit' value='Reenviar emails' /></p>";
+                       html += "</fieldset></form>";
+                       $("#coleta").append(html);
+                       atualiza=1; //atualiza
+                       }else {
+                       html = "<form><fieldset>";
+                       html += "<legend>Alterando a coleta de dados</legend>";
+                       html += "<p><label for=data_inicial>Data de início:</label>";
+                       html += "<input type='text' id='datainicio'  /></p>";
+                       html += "<p><label for=data_final>Data de término:</label>";
+                       html += "<input type='text' id='datafim' /></p>";
+                       html += "<p><label for=email>Email dos respondentes:</label>";
+                       html += "<textarea id='email'>separados por vírgula </textarea></p>";
+                       html += "<p><label for=mensagem>Mensagem do avaliador:</label>";
+                       html += "<textarea id='mensagem_avaliador'> será incluída no email dos respondentes. </textarea></p>";
+                       html += "<input type='hidden' value='"+retorno['codigo']+"' id='codigo_formulario' /></p>";
+                       html += "<input type='hidden' value='0' id='atualiza' /></p>";
+                       html += "<p><input type='submit' value='Enviar emails' /></p>";
+                       html += "</fieldset></form>";
+                       $("#coleta").append(html);
+                       atualiza=0; //campos limpos insert
+                   }
+                    $('#datainicio').datepicker({
+                        dateFormat:  'dd/mm/yy',
+                        onSelect: function(dateText,inst) {
+   
+                         //$("#datainicio").live('blur' ,function() {  //pega o valor original
+                            $(this).attr("class", "focus");
+                            var datainicio=$(this).attr("value");
+                            var codigo=$("#codigo_formulario").attr("value");
+                            atualiza=$("#atualiza").attr("value");
+                            alert(datainicio);
+                            if (datainicio.length > 0 ) {
+                                var envia = "acao=AtualizaColeta&dados="+atualiza+"&datainicio="+datainicio+"&codigo="+codigo;
+                                atualiza_coleta(envia); //atualiza campos individualmente   
+                            }  
+                        }//fim select
+                    }) ; //fim data inicial
+                    
+                    $("#datafim").datepicker({
+                        dateFormat:  'dd/mm/yy',
+                        onSelect: function(dateText,inst) {
+                            $(this).attr("class", "focus");
+                            var datafim=$("#datafim").attr("value");
+                            var codigo=$("#codigo_formulario").attr("value");
+                            atualiza=$("#atualiza").attr("value");
+                            if (datafim.length > 0 ) {
+                                var envia = "acao=AtualizaColeta&dados="+atualiza+"&datafim="+datafim+"&codigo="+codigo;
+                                //alert(envia);
+                                atualiza_coleta(envia); //atualiza campos individualmente
+                            }
+                        }//fim select
+                    }) ; //fim data final
+                    
+               } //fim de sucesso
+            });//fim de ajax
+        }//fim de else sem titulo
     }
     
     /*
         Controle de insert e update dos campos
     */
-    $("#datainicial").live('blur' ,function() {  //pega o valor original
-        $(this).attr("class", "focus");
-        var datainicial=$("#datainicial").attr("value");
-        if (datainicial.length > 0 ) {
-           var envia = "acao=AtualizaColeta&dados="+atualiza+"&datainicial="+datainicial;
-           //alert(envia);
-           atualiza_coleta(envia); //atualiza campos individualmente
-           
-        }  
-    }) ; //fim data inicial
+   
   
-    $("#datafinal").live('blur' ,function() {  //pega o valor original
-       $(this).attr("class", "focus");
-       
-       var datafinal=$("#datafinal").attr("value");
-     
-       if (datafinal.length > 0 ) {
-          var envia = "acao=AtualizaColeta&dados="+atualiza+"&datafinal="+datafinal;
-          //alert(envia);
-          atualiza_coleta(envia); //atualiza campos individualmente
-          
-       }  
-    }) ; //fim data inicial
+   
     
     
     $("#email").live('blur' ,function() {  //pega o valor original
         $(this).attr("class", "focus");
         
         var email=$("#email").attr("value");
+        var codigo=$("#codigo_formulario").attr("value");
+        atualiza=$("#atualiza").attr("value");
          
-        if (email.length > 0 ) {
-           var envia = "acao=AtualizaColeta&dados="+atualiza+"&email="+email;
+        if (email.length > 0 && validateMultipleEmailsCommaSeparated(email) ) {
+            $("#mensagem_coleta").empty();
+           var envia = "acao=AtualizaColeta&dados="+atualiza+"&email="+email+"&codigo="+codigo;
            //alert(envia);
            atualiza_coleta(envia); //atualiza campos individualmente
-           
-        }  
+        } else {
+        
+	
+		$( "#mensagem_coleta" ).dialog({
+			height: 200,
+			modal: true,
+                        buttons: {
+				Ok: function() {
+					$( this ).dialog( "close" );
+				}
+			}
+		});
+            $("#mensagem_coleta").empty();
+            $("#mensagem_coleta").append("Email inválido, por favor verifique sua lista." );
+            $("#email").focus();
+        
+        }
     }) ; //fim data inicial
     
      $("#mensagem_avaliador").live('blur' ,function() {  //pega o valor original
         $(this).attr("class", "focus");
         var mensagem=$("#mensagem_avaliador").attr("value");
+        var codigo=$("#codigo_formulario").attr("value");
+        atualiza=$("#atualiza").attr("value");
         if (mensagem.length > 0 ) {
-           var envia = "acao=AtualizaColeta&dados="+atualiza+"&mensagem="+mensagem;
+           var envia = "acao=AtualizaColeta&dados="+atualiza+"&mensagem="+mensagem+"&codigo="+codigo;
            //alert(envia);
            atualiza_coleta(envia); //atualiza campos individualmente
            
@@ -118,16 +173,15 @@ $(function(){
    /*
     Atualiza coleta a cada saida de campo, grava na tabela gerencia
     */
-     function atualiza_coleta(acao) {
-     alert(acao);
-     return;
+     function atualiza_coleta(acao) {    
         $.ajax({
            type: "POST",
            dataType: "json",
            url: Drupal.settings.ferramenta2.servidor,
            data: acao,
-           success: function(retorno){
-        
+           success: function(resposta){
+                $("#atualiza").attr("value",resposta['atualiza'] );
+            
             } //fim de sucesso
         });//fim de ajax
     }
