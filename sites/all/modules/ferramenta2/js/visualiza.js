@@ -6,7 +6,7 @@
 
 
 $(function(){
-       
+$( "#monta_html:ui-dialog" ).dialog( "destroy" );
    //$('#tabs').tabs('select',1);
    $( "#tabs" ).bind( "tabsselect", function(event, ui) {
                           
@@ -124,6 +124,17 @@ var palavras, i, html;
             }
         }); //fim li.each
     if (verifica_titulo==0){
-         $("#monta_html").append("<h2 class='error'>Carregue antes um questionário.</h2>");
+                  $( "#monta_html" ).dialog({
+			
+			modal: true,
+                        buttons: {
+				Ok: function() {
+					$( this ).dialog( "close" );
+                                        $( "#tabs" ).tabs( "select",0);
+				}
+			}
+		});
+            $("#monta_html").empty();
+            $("#monta_html").append("<h3 class='error'>Carregue antes um questionário. Buscando por TÍTULO.</h3>");
     }
 }

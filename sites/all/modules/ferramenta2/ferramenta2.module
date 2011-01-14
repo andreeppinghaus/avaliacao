@@ -241,7 +241,7 @@ function cria_questionarios() {
                             <div id='monta_html'> </div>
             </div>
             <div id='tabs-3'>
-                    <div id='mensagem_preteste'></div>
+                    <div id='mensagem_preteste'  title='Mensagem Pre-teste'></div>
                     <div id='pre_teste'>
                     
                     
@@ -249,7 +249,7 @@ function cria_questionarios() {
                     
             </div>
             <div id='tabs-4'>
-                    <div id='mensagem_coleta'></div>
+                    <div id='mensagem_coleta' title='Mensagem Coleta'></div>
                     <div id='coleta'>
                    
                     

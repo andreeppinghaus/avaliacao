@@ -5,7 +5,7 @@
 
 
 $(function(){
-
+$( "#mensagem_preteste:ui-dialog" ).dialog( "destroy" );
 var link=''; //link para o preteste
        
    //$('#tabs').tabs('select',1);
@@ -63,7 +63,19 @@ um html dentro da div preteste
  
 var verifica = verifica_preteste("acao=VerificaPreTeste&titulo="+titulo); //verifica se ja existe um preteste
  if (titulo === undefined) {
-     $("#pre_teste").append("<h2 class='error'>Carregue antes um questionário.</h2>");
+                $( "#pre_teste" ).dialog({
+			
+			modal: true,
+                        buttons: {
+				Ok: function() {
+					$( this ).dialog( "close" );
+                                         $( "#tabs" ).tabs( "select",0);
+				}
+			}
+		});
+            $("#pre_teste").empty();
+            $("#pre_teste").append("<h3 class='error'>Carregue antes um questionário. Buscando por TÍTULO.</h3>");
+    
  }else {
        html += '<form> <p>Título: '+ titulo+'</p>';
        html += '<fieldset><label for="email"> Digite um email para o pré-teste:</label>';
