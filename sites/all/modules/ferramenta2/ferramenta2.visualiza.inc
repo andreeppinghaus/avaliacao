@@ -356,7 +356,7 @@ function pega_resultado_questao($codigo='', $nivel=''){
     $saida = $resposta=str_replace("&iexcl;",'', $saida);
     return  $saida ;
 }
-
+/*
 function salva_questionario(){
     $acao = explode(";",$_POST[acao]);
     
@@ -395,7 +395,7 @@ function salva_questionario(){
     echo $saida;
     
 }//fim
-
+*/
 function existe($array,$string) {
     $existe=0;
     foreach ($array as $campo) {

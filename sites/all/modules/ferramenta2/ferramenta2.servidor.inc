@@ -293,17 +293,18 @@ if ($acao=='VerificaColeta'){
     $url_padrao = url('', $opts);
     $url_padrao .="/avaliacao/$link";
     
-    $mensagem_sistema="\n\n Copie e cole este link no seu browser";
-    $mensagem_sistema.="\n\n\t\t -> $url_padrao";
-    $mensagem.=$mensagem_sistema;
     
     
     $lista_email = explode(",", $email);
- 
-    foreach ($lista_email  as &$respondente) {
-        
-        $respondente = str_replace("'", "", $respondente);//limpa aspas simples dos emails 
-        if (mail($respondente, $subject, $mensagem)) {
+    
+    $respondente = str_replace("'", "", $respondente);//limpa aspas simples dos emails
+    $mensagem_sistema="\n\n Copie e cole este link no seu browser";
+    $mensagem_sistema.="\n\n\t\t -> $url_padrao/";
+    $mensagem.=$mensagem_sistema;
+    
+    foreach ($lista_email  as &$respondente) {        
+        $link_email = md5($respondente);
+        if (mail($respondente, $subject, $mensagem.$link_email)) {
             $saida=array("email"=>"ok");
         } else {
             $saida=array("email"=>"erro");

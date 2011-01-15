@@ -451,7 +451,7 @@ function grava_valores() {
        $questao=substr($questao, 0 , $posicao);
     }
  
-    $sql = "insert into tabelas.usuario_$tabela(email, q$questao) values('$email','$resposta')";
+    $sql = "insert into tabelas.usuario_$tabela(email, q$questao, alteracao) values('$email','$resposta', now())";
   //  echo $sql;
     $erro =db_query ($sql); 
     if ( ! $erro ){
@@ -468,7 +468,7 @@ function grava_valores() {
        $questao=substr($questao, 0 , $posicao);
     }
  
-    $sql = "update tabelas.usuario_$tabela set q$questao= '$resposta' where email='$email'";
+    $sql = "update tabelas.usuario_$tabela set q$questao= '$resposta', alteracao = now() where email='$email'";
     //echo $sql;
      $erro =db_query ($sql); 
     if ( ! $erro ){

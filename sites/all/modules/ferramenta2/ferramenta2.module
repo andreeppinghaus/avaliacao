@@ -578,7 +578,7 @@ situacao = 2 - avaliacao sendo respondida
         $message = "Prezado usuario, $respondente
         \n Voce foi convidado para testar uma avaliacao do usuario, $user->mail
         \n Para responder basta clicar em  $url_padrao/$email_respondente, caso nao funcione, copie e cole no seu browser.
-        \n ao se preocupe, sua identidade esta protegida.
+        \n Nao se preocupe pois sua identidade esta protegida.
         \n Muito obrigado por usar nosso sistema. :)
         \n Equipe de desenvolvimento, \n\t\t\t\t http://www.avaliacao.kinghost.net";
         
