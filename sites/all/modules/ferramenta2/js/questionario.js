@@ -6,7 +6,24 @@
 
   
 $(function(){
+$("#salvar").button();
+$("#sair").button();
 
+
+$("#salvar").click(function(evento) {
+ var html;
+ html ="Questionário Salvo.";
+ alert(html);
+evento.preventDefault();
+
+});
+
+$("#sair").click(function(evento) {
+
+window.location = 'http://www.avaliacao.kinghost.net';
+evento.preventDefault();
+
+});
 var resposta='0';
  $("#mensagem_aviso").hide();
     //funcao para gravar os objetos (item_secao, item_questao, item_formulario) na tabela

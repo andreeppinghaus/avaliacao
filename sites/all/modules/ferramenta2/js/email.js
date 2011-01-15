@@ -1,0 +1,24 @@
+/**
+ * @author andre
+ */
+// cria variaveis globais
+
+var atualiza=0, retorno=0;
+
+$(function(){
+
+
+function validateEmail(field) {
+    var regex=/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i;
+    return (regex.test(field)) ? true : false;
+}
+
+function validateMultipleEmailsCommaSeparated(value) {
+    var result = value.split(",");
+    for(var i = 0;i < result.length;i++)
+    if(!validateEmail(result[i])) 
+            return false;               
+    return true;
+}
+
+});//fim jquery

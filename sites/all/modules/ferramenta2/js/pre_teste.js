@@ -5,10 +5,7 @@
 
 
 $(function(){
-$( "#mensagem_preteste:ui-dialog" ).dialog( "destroy" );
-var link=''; //link para o preteste
-       
-   //$('#tabs').tabs('select',1);
+   var link=''; //link para o preteste
    $( "#tabs" ).bind( "tabsselect", function(event, ui) {
          
               if (ui.index==2) { //e a segunda tab
@@ -16,40 +13,7 @@ var link=''; //link para o preteste
               }
    });
    
-$('#gerar').button().live('click', function(event) {
-/* aqui o paramentro live server para que o jquery possa reconhecer elementos
-no DOM criados apos o carregamento da página
-*/
-/*Gera o pre-teste, criando uma tabela com nome do usuario+numero formulario
-  */
-        
- var titulo =  $("#titulo").attr("value") ; //pega do titulo do instrumento e nao da busca
- var  email = $("#email").attr("value"); //pega os emails separados por ;
- var html;
-  // $("#linhas").empty();
- var acao =  "titulo='"+titulo+"'&email='"+email+"'"; //pega o instrumento todo
- $.ajax({
-           type: "POST",
-           dataType: "json",
-           url: Drupal.settings.ferramenta2.gerar,
-           data: acao,
-           success: function(retorno){
-              exibe_mensagem(retorno);                      
-          } //fim de sucesso
- });//fim de ajax
 
- acao = "acao=EnviaEmail&titulo="+titulo+"&email="+email+"&link="+Drupal.settings.ferramenta2.avaliacao+"/"+link; //pega o instrumento todo
- $.ajax({
-           type: "POST",
-           dataType: "json",
-           url: Drupal.settings.ferramenta2.servidor,
-           data: acao,
-           success: function(retorno){
-                exibe_mensagem(retorno);                      
-          } //fim de sucesso
- });//fim de ajax
-        
-}); //fim
 
 function pega_dados() {
 /*
@@ -61,48 +25,24 @@ um html dentro da div preteste
  $("#mensagem_preteste").empty();
  $("#pre_teste").empty();
  
-var verifica = verifica_preteste("acao=VerificaPreTeste&titulo="+titulo); //verifica se ja existe um preteste
  if (titulo === undefined) {
-                $( "#pre_teste" ).dialog({
-			
-			modal: true,
-                        buttons: {
-				Ok: function() {
-					$( this ).dialog( "close" );
-                                         $( "#tabs" ).tabs( "select",0);
-				}
-			}
-		});
-            $("#pre_teste").empty();
-            $("#pre_teste").append("<h3 class='error'>Carregue antes um questionário. Buscando por TÍTULO.</h3>");
-    
+     aviso("<h3 class='error'>Carregue antes um questionário. Buscando por TÍTULO.</h3>");    
  }else {
+       var verifica = verifica_preteste("acao=VerificaPreTeste&titulo="+titulo); //verifica se ja existe um preteste
        html += '<form> <p>Título: '+ titulo+'</p>';
-       html += '<fieldset><label for="email"> Digite um email para o pré-teste:</label>';
-       html += '<p><textarea id="email" class="text ui-widget-content ui-corner-all"> </textarea> </p></fieldset>';
+       html += '<fieldset><label for="email_pre"> Digite um email para testar o novo pré-teste:</label>';
+       html += '<p><textarea id="email_pre" class="text ui-widget-content ui-corner-all"> </textarea> </p></fieldset>';
      //   html += '<fieldset><label for="convite"> Digite aqui o seu convite para que o avaliado preencha este questionário online:</label>';
      //  html += '<p><textarea id="convite" class="text ui-widget-content ui-corner-all"> </textarea> </p></fieldset>';
        
        html += '</form>' ;
-       html += "<button id='gerar' type='button'>Gerar novo pré-teste</button>";
+       html += "<button id='gerar' type='button'>Enviar email's e GERAR novo pré-teste</button>";
        //html += "<button id='aplicar' type='button'>inicia Avaliação</button>";  
-       $("#pre_teste").append(html);     
+       $("#pre_teste").append(html);
+       botao_gerar();
+       
   }
 }//fim funcao
-
-function exibe_mensagem(retorno) {
-  $("#mensagem_preteste").empty();
-  var html=''; //para escrever o html de  saida
-  if (retorno['situacao']==1){
-      link = retorno['link'];
-      $("#mensagem_preteste").append(html);
-      html +="<p>Este questionário já possui um  pré-teste: ";
-      html += "<a href="+Drupal.settings.ferramenta2.avaliacao+"/"+retorno['link']+"/"+Drupal.settings.ferramenta2.email+"><button type='button'>Testar o questionario</button></a></p>";
-  }else if(retorno['situacao']==2)  {
-      html +="<p>Avaliação sendo aplicada</p>";
-   }//fim if
-   $("#mensagem_preteste").append(html);  
-}
 
 function verifica_preteste(acao) {
        // alert(acao);
@@ -112,9 +52,80 @@ function verifica_preteste(acao) {
             url: Drupal.settings.ferramenta2.servidor,
             data: acao,
             success: function(retorno){
-                exibe_mensagem(retorno);              
-            }//fim success
+                 $("#pre_teste").empty();
+                var html=''; //para escrever o html de  saida
+                 if (retorno['situacao']==1){
+                   link = retorno['link'];
+                   $("#pre_teste").append(html);
+                   html +="<p>Este questionário já possui um  pré-teste: ";
+                   html += "<a href="+Drupal.settings.ferramenta2.avaliacao+"/"+retorno['link']+"/"+Drupal.settings.ferramenta2.email+"><button id='testar'>Testar o questionario</button></a></p>";
+                  
+                }else if(retorno['situacao']==2)  {
+                   html +="<p>Avaliação sendo aplicada</p>";
+                }//fim if
+               $("#pre_teste").append(html);
+                $("#testar").button();
+                
+           }//fim success
         });
+        return;
  }//fim funcao
-    
+ 
+ 
+ function botao_gerar() {
+  $('#gerar').button();
+  $('#gerar').click( function(event) {
+/* aqui o paramentro live server para que o jquery possa reconhecer elementos
+no DOM criados apos o carregamento da página
+Gera o pre-teste, criando uma tabela com nome do usuario+numero formulario
+  */
+        
+ var titulo =  $("#titulo").attr("value") ; //pega do titulo do instrumento e nao da busca
+ var  email = $("#email_pre").attr("value"); //pega os emails separados por ;
+ var html;
+
+  // $("#linhas").empty();
+ var acao =  "titulo='"+titulo+"'&email='"+email+"'"; //pega o instrumento todo
+ 
+ $.ajax({
+           type: "POST",
+           dataType: "json",
+           url: Drupal.settings.ferramenta2.gerar,
+           data: acao,
+           success: function(retorno){
+                $("#pre_teste").empty();
+                var html=''; //para escrever o html de  saida
+                 if (retorno['situacao']==1){
+                   link = retorno['link'];
+                   $("#pre_teste").append(html);
+                   html +="<p>Este questionário já possui um  pré-teste: ";
+                   html += "<a href="+Drupal.settings.ferramenta2.avaliacao+"/"+retorno['link']+"/"+Drupal.settings.ferramenta2.email+"><buttonid='testar'>Testar o questionario</button></a></p>";
+                }else if(retorno['situacao']==2)  {
+                   html +="<p>Avaliação sendo aplicada</p>";
+                }//fim if
+               $("#pre_teste").append(html);
+               $("#testar").button();
+          } //fim de sucesso
+ });//fim de ajax
+
+        
+}); //fim
+ }//fim botao_gerar
+ 
+ 
+ function aviso(mensagem_aviso) {
+   $( "#mensagem_preteste" ).dialog({
+			
+			modal: true,
+                        buttons: {
+				Ok: function() {
+					$( this ).dialog( "close" );
+                                         $( "#tabs" ).tabs( "select",0);
+				}
+			}
+		});
+            $("#mensagem_preteste").empty();
+            $("#mensagem_preteste").append(mensagem_aviso);
+ }
+ 
 });//fim jquery

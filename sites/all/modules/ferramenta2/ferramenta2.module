@@ -175,6 +175,7 @@ function ferramenta2_carrega_variaveis_javascript(){
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/inc/jquery.metadata.js");
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/jquery.draggableList.js");
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/principal2.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/email.js");
 }   
 
 function abertura() {
@@ -212,7 +213,7 @@ function cria_questionarios() {
     //cria uma variavel global para email no javascript
     global $user;
     
-    $email = md5($user->email);
+    $email = md5($user->mail);
     $uid_atual = $user->uid;
     
     drupal_add_js(array('ferramenta2' => array("email" => $email)), 'setting');
@@ -238,23 +239,24 @@ function cria_questionarios() {
     $saida.= "
             </div>
 	    <div id='tabs-2'>
-                            <div id='monta_html'> </div>
+                <div id='mensagem_vizualiza' title='Mensagem Vizualiza'></div>
+                <div id='monta_html'> </div>
             </div>
             <div id='tabs-3'>
-                    <div id='mensagem_preteste'  title='Mensagem Pre-teste'></div>
-                    <div id='pre_teste'>
+                <div id='mensagem_preteste'  title='Mensagem Pre-teste'></div>
+                <div id='pre_teste'>
                     
                     
-                    </div>
+                </div>
                     
             </div>
             <div id='tabs-4'>
-                    <div id='mensagem_coleta' title='Mensagem Coleta'></div>
-                    <div id='coleta'>
+                <div id='mensagem_coleta' title='Mensagem Coleta'></div>
+                <div id='coleta'>
                    
                     
-                    </div>
-                    
+                </div>
+                   
             </div>
 			
 		</div>"; 
@@ -283,6 +285,7 @@ e a comentar a funcao anterior
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/jquery.draggableList.js");
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/principal2.js");
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/visualiza.js");
+    
     
    // echo "-$saida-";
    //inicio da tabulacao do jquery
@@ -562,6 +565,30 @@ situacao = 2 - avaliacao sendo respondida
       $saida['erro']   = "Erro";
      }
     
+    $lista_email = explode(",", $email);
+    
+    $subject = 'Voce foi convidado para preencher uma avaliacao on-line do sistema avaliacao.kinghost.net';
+    
+     $opts = array('absolute' => TRUE);
+    $url_padrao = url('', $opts);
+    $url_padrao .="/avaliacao/".$saida['link'];
+    
+    foreach ($lista_email  as &$respondente) {
+        $message = "Prezado usuario, $respondente
+        \n Voce foi convidado para preencher uma avaliacao do usuario, $user->mail
+        \n Para responder basta clicar em  $url_padrao, caso nao funcione, copie e cole no seu browser.
+        \n Sua identidade esta protegidas.
+        \n Muito obrigado por usar nosso sistema. :)
+        \n Equipe de desenvolvimento, \n\t\t\t\t www.avaliacao.kinghost.net";
+        
+         $respondente = str_replace("'", "", $respondente);
+         echo "$respondente";
+        if (mail($respondente, $subject, $message)) {
+            $saida=array("email"=>"ok");
+        } else {
+            $saida=array("email"=>"erro");
+        }
+    } //fim foreach
 echo json_encode($saida);
    
 }

@@ -145,7 +145,7 @@ if ($acao=="VerificaPreTeste") {
     echo json_encode($saida);
     
 }
-
+/*
 if ($acao=="EnviaEmail") {
     
     $to=explode(',',$_POST[email]);
@@ -166,6 +166,7 @@ if ($acao=="EnviaEmail") {
     
     //echo "$to, $subject, $message, $headers";
 }
+*/
 
 if ($acao=='VerificaColeta'){
     $titulo = $_POST[titulo];
@@ -265,6 +266,53 @@ if ($acao=='VerificaColeta'){
     echo json_encode($retorno);
    
  }//fim AtualizaColeta
+ 
+ 
+ if ($acao=='EnviaColeta'){
+
+    $email=$_POST[email];
+    $mensagem=$_POST[mensagem_avaliador];
+    $titulo= $_POST[titulo];
+    $codigo= $_POST[codigo];
+    
+     $sql = "select distinct link, situacao from ferramenta2.formulario where trim(titulo)=trim('$titulo') and uid=$user->uid ";
+    //echo $sql;
+    $retorno = db_query($sql);
+   // print pg_num_rows($retorno);
+    if (pg_num_rows($retorno)>0) {
+        while ($linha = pg_fetch_object($retorno) ){
+           if (strlen($linha->link)>0){
+                $link = "$linha->link";
+           }
+        }       
+    }
+     
+    $subject = 'Voce foi convidado para preencher uma avaliacao on-line do sistema avaliacao.kinghost.net';
+    
+    $opts = array('absolute' => TRUE);
+    $url_padrao = url('', $opts);
+    $url_padrao .="/avaliacao/$link";
+    
+    $mensagem_sistema="\n\n Copie e cole este link no seu browser";
+    $mensagem_sistema.="\n\n\t\t -> $url_padrao";
+    $mensagem.=$mensagem_sistema;
+    
+    
+    $lista_email = explode(",", $email);
+ 
+    foreach ($lista_email  as &$respondente) {
+        
+        $respondente = str_replace("'", "", $respondente);//limpa aspas simples dos emails 
+        if (mail($respondente, $subject, $mensagem)) {
+            $saida=array("email"=>"ok");
+        } else {
+            $saida=array("email"=>"erro");
+	    watchdog("EmailColeta - ferramenta2.servidor.inc $respondente, $mensagem, $subject");
+	    echo "erro";
+        }
+    } //fim foreach
+    echo json_encode($saida);
+ }
 return;
 } //fim de servidor
 

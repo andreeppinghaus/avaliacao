@@ -11,9 +11,34 @@ $url_padrao = url('', $opts);
  
 $codigo=arg(1);
 $email=arg(2);
-$sql = "select email from tabelas.usuario_$codigo where email='$email'";//verifica se este email ja fez esta avaliacao
+
+$sql = "select codigo_formulario from ferramenta2.formulario where link='$codigo'";
 $ret = db_query($sql);
 
+if ( pg_num_rows($ret) > 0 ) { //formulario existe
+    $formulario = pg_fetch_object($ret); 
+    //verifica a data de aplicacao
+    //se a data atual esta entre o inicio e fim
+    $sql = "select datainicio, datafim
+	    from ferramenta2.gerencia
+	    where codigo_formulario='$formulario->codigo_formulario' and datainicio <= current_date and datafim >= current_date";
+    $ret = db_query($sql);
+    if ( pg_num_rows($ret) <= 0 ) {
+	echo "<p style='text-align:center;'><h3 class=error>Infelizmente, a data de aplicação do questionário já expirou.</h3><p>";
+	$erro=1;	
+    }
+}else {
+    echo "<p><h1 class=error>Formulario não existe.<h1><p>";
+    $erro=1;
+}
+
+if ($erro==1) {
+    echo "<h3>A equipe do projeto http://avaliacao.kinghost.net agradece.</h3>";
+    return;
+}
+
+$sql = "select email from tabelas.usuario_$codigo where email='$email'";//verifica se este email ja fez esta avaliacao
+$ret = db_query($sql);
 
  //armazena variaveis para identificar o usuario e o codigo do questionario
 echo "<input type='hidden' id='controle1' value='$codigo' /> "; 
@@ -38,20 +63,17 @@ echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.or
     echo "<script src='$url_padrao$diretorio/js/js/jquery-1.4.2.min.js' type='text/javascript'></script>";
     echo "<script src='$url_padrao$diretorio/js/js/jquery-ui-1.8.1.custom.min.js' type='text/javascript'></script>";
     echo "<script src='$url_padrao$diretorio/js/development-bundle/ui/jquery.ui.core.js' type='text/javascript'></script>";
-    echo "<script src='$url_padrao$diretorio/js/development-bundle/ui/jquery.ui.core.js' type='text/javascript'></script>";	
     echo "<script src='$url_padrao$diretorio/js/development-bundle/ui/jquery.ui.draggable.js' type='text/javascript'></script>";
     echo "<script src='$url_padrao$diretorio/js/development-bundle/ui/jquery.ui.resizable.js' type='text/javascript'></script>";
     echo "<script src='$url_padrao$diretorio/js/questionario.js' type='text/javascript'></script>";
   echo "</head>
 <body>";
-  /* echo '
-        <div id="aviso-avaliacao" title="Avaliação Armazenada com sucesso.">
-	<h2> Sua avaliação foi Armazenada com sucesso</h2>
-	<br /> <h3>Agradecemos a sua  colaboração.</h3>
+   echo '
+        <div id="aviso-avaliacao" title="Mensagem Avaliação.">
     	</div>
             
         ';
-  */
+  
    $sql = "select * from ferramenta2.formulario where link='$codigo'";
    // echo $sql;
    
@@ -194,15 +216,15 @@ $saida .= "
        
     }//fim foreach $linhas
     $saida.="<div class='grid_6 alpha' ><br /><br />
-    <center><input id='salvar' type='button' value='Salvar questionario' /></center><br /><br /></div>";
+    <center><button id='salvar'>Salvar questionário </button></center><br /><br /></div>";
     $saida.="<div class='grid_6 omega' ><br /><br />
-    <center><input id='sair' type='button' value='Sair' /></center><br /><br /></div>";
+    <center><button id='sair'> Sair </button></center><br /><br /></div>";
     
     $saida.="</div></div>"; //container  fecha div's de conteudo
   $saida .="
     <div id='footer' class='container_12 rodape'>
 	<div id='' class='grid_12 dejavu6 '>
-	    <a href='http://avaliacao.kinghost.net'><p> Sistema de cria&ccedil;&atilde;o de Question&aacute;rios onLine Beta 0.3</p></a>
+	    <a href='http://avaliacao.kinghost.net'><p> Sistema de cria&ccedil;&atilde;o de Question&aacute;rios onLine Beta 1.0</p></a>
 	</div>
 "  ;
     $saida .="</div></form>"; // fecha div principal
@@ -416,7 +438,7 @@ function sair_questionario() {
 echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
 <html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
 <head>
-<title>Sistema de Avalia&ccedil;&atilde;o Online Beta</title>";
+<title>Sistema de Avalia&ccedil;&atilde;o Beta</title>";
    echo "<link rel='stylesheet' href='$url_padrao$diretorio/css/questionario/questionario.css' type='text/css' />";
    echo "<script src='$url_padrao$diretorio/js/questionario.js' type='text/javascript'></script>";
   echo "</head>

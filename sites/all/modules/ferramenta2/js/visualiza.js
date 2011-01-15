@@ -6,7 +6,6 @@
 
 
 $(function(){
-$( "#monta_html:ui-dialog" ).dialog( "destroy" );
    //$('#tabs').tabs('select',1);
    $( "#tabs" ).bind( "tabsselect", function(event, ui) {
                           
@@ -16,12 +15,12 @@ $( "#monta_html:ui-dialog" ).dialog( "destroy" );
    });
    
      
-   $("#visualizar").button().click(function(){
+   $("#visualizar").button().click(function(){ //este botao  esta no momento da criacao do questionario
       $( "#tabs" ).tabs( "select",1 );
-     return false;
-      
+     return false;      
    });
-   $("#voltar").button().click(function(){
+   
+   $("#voltar").button().click(function(){ //alterna entre o questionario e o visualizar
       $( "#tabs" ).tabs( "select",0 );
      return false;
       
@@ -38,6 +37,7 @@ $("#monta_html").empty();
 
 var verifica_titulo=0;
 var palavras, i, html;
+    
     $("#linhas>li").each(function(index) {
             //pega o objeto filho de <li>
             var objeto=$(this).children("div").attr("id");
@@ -123,8 +123,9 @@ var palavras, i, html;
                 
             }
         }); //fim li.each
-    if (verifica_titulo==0){
-                  $( "#monta_html" ).dialog({
+    
+ if (verifica_titulo==0){ //titulo ainda continuar vazio retorna para a tela principal
+                  $( "#mensagem_vizualiza" ).dialog({
 			
 			modal: true,
                         buttons: {
@@ -134,7 +135,9 @@ var palavras, i, html;
 				}
 			}
 		});
-            $("#monta_html").empty();
-            $("#monta_html").append("<h3 class='error'>Carregue antes um questionário. Buscando por TÍTULO.</h3>");
+            $("#mensagem_vizualiza").empty();
+            $("#mensagem_vizualiza").append("<h3 class='error'>Carregue antes um questionário. Buscando por TÍTULO.</h3>");
+            return;
     }
+    
 }
