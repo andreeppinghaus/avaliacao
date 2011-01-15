@@ -575,9 +575,9 @@ situacao = 2 - avaliacao sendo respondida
     
     foreach ($lista_email  as &$respondente) {
         $message = "Prezado usuario, $respondente
-        \n Voce foi convidado para preencher uma avaliacao do usuario, $user->mail
+        \n Voce foi convidado para testar uma avaliacao do usuario, $user->mail
         \n Para responder basta clicar em  $url_padrao, caso nao funcione, copie e cole no seu browser.
-        \n Sua identidade esta protegidas.
+        \n ao se preocupe, sua identidade esta protegida.
         \n Muito obrigado por usar nosso sistema. :)
         \n Equipe de desenvolvimento, \n\t\t\t\t www.avaliacao.kinghost.net";
         

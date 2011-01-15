@@ -137,12 +137,12 @@ function validateMultipleEmailsCommaSeparated(value) {
                     $("#enviar_coleta").click(function(){
                          var email = $("#email").attr("value");
                         var titulo =  $("#titulo").attr("value"); //pega do titulo do instrumento e nao da busca
-                        var mensagem =  $("#mensagem_avaliador").attr("value");
+                        var mensagem_avaliador =  $("#mensagem_avaliador").attr("value");
                         var codigo=$("#codigo_formulario").attr("value");
                 
                        
                         if (email.length >0) {
-                            var envia = "acao=EnviaColeta&email="+email+"&mensagem="+mensagem+"&codigo="+codigo+"&titulo="+titulo;
+                            var envia = "acao=EnviaColeta&email="+email+"&mensagem_avaliador="+mensagem_avaliador+"&codigo="+codigo+"&titulo="+titulo;
                             envia_email_coleta(envia);
                             return;
                         }else {

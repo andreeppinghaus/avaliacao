@@ -29,14 +29,14 @@ um html dentro da div preteste
      aviso("<h3 class='error'>Carregue antes um questionário. Buscando por TÍTULO.</h3>");    
  }else {
        var verifica = verifica_preteste("acao=VerificaPreTeste&titulo="+titulo); //verifica se ja existe um preteste
-       html += '<form> <p>Título: '+ titulo+'</p>';
-       html += '<fieldset><label for="email_pre"> Digite um email para testar o novo pré-teste:</label>';
+       html += '<fieldset><label>Gerando um novo Pré-Teste</label><p>Título: '+ titulo+'</p>';
+       html += '<label for="email_pre"> Digite um email para testar o novo pré-teste:';
        html += '<p><textarea id="email_pre" class="text ui-widget-content ui-corner-all"> </textarea> </p></fieldset>';
      //   html += '<fieldset><label for="convite"> Digite aqui o seu convite para que o avaliado preencha este questionário online:</label>';
      //  html += '<p><textarea id="convite" class="text ui-widget-content ui-corner-all"> </textarea> </p></fieldset>';
        
-       html += '</form>' ;
-       html += "<button id='gerar' type='button'>Enviar email's e GERAR novo pré-teste</button>";
+       html += "<button id='gerar' type='button'>Enviar email's e GERA um novo pré-teste</button>";
+       html += '</fieldset>' ;
        //html += "<button id='aplicar' type='button'>inicia Avaliação</button>";  
        $("#pre_teste").append(html);
        botao_gerar();
@@ -52,7 +52,7 @@ function verifica_preteste(acao) {
             url: Drupal.settings.ferramenta2.servidor,
             data: acao,
             success: function(retorno){
-                 $("#pre_teste").empty();
+               //  $("#pre_teste").empty();
                 var html=''; //para escrever o html de  saida
                  if (retorno['situacao']==1){
                    link = retorno['link'];
@@ -93,7 +93,7 @@ Gera o pre-teste, criando uma tabela com nome do usuario+numero formulario
            url: Drupal.settings.ferramenta2.gerar,
            data: acao,
            success: function(retorno){
-                $("#pre_teste").empty();
+              // $("#pre_teste").empty();
                 var html=''; //para escrever o html de  saida
                  if (retorno['situacao']==1){
                    link = retorno['link'];
