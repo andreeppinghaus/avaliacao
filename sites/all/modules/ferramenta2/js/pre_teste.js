@@ -29,7 +29,7 @@ um html dentro da div preteste
      aviso("<h3 class='error'>Carregue antes um questionário. Buscando por TÍTULO.</h3>");    
  }else {
        var verifica = verifica_preteste("acao=VerificaPreTeste&titulo="+titulo); //verifica se ja existe um preteste
-       html += '<fieldset><label>Gerando um novo Pré-Teste</label><p>Título: '+ titulo+'</p>';
+       html += '<fieldset><legend>Gerando um novo Pré-Teste</legend><p>Título: '+ titulo+'</p>';
        html += '<label for="email_pre"> Digite um email para testar o novo pré-teste:';
        html += '<p><textarea id="email_pre" class="text ui-widget-content ui-corner-all"> </textarea> </p></fieldset>';
      //   html += '<fieldset><label for="convite"> Digite aqui o seu convite para que o avaliado preencha este questionário online:</label>';
@@ -98,8 +98,9 @@ Gera o pre-teste, criando uma tabela com nome do usuario+numero formulario
                  if (retorno['situacao']==1){
                    link = retorno['link'];
                    $("#pre_teste").append(html);
-                   html +="<p>Este questionário já possui um  pré-teste: ";
+                   html +="<fieldset><legend>Este questionário já possui um  pré-teste:</legend> ";
                    html += "<a href="+Drupal.settings.ferramenta2.avaliacao+"/"+retorno['link']+"/"+Drupal.settings.ferramenta2.email+"><buttonid='testar'>Testar o questionario</button></a></p>";
+                   html +="</fieldset>";
                 }else if(retorno['situacao']==2)  {
                    html +="<p>Avaliação sendo aplicada</p>";
                 }//fim if
