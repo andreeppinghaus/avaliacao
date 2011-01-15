@@ -31,11 +31,11 @@ um html dentro da div preteste
        var verifica = verifica_preteste("acao=VerificaPreTeste&titulo="+titulo); //verifica se ja existe um preteste
        html += '<fieldset><legend>Gerando um novo Pré-Teste</legend><p>Título: '+ titulo+'</p>';
        html += '<label for="email_pre"> Digite um email para testar o novo pré-teste:';
-       html += '<p><textarea id="email_pre" class="text ui-widget-content ui-corner-all"> </textarea> </p></fieldset>';
+       html += '<p><textarea id="email_pre" class="text ui-widget-content ui-corner-all"> </textarea> </p>';
      //   html += '<fieldset><label for="convite"> Digite aqui o seu convite para que o avaliado preencha este questionário online:</label>';
      //  html += '<p><textarea id="convite" class="text ui-widget-content ui-corner-all"> </textarea> </p></fieldset>';
        
-       html += "<button id='gerar' type='button'>Enviar email's e GERA um novo pré-teste</button>";
+       html += "<p><button id='gerar' type='button'>Enviar email's e GERA um novo pré-teste</button></p>";
        html += '</fieldset>' ;
        //html += "<button id='aplicar' type='button'>inicia Avaliação</button>";  
        $("#pre_teste").append(html);
@@ -57,9 +57,10 @@ function verifica_preteste(acao) {
                  if (retorno['situacao']==1){
                    link = retorno['link'];
                    $("#pre_teste").append(html);
-                   html +="<p>Este questionário já possui um  pré-teste: ";
-                   html += "<a href="+Drupal.settings.ferramenta2.avaliacao+"/"+retorno['link']+"/"+Drupal.settings.ferramenta2.email+"><button id='testar'>Testar o questionario</button></a></p>";
-                  
+                   html +="<fieldset> ";
+                   html +="<legend>Este questionário já possui um  pré-teste:</legend> ";
+                   html += "<p><a href="+Drupal.settings.ferramenta2.avaliacao+"/"+retorno['link']+"/"+Drupal.settings.ferramenta2.email+"><button id='testar'>Testar o questionario</button></a></p>";
+                    html +="</fieldset> ";
                 }else if(retorno['situacao']==2)  {
                    html +="<p>Avaliação sendo aplicada</p>";
                 }//fim if
@@ -74,12 +75,9 @@ function verifica_preteste(acao) {
  
  function botao_gerar() {
   $('#gerar').button();
+  
   $('#gerar').click( function(event) {
-/* aqui o paramentro live server para que o jquery possa reconhecer elementos
-no DOM criados apos o carregamento da página
-Gera o pre-teste, criando uma tabela com nome do usuario+numero formulario
-  */
-        
+  
  var titulo =  $("#titulo").attr("value") ; //pega do titulo do instrumento e nao da busca
  var  email = $("#email_pre").attr("value"); //pega os emails separados por ;
  var html;
@@ -103,7 +101,14 @@ Gera o pre-teste, criando uma tabela com nome do usuario+numero formulario
                    html +="</fieldset>";
                 }else if(retorno['situacao']==2)  {
                    html +="<p>Avaliação sendo aplicada</p>";
-                }//fim if
+                }else {
+                     if (retorno['email']=="ok") {
+                         aviso("Emails enviados com sucesso.");
+                     }else {
+                         aviso("Ocorreu um erro ao enviar o(s) email(s). O administrador ja foi avisado.");
+                     }
+               }
+                
                $("#pre_teste").append(html);
                $("#testar").button();
           } //fim de sucesso
@@ -113,15 +118,29 @@ Gera o pre-teste, criando uma tabela com nome do usuario+numero formulario
 }); //fim
  }//fim botao_gerar
  
- 
- function aviso(mensagem_aviso) {
+ function validateEmail(field) {
+    var regex=/\b[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}\b/i;
+    return (regex.test(field)) ? true : false;
+}
+
+function validateMultipleEmailsCommaSeparated(value) {
+    var result = value.split(",");
+    for(var i = 0;i < result.length;i++)
+    if(!validateEmail(result[i])) 
+            return false;               
+    return true;
+}
+
+ function aviso(mensagem_aviso, controle) {
    $( "#mensagem_preteste" ).dialog({
 			
 			modal: true,
                         buttons: {
 				Ok: function() {
 					$( this ).dialog( "close" );
-                                         $( "#tabs" ).tabs( "select",0);
+                                        if (controle>=0){
+                                            $( "#tabs" ).tabs( "select",0);
+                                        }
 				}
 			}
 		});

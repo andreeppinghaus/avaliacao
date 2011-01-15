@@ -75,15 +75,7 @@ function visualiza() {
 		.gray {color: #a19292;} 
     	</style>';
     echo "</head><br /></br><body>";
-    echo '
-        <div id="aviso-avaliacao" title="Avaliação Armazenada com sucesso.">
-	<h2> Sua avaliação foi foi Armazenada com sucesso</h2>
-	<br /> <h3>Agradecemos a sua  colaboração.</h3>
-	<br /><h6 style="text-align: center;">Comissão Própria de Avaliação CPA-UGF</h6>
-	<br /><h6 style="text-align: center;">Coordenação Técnica de Avaliação CTA<h6>
-	</div>
-            
-        ';
+
 				
    // echo "<div id='mensagem' class='notice' style='position:relative;margin-top: 3px;float: right;height: 14px;'>ok</div>";
     

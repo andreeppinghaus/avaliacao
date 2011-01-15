@@ -248,7 +248,7 @@ function validateMultipleEmailsCommaSeparated(value) {
             buttons: {
                 Ok: function() {
                     $( this ).dialog( "close" );
-                    if (control>=0){
+                    if (controle>=0){
                         $( "#tabs" ).tabs( "select",0);
                     }
                     

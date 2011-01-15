@@ -574,15 +574,15 @@ situacao = 2 - avaliacao sendo respondida
     $url_padrao .="/avaliacao/".$saida['link'];
     
     foreach ($lista_email  as &$respondente) {
+        $email_respondente = md5($respondente);
         $message = "Prezado usuario, $respondente
         \n Voce foi convidado para testar uma avaliacao do usuario, $user->mail
-        \n Para responder basta clicar em  $url_padrao, caso nao funcione, copie e cole no seu browser.
+        \n Para responder basta clicar em  $url_padrao/$email_respondente, caso nao funcione, copie e cole no seu browser.
         \n ao se preocupe, sua identidade esta protegida.
         \n Muito obrigado por usar nosso sistema. :)
-        \n Equipe de desenvolvimento, \n\t\t\t\t www.avaliacao.kinghost.net";
+        \n Equipe de desenvolvimento, \n\t\t\t\t http://www.avaliacao.kinghost.net";
         
          $respondente = str_replace("'", "", $respondente);
-         echo "$respondente";
         if (mail($respondente, $subject, $message)) {
             $saida=array("email"=>"ok");
         } else {

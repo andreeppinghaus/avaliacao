@@ -12,6 +12,11 @@ $url_padrao = url('', $opts);
 $codigo=arg(1);
 $email=arg(2);
 
+if (strlen($email)<=0 or strlen($codigo)<=0 ) {
+    echo "<h1> Avaliação inexistente</h1> ";
+    return;
+}
+
 $sql = "select codigo_formulario from ferramenta2.formulario where link='$codigo'";
 $ret = db_query($sql);
 
@@ -88,29 +93,10 @@ echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.or
     
     $array_linha =  str_replace('"','',$saida);
     
-    //echo "$resultado->json" ;
-  // print_r($array_linha);
-    //monta o form
-//    header('Content-type: application/json; charset=ISO-8859-9');
-    
    $saida = "<form action='usuario$codigo' method='POST'>";
-    
- //   $saida = "<img src='$url_padrao/sites/default/files/logo_ugf.png' class='top  left' height='100' width='100' alt='logo' />";
- 
+
  //cabecalho principal
-    /*$saida .= "
-<div id='header' class='container_12'> 
-    <div id='header_main' class='grid_12 '>
-
-	<div id='logo' class='grid_3 alpha'>
-	</div>
-
-	<div id='header_content' class='grid_9 omega'>
-	<p class='aviso'> Sistema de criacao de questionarios</p>
-	</div>
-    </div>
-</div>";
-    */
+ 
 $saida .= "
 
 <div id='content' class='container_12 bloco_principal'>
@@ -451,6 +437,7 @@ echo "</body></html>";
 * Esta funcao pega toda a alteracao do usuario no questionario e grava no banco
 */
 function grava_valores() {
+//echo $_POST[acao];
  $acao = explode(";",$_POST[acao]);
  $questao=$acao[1];
  $resposta=$acao[2];
@@ -465,6 +452,7 @@ function grava_valores() {
     }
  
     $sql = "insert into tabelas.usuario_$tabela(email, q$questao) values('$email','$resposta')";
+  //  echo $sql;
     $erro =db_query ($sql); 
     if ( ! $erro ){
     //erro
@@ -481,6 +469,7 @@ function grava_valores() {
     }
  
     $sql = "update tabelas.usuario_$tabela set q$questao= '$resposta' where email='$email'";
+    //echo $sql;
      $erro =db_query ($sql); 
     if ( ! $erro ){
     //erro
