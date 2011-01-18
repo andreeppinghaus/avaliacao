@@ -371,7 +371,7 @@ $saida .='
             <textarea rows="4" cols="30" name="tabela" id="tabela" class="text ui-widget-content ui-corner-all">
             opção1;
             opção2;
-            opção3;
+            opção3
             </textarea></p>
         </fieldset>
     </form>

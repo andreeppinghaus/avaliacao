@@ -302,14 +302,14 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
                    // exibeResposta.titulo = $("#resposta_texto").val();
                     var conteudo = $("#seleciona_resposta").attr("value");
                     
-                 //    alert("=="+conteudo);
+                    // alert("=="+conteudo);
                      //exibeResposta.tipo=conteudo;
                      exibeResposta.codigo=conteudo;
                     //alert(conteudo);
 //                    console.log(exibeResposta.tipo);
                     exibeResposta.tabela = $("#tabela").val();
                     identificador++;                    
-                   adiciona_resposta(identificador, exibeResposta.titulo, exibeResposta.tipo, exibeResposta.tabela );
+                   adiciona_resposta(identificador, exibeResposta.codigo, exibeResposta.tipo, exibeResposta.tabela );
                 // colocando a opcao selecionada no 
                     
                    
@@ -622,40 +622,40 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
        }
     */
     } //fim de adiciona pergunta
-    
+   
     function adiciona_resposta(codigo_objeto, codigo_resposta, tipo, tabela ) { //titulo  nao usado no momento
         var nivel = "<div id=r" + codigo_objeto + " style=\"padding-left :100px; font-family : tahoma; font-size : 12px;\" >";
        //alert(codigo);
        
        //controle do select
-      // alert(exibeResposta.codigo);
+     // alert("aqui=="+exibeResposta.codigo);
        $opcao="";
-          if (exibeResposta.codigo_resposta==0) {
+          if (codigo_resposta==0) {
                      $opcao += "<option value='0' selected='selected'>Sem resposta</option>";
            }else {
                    $opcao += "<option value='0'>Sem resposta</option>";
            }
-           if (exibeResposta.codigo_resposta==1) {
+           if (codigo_resposta==1) {
                      $opcao += "<option value='1' selected='selected'>Lista com m&uacute;ltiplas escolhas</option>";
            }else {
                    $opcao += "<option value='1'>Lista com m&uacute;ltiplas escolhas</option>";
            }
-           if (exibeResposta.codigo_resposta==2) {
+           if (codigo_resposta==2) {
                      $opcao += "<option value='2' selected='selected'>Lista com resposta &uacute;nica</option>";
            }else {
                    $opcao += "<option value='2'>Lista com resposta &uacute;nica</option>";
            }
-           if (exibeResposta.codigo_resposta==3) {
+           if (codigo_resposta==3) {
                      $opcao += "<option value='3' selected='selected'>Resposta aberta objetiva</option>";
            }else {
                    $opcao += "<option value='3'>Resposta aberta objetiva</option>";
            }
-           if (exibeResposta.codigo_resposta==4) {
+           if (codigo_resposta==4) {
                      $opcao += "<option value='4' selected='selected'>Escala de níveis</option>";
            }else {
                    $opcao += "<option value='4'>Escala de níveis</option>";
            }
-           if (exibeResposta.codigo_resposta==5) {
+           if (codigo_resposta==5) {
                      $opcao += "<option value='5' selected='selected'>Resposta aberta detalhada</option>";
            }else {
                    $opcao += "<option value='5'>Resposta aberta detalhada</option>";
