@@ -122,8 +122,11 @@ function busca_instrumento() {
                         ultimo_identificador.sort(sortNumber);
                         //alert(ultimo_identificador);
                         identificador=ultimo_identificador[(ultimo_identificador.length)-1]; //pega o maior elemento do array
-                        identificador; //atualiza o identificador para o ultimo
-                        //alert(identificador);
+                       // identificador; //atualiza o identificador para o ultimo
+                        if(identificador==undefined){
+                                identificador=0;
+                        }
+                       // alert(identificador);
                         //console.log(ultimo_identificador, identificador,ultimo_identificador.length);
                          $("#controle").dialog("open");
                     } //fim de sucesso
