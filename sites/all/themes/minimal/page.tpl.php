@@ -108,7 +108,7 @@
           
           <?php if (!empty($site_name)): ?>
             <h1 id="site-name" class="laconic" >
-              <a class="classe1" href="<?php print $front_page ?>" title="<?php print t('Home'); ?>" rel="home"><span><?php print $site_name; ?></span></a>
+              <a href="<?php print $front_page ?>" title="<?php print t('Home'); ?>" rel="home"><span><?php print $site_name; ?></span></a>
             </h1>
           <?php endif; ?>
 
@@ -130,7 +130,7 @@
      <?php
             global $user;
             if ($user->uid >0) {
-              echo "<div id='boasvindas' class='laconic baixo' style='text-align:right;'> Bem vindo(a): $user->name. <a href='/logout'>".t('Sair')."</a></div>";  
+              echo "<div id='boasvindas' class='laconic' style='text-align:right;'> Avaliador(a): $user->name. <a href='/logout'>".t('Sair')."</a></div>";  
             }
             
             ?>
@@ -138,9 +138,9 @@
 
     <div id="container" class="clear-block container_12">
 
-      <div id="navigation" class="menu baixo <?php if (!empty($primary_links)) { print "withprimary"; } if (!empty($secondary_links)) { print " withsecondary"; } ?> ">
+      <div id="navigation" class="menu <?php if (!empty($primary_links)) { print "withprimary"; } if (!empty($secondary_links)) { print " withsecondary"; } ?> ">
         <?php if (!empty($primary_links)): ?>
-          <div id="primary" class="clear-block">
+          <div id="primary" class="clear-block modelo-menu">
             <?php print theme('links', $primary_links, array('class' => 'links primary-links')); ?>
           </div>
         <?php endif; ?>
@@ -163,7 +163,7 @@
         <?php if (!empty($mission)): ?><div id="mission"><?php print $mission; ?></div><?php endif; ?>
 
         <div id="content" >
-          <?php if (!empty($title)): ?><h1 class="title" id="page-title"><?php print $title; ?></h1><?php endif; ?>
+          <?php if (!empty($title)): ?><h2 class="nobile" id="page-title"><?php print $title; ?></h1><?php endif; ?>
           <?php if (!empty($tabs)): ?><div class="tabs grid_6"><?php print $tabs; ?></div><?php endif; ?>
           <?php if (!empty($messages)): print "<div class='grid_6 messages error'>$messages</div>"; endif; ?>
           <?php if (!empty($help)): print "<div class='grid_6'>$help</div>"; endif; ?>

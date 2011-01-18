@@ -228,10 +228,10 @@ function cria_questionarios() {
    //$saida .="<div id=aviso_salvar> Salv</div>";    
    $saida .= "<div id='tabs'>
 			<ul>
-				<li><a href='#tabs-1'>Crie seu questionário</a></li>
-				<li><a href='#tabs-2'>Visualize</a></li>
-                                <li><a href='#tabs-3'>Pré-teste</a></li>
-                                <li><a href='#tabs-4'>Iniciar Coleta da Avaliação</a></li>
+				<li><a href='#tabs-1'>1-Crie seu questionário</a></li>
+				<li><a href='#tabs-2'>2-Visualize</a></li>
+                                <li><a href='#tabs-3'>3-Pré-teste</a></li>
+                                <li><a href='#tabs-4'>4-Iniciar Coleta da Avaliação</a></li>
 				
 			</ul>
 			<div id='tabs-1'>";

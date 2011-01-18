@@ -3,28 +3,42 @@
 .caixa_controle {
     position: fixed; top:150px; right:200px; width:120px; background-color:#F9FBD0
 }
+
 .caixa_css {
 background:#8b94ec;
 color:#fff;
 margin:0 15px;
 }
+
 .rtop, .rbottom{
 display:block;
 background:#fff;
 }
+
  .rtop *, .rbottom *{
 display: block;
 height: 1px;
 overflow: hidden;
 background:#8b94ec;
  }
+ 
 .r1{margin: 0 5px}
 .r2{margin: 0 3px}
 .r3{margin: 0 2px}
 .r4{margin: 0 1px; height: 2px}
 
+#name-and-slogan {
+border-top-style:solid;
+border-color: #dcd2d2;
+    border-width:1px;
+}
 
-.baixo {
+#boasvindas {
+border-bottom-style:solid;
+border-color: #dcd2d2;
+    border-width:1px;
+}
+.modelo-menu {
     border-bottom-style:solid;
     border-color: #dcd2d2;
     border-width:1px;
@@ -47,10 +61,6 @@ background:#8b94ec;
     border-color: #dcd2d2;
     border-width:1px;
 }
-
-
-
-
 
 
 
@@ -160,10 +170,32 @@ p {font: 18px/27px 'NobileRegular', Arial, sans-serif;}
 .nobile4 {font: 18px/27px 'NobileBoldItalic', Arial, sans-serif;}
 		
 
+#site-name a:link {
+text-decoration: none;
+}
+#site-name a:visited {
+text-decoration: none;
+color: #0000EE;
+}
 
-a.classe1:link {text-decoration: none}
-a.classe1:visited {text-decoration: none}
-a.classe1:hover {
-  text-decoration: underline; 
-  
-  }
+#primary a:link{
+text-decoration: none;
+}
+#primary a:hover {
+    color: #FFF;
+    background-color:silver;
+}
+#primary a:visited{
+text-decoration: none;
+}
+#primary li{
+display:inline;
+padding:10px;
+font: 18px/27px 'NobileRegular', Arial, sans-serif;
+}
+#primary a{
+padding:10px;
+margin-bottom: 10px;
+padding-bottom: 1px;
+padding-top: 1px;
+}

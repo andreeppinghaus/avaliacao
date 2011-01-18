@@ -293,8 +293,6 @@ if ($acao=='VerificaColeta'){
     $url_padrao = url('', $opts);
     $url_padrao .="/avaliacao/$link";
     
-    
-    
     $lista_email = explode(",", $email);
     
     $respondente = str_replace("'", "", $respondente);//limpa aspas simples dos emails
