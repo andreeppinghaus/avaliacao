@@ -129,6 +129,7 @@ function busca_instrumento() {
                        // alert(identificador);
                         //console.log(ultimo_identificador, identificador,ultimo_identificador.length);
                          $("#controle").dialog("open");
+                         $("#excluir-formulario").show();
                     } //fim de sucesso
                 });//fim de ajax
 }
@@ -433,6 +434,7 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
                 verifica_check = 1;
                 var valor = $(this).val();
                 $("#li" + valor).remove(); //remove <li id=li1,2,3,4,5 <identificador unico>
+                //alert("linhas->"+valor);
             });
         }
         
@@ -666,7 +668,7 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
        
         $("#linhas").append("<li id=li" + codigo_objeto + ">" + nivel +
                             "<img src='"+Drupal.settings.ferramenta2.url+"sites/default/files/arrow.png' alt='move' width='16' height='16' class='handle' />"+
-                            "<input type=checkbox id='escolhe-check" + codigo_objeto + "' value='" + codigo_resposta + "' />" +
+                            "<input type=checkbox id='escolhe-check" + codigo_objeto + "' value='" +   codigo_objeto + "' />" +
                          //   "<input type=text id='titulo' size='40'  value='" + titulo + "'/>"+
                         //    "Resposta " +
                             "Tipo:" +

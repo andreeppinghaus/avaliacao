@@ -203,11 +203,14 @@
         <div id="" class="grid_3 ">
           <br/>
         <br/>
-<a href="http://twitter.com/share" class="twitter-share-button" data-text="Compartilhe" data-count="horizontal" data-via="andreeppinghaus">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
-          <br />
+        <?php
+//<a href="http://twitter.com/share" class="twitter-share-button" data-text="Compartilhe" data-count="horizontal" data-via="andreeppinghaus">Tweet</a><script type="text/javascript" src="http://platform.twitter.com/widgets.js"></script>
+        /*  <br />
           <iframe src="http://www.facebook.com/widgets/like.php?href=http://avaliacao.kinghost.net"
                     scrolling="no" frameborder="0" style="border:none; width:450px; height:80px">
                   </iframe>
+                  */
+        ?>
         </div>
 
         <div id="" class="grid_3 ">

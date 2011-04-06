@@ -313,7 +313,7 @@ e a comentar a funcao anterior
  
   $saida .= "<div id=\"controle\">
                 <center>
-               <button id='adiciona-secao' type='button'>+ Se&ccedil;&atilde;o</button> 
+               <button id='adiciona-secao' type='button'>+ Grupo Perguntas</button> 
                <button id='adiciona-pergunta' type='button'>+ Pergunta</button>
                <button id='adiciona-resposta' type='button'>+ Resposta</button>
                <button id='excluir' type='button'>- Excluir</button>
