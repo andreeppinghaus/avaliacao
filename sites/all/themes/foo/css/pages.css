@@ -83,7 +83,7 @@ div#site-name /* The name of the website */ {
 
 #site-name a:link,
 #site-name a:visited {
-  color: #000;
+  color: #fff;
   text-decoration: none;
 }
 
@@ -92,9 +92,18 @@ div#site-name /* The name of the website */ {
   text-decoration: underline;
 }
 
+#site-name{
+display:block;
+height: 100px;
+}
+
 #site-slogan /* The slogan (or tagline) of a website */ {
 }
 
+#main-menu{
+display: block;
+/*border: solid 1px;*/
+}
 .region-header /* Wrapper for any blocks placed in the header region */ {
 }
 

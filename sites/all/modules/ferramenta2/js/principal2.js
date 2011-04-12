@@ -52,7 +52,8 @@ $("#controle").dialog({ position: 'right' });
 
 
 //carga do autoearch
-$.ajax({
+function carrega_busca () {
+   $.ajax({
          type: "POST",
          dataType: "json",//necessario este parametro para retorno do json
          url: Drupal.settings.ferramenta2.servidor, 
@@ -71,7 +72,10 @@ $.ajax({
                     
                 }
          }
-}); //fim autosearch
+   }); //fim autosearch
+}// fim carrega busca
+
+carrega_busca ();
 
 //carrega instrumento
 
@@ -274,8 +278,8 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
     */
     $("#dialog-pergunta").dialog({
             autoOpen: false,
-            height: 300,
-            width: 350,
+            height: 350,
+            width: 450,
             modal: true,
             buttons: {
             'Adiciona': function() {
@@ -342,8 +346,8 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
          
         $("#dialog-secao").dialog({
             autoOpen: false,
-            height: 350,
-            width: 350,
+            height: 450,
+            width: 550,
             modal: true,
             buttons: {
             'Adiciona': function() {
@@ -409,7 +413,8 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
                    envia_servidor(acao);
                    $('#linhas').empty();
                    $('#tags').attr('value', '');
-                   $("#controle").dialog({ position: 'right' });             
+                   $("#controle").dialog({ position: 'right' });
+                   carrega_busca ();
                    }
                    
                           

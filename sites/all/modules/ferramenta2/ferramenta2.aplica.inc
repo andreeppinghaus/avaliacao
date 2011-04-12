@@ -17,16 +17,19 @@ if (strlen($email)<=0 or strlen($codigo)<=0 ) {
     return;
 }
 
-$sql = "select codigo_formulario from ferramenta2.formulario where link='$codigo'";
+$sql = "select codigo_formulario, situacao from ferramenta2.formulario where link='$codigo'";
 $ret = db_query($sql);
 
 if ( pg_num_rows($ret) > 0 ) { //formulario existe
     $formulario = pg_fetch_object($ret); 
     //verifica a data de aplicacao
     //se a data atual esta entre o inicio e fim
-    $sql = "select datainicio, datafim
+    if ($formulario->situacao==2) {
+	$sql = "select datainicio, datafim
 	    from ferramenta2.gerencia
 	    where codigo_formulario='$formulario->codigo_formulario' and datainicio <= current_date and datafim >= current_date";
+    }
+    
     $ret = db_query($sql);
     if ( pg_num_rows($ret) <= 0 ) {
 	echo "<p style='text-align:center;'><h3 class=error>Infelizmente, a data de aplicação do questionário já expirou.</h3><p>";
@@ -59,7 +62,10 @@ if ( pg_num_rows($ret) > 0 ) {
 //echo "$codigo - $email";
 $_SESSION[codigo]=$codigo;
 $_SESSION[email]=$email;
- ferramenta2_carrega_variaveis_javascript();
+$site_name = variable_get('site_name', 'drupal');
+
+ferramenta2_carrega_variaveis_javascript();
+
 echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd'>
 <html xmlns='http://www.w3.org/1999/xhtml' xml:lang='en' lang='en'>
 <head>
@@ -72,7 +78,7 @@ echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.or
     echo "<script src='$url_padrao$diretorio/js/development-bundle/ui/jquery.ui.resizable.js' type='text/javascript'></script>";
     echo "<script src='$url_padrao$diretorio/js/questionario.js' type='text/javascript'></script>";
   echo "</head>
-<body>";
+<body class='corpo'><a href='http://www.ambiente-virtual.net/avaliacao' >$site_name</a>";
    echo '
         <div id="aviso-avaliacao" title="Mensagem Avaliação.">
     	</div>

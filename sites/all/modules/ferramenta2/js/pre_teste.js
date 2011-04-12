@@ -83,7 +83,7 @@ function verifica_preteste(acao) {
  var html;
 
   // $("#linhas").empty();
- var acao =  "titulo='"+titulo+"'&email='"+email+"'"; //pega o instrumento todo
+ var acao =  "titulo='"+titulo+"'&email='"+email+"'"; //pega o instrumento todo situacao=1 ==pre-teste
  
  $.ajax({
            type: "POST",

@@ -336,10 +336,10 @@ $saida .='
     <div id="dialog-pergunta" title="Adicionando uma Pergunta">
     <form>
         <fieldset>
-            <label for="pergunta_texto">Digite pergunta.</label>
+            <label for="pergunta_texto">Digite o título da pergunta</label>
             <input type="text" name="pergunta_texto" id="pergunta_texto" class="text ui-widget-content ui-corner-all" />
         </fieldset>
-        <p>Digite a pergunta do question&aacute;rio que dever&aacute; ser respondida pelo avaliado.</p>
+        <p>Digite o título da pergunta do question&aacute;rio que dever&aacute; ser respondida pelo avaliado.</p>
     </form>
     </div>
                 ';
@@ -387,10 +387,14 @@ $saida .='
     <div id="dialog-secao" title="Adicionando uma se&ccedil;&atilde;o">
     <form>
         <fieldset>
-            <label for="secao_texto">Digite texto para se&ccedil;&atilde;o de quest&otilde;es</label>
+            <label for="secao_texto">Digite um título para grupo de quest&otilde;es:</label>
             <input type="text" name="secao_texto" id="secao_texto" class="text ui-widget-content ui-corner-all" />
         </fieldset>
-        <p>Entende-se que uma Se&ccedil;&atilde;o &eacute; um grupo de quest&otilde;es relacionadas a um objetivo, como por exemplo "Dados Familiares".</p>
+        <p> Adicione um t&iacute;tulo para o grupo de quest&otilde;es. Exemplo:</p>
+        <p><b>"Dados Familiares"</b></p>
+        <p> Nome:<p>
+        <p> Sexo:<p>
+        <p> ... </p>
     </form>
     </div>
                 ';
