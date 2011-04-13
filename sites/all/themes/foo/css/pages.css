@@ -79,6 +79,7 @@ div#site-name /* The name of the website */ {
   margin: 0;
   font-size: 2em;
   line-height: 1.3em;
+  background-color: #0920ff;
 }
 
 #site-name a:link,
