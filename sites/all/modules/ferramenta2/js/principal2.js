@@ -302,30 +302,63 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
 
     $("#dialog-resposta").dialog({
             autoOpen: false,
-            height: 500,
+            height: 560,
             width: 550,
             modal: true,
             buttons: {
             'Adiciona': function() {
                    // exibeResposta.titulo = $("#resposta_texto").val();
-                    var conteudo = $("#seleciona_resposta").attr("value");
-                    
-                    // alert("=="+conteudo);
-                     //exibeResposta.tipo=conteudo;
-                     exibeResposta.codigo=conteudo;
+                    //var conteudo = $("#seleciona_resposta").attr("value");
+                    var conteudo = $("input[name='seleciona_resposta']:checked").val();
+                    exibeResposta.codigo=conteudo;
                     //alert(conteudo);
 //                    console.log(exibeResposta.tipo);
-                    exibeResposta.tabela = $("#tabela").val();
-                    identificador++;                    
-                   adiciona_resposta(identificador, exibeResposta.codigo, exibeResposta.tipo, exibeResposta.tabela );
-                // colocando a opcao selecionada no 
                     
-                   
+                    //adiciona o texto objetivo e o texto livre
+                    identificador++;                    
+                    adiciona_resposta(identificador, exibeResposta.codigo, exibeResposta.tipo, exibeResposta.tabela );
                     $(this).dialog('close');
 
                 },
             'Cancela': function() {
                 $(this).dialog('close'); 
+                }
+            }
+
+            });
+    
+    //exibe a janela de tipo de resposta quando for clicada
+    $("input[type=radio][name=seleciona_resposta]").click(function(){
+        var conteudo = $("input[name='seleciona_resposta']:checked").val();
+        if (conteudo == 1 || conteudo == 2|| conteudo == 4 ) {
+                   var conteudo = $("input[name='seleciona_resposta']:checked").val();
+                    exibeResposta.codigo=conteudo;
+                $('#dialog-tipo_resposta').dialog('open');
+        }else {
+                exibeResposta.tabela = "";
+        }
+        
+    // alert("=="+conteudo);
+    });
+    
+    $("#dialog-tipo_resposta").dialog({
+            autoOpen: false,
+            height: 500,
+            width: 550,
+            modal: true,
+            buttons: {
+            'Adiciona': function() {
+                   //coloca o conteudo da caixa texto no objeto global exibeResposta
+                   exibeResposta.tabela = jQuery.trim( $("#tabela").val() );
+                   //adiciona tudo aqui
+                     identificador++;                    
+                   adiciona_resposta(identificador, exibeResposta.codigo, exibeResposta.tipo, exibeResposta.tabela );
+                   $(this).dialog('close');
+                   $("#dialog-resposta").dialog('close');
+                },
+            'Cancela': function() {
+                $(this).dialog('close');
+                $("#dialog-resposta").dialog('close');
                 }
             }
 

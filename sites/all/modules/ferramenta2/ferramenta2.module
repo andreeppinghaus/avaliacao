@@ -357,26 +357,42 @@ $saida .='
         <fieldset>
            
             <label for="tipo_resposta"><h3>Esta questão possui uma resposta do tipo:</h3></label>
-            <select id="seleciona_resposta">
-                 
-                  <option value="1">Lista com m&uacute;ltiplas escolhas</option>
-                  <option value="2">Lista com resposta &uacute;nica </option>
-                  <option value="3">Resposta aberta objetiva</option>
-                  <option value="4">Escala de níveis</option>
-                  <option value="5">Resposta aberta detalhada</option>
-            </select>
-            <br />
-            <label id="mensagem_resposta" for="tabela" class="nobile2" style="color:red">
+            <p><input id="seleciona_resposta" name="seleciona_resposta" type="radio" value="1"> Lista com m&uacute;ltiplas escolhas -> Checkbox
+            <input type="checkbox" checked="checked" disabled="disabled"> </p>
             
-            <textarea rows="4" cols="30" name="tabela" id="tabela" class="text ui-widget-content ui-corner-all">
-            opção1;
-            opção2;
-            opção3
-            </textarea></p>
+            <p><input id="seleciona_resposta" name="seleciona_resposta" type="radio" value="2"> Lista com resposta &uacute;nica -> Radio
+            <input type="radio" checked="checked" disabled="disabled"> </p>
+            
+            <p><input id="seleciona_resposta" name="seleciona_resposta" type="radio" value="3"> Resposta aberta objetiva -> Texto
+            <input type="text" disabled="disabled" size="10"> </p>
+            
+            <p><input id="seleciona_resposta" name="seleciona_resposta" type="radio" value="4"> Escala de níveis ->
+            <select disabled="disabled" > <option value="4">Escala de níveis</option></select>
+            </p>
+            
+             <p><input id="seleciona_resposta" name="seleciona_resposta" type="radio" value="5"> Resposta aberta detalhada -> 
+            <textarea rows="2" cols="10"disabled="disabled" > Texto livre</textarea></p>
+            
         </fieldset>
     </form>
     </div>
                 ';
+                
+$saida .=' <div id="dialog-tipo_resposta" title="Adicionando os tipos de Resposta">
+    <form>
+        <fieldset>           
+            <label for="tipo_resposta">
+            <p><h4>Digite aqui o conteúdo da resposta, separado por ponto e vírgula ; </h4></p>
+            <i><p> Por exemplo:</p>
+            <p>Para perguntas do tipo: Qual o seu sexo ? </p>
+            <p>  O conteúdo da resposta seria: <b>Feminino; Masculino </b> </i></p>
+            </label>
+            
+            <label id="mensagem_resposta" for="tabela" class="nobile2" style="color:red">            
+    <textarea rows="2" cols="20" name="tabela" id="tabela" class="text ui-widget-content ui-corner-all"> opção1; opção2</textarea></p>
+        </fieldset>
+    </form>
+    </div>';
 /*
  <p class="nobile2" style="color:red;">As poss&iacute;veis op&ccedil;&otilde;es  de respostas devem ser separadas por (<b>;</b>)</p>
             
