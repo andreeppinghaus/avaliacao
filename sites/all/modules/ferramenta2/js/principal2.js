@@ -405,7 +405,7 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
 
         $("#dialog-formulario").dialog({
             autoOpen: false,
-            height: 350,
+            height: 450,
             width: 450,
             modal: true,
             buttons: {
@@ -594,9 +594,7 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
                 if (exibeResposta.codigo_resposta==5) {
                      exibeResposta.tipo="Resposta aberta detalhada";
                 }
-                
-               
-                 
+
             }  
             if (registro=='tabela') {
                 exibeResposta.tabela=conteudo; //ultimo campo apos devera imprimir na tela

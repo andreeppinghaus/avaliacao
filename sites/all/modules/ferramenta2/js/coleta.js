@@ -228,7 +228,7 @@ function validateMultipleEmailsCommaSeparated(value) {
            url: Drupal.settings.ferramenta2.servidor,
            data: acao,
            success: function(retorno_email){
-           console.log(retorno_email);
+          // console.log(retorno_email);
            
                if (retorno_email['email']=="ok") {
                     aviso("Emails enviados com sucesso.");

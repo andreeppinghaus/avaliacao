@@ -179,13 +179,12 @@ function ferramenta2_carrega_variaveis_javascript(){
 }   
 
 function abertura() {
+  
     global $user;
     
     ferramenta2_carrega_variaveis_javascript();
 
-     //cria  a variavel de caminho do servidor ajax
-    $opts = array('absolute' => TRUE);
-    $url_padrao = url('', $opts);
+   
     
     if ($user->uid<=0) { //aparece a tela principal
 
@@ -196,7 +195,7 @@ function abertura() {
     $saida .="</div></div>";
       }else { //aparece o menu 
            $saida .= "<div class=container_8><div class=grid_4>";    
-        $saida .= monta_box("<a href='$url_padrao/ferramenta2/criacao'><center><h1 class='laconic'> 3 - Crie seu questionario </h1></center></a>", '500px','green', 'left:100px;' );
+        $saida .= monta_box("<a href='$url_padrao/avaliacao/ferramenta2/criacao'><center><h1 class='laconic'> 3 - Crie seu questionario </h1></center></a>", '500px','green', 'left:100px;' );
         $saida .="</div></div>";
         
       }
@@ -211,6 +210,21 @@ function cria_questionarios() {
        */
     
     //cria uma variavel global para email no javascript
+    $opts = array('absolute' => TRUE);
+    $url_padrao = url('', $opts);
+    
+    if (ae_detect_ie() ) {
+        $saida .= "<h1><p style='color: #ff4444'>Infelizmente este software não funciona com o navegador Internet Explorer.</h1>";
+        $saida .= "<p><center><img src=$url_padrao/sites/all/modules/ferramenta2/Sad_cry.png></center> </p>";
+        $saida .= "<center><h3>Baixe os navegadores compatíveis com este site:</h3>";
+        $saida .= " 
+        <p><a href='http://www.google.com/chrome/' alt='Chrome'><img src=$url_padrao/sites/all/modules/ferramenta2/browser_chrome.png>Chrome</a>
+        <p><a href='http://br.mozdev.org/' alt='Firefox'><img src=$url_padrao/sites/all/modules/ferramenta2/browser_firefox.png>Firefox</a>
+        <p><a href='http://www.opera.com/?ref=home' alt='Opera'><img src=$url_padrao/sites/all/modules/ferramenta2/browser_opera.png>Opera</a>
+        </center>
+       ";
+        return $saida;
+    }
     global $user;
     
     $email = md5($user->mail);
@@ -660,5 +674,13 @@ function gerencia_questionario($titulo= '') {
 
 }*/
 
-        
+  
+  function ae_detect_ie()
+{
+    if (isset($_SERVER['HTTP_USER_AGENT']) && 
+    (strpos($_SERVER['HTTP_USER_AGENT'], 'MSIE') !== false))
+        return true;
+    else
+        return false;
+}      
 ?>
