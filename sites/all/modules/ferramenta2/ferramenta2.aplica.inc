@@ -41,7 +41,7 @@ if ( pg_num_rows($ret) > 0 ) { //formulario existe
 }
 
 if ($erro==1) {
-    echo "<h3>A equipe do projeto http://avaliacao.kinghost.net agradece.</h3>";
+    echo "<h3>A equipe do projeto http://www.ambiente-virtual.net agradece.</h3>";
     return;
 }
 
@@ -77,6 +77,7 @@ echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.or
     echo "<script src='$url_padrao$diretorio/js/development-bundle/ui/jquery.ui.draggable.js' type='text/javascript'></script>";
     echo "<script src='$url_padrao$diretorio/js/development-bundle/ui/jquery.ui.resizable.js' type='text/javascript'></script>";
     echo "<script src='$url_padrao$diretorio/js/questionario.js' type='text/javascript'></script>";
+    echo "<script src='$url_padrao$diretorio/js/jquery.form.js' type='text/javascript'></script>";
   echo "</head>
 <body class='corpo'><a href='http://www.ambiente-virtual.net/avaliacao' >$site_name</a>";
    echo '
@@ -99,7 +100,7 @@ echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.or
     
     $array_linha =  str_replace('"','',$saida);
     
-   $saida = "<form action='usuario$codigo' method='POST'>";
+   $saida = "<form id='FormColeta' method='POST'>";
 
  //cabecalho principal
  
@@ -208,7 +209,7 @@ $saida .= "
        
     }//fim foreach $linhas
     $saida.="<div class='grid_6 alpha' ><br /><br />
-    <center><button id='salvar'>Salvar questionário </button></center><br /><br /></div>";
+    <center><input type='submit' id='salvar' value='Salvar questionário' ></center><br /><br /></div>";
     $saida.="<div class='grid_6 omega' ><br /><br />
     <center><button id='sair'> Sair </button></center><br /><br /></div>";
     
@@ -290,9 +291,9 @@ $cor= cor da questao
 		//print_r($array_campo);
 		//echo "<p>--$array_campo[1]==$nivel--".in_array($array_campo,$nivel);
 		if (existe($array_campo,$nivel)) {
-		    $saida .="<br /><input type='checkbox' name='$codigo_objeto"."[]' id='$codigo_objeto"."[]' value='$exibe_nivel' checked /> $exibe_nivel <br />";
+		    $saida .="<br /><input type='checkbox' name='$codigo_objeto' id='$codigo_objeto"."[]' value='$exibe_nivel' checked /> $exibe_nivel <br />";
 		}else {
-		    $saida .="<br /><input type='checkbox' name='$codigo_objeto"."[]' id='$codigo_objeto"."[]' value='$exibe_nivel' /> $exibe_nivel <br />";
+		    $saida .="<br /><input type='checkbox' name='$codigo_objeto' id='$codigo_objeto"."[]' value='$exibe_nivel' /> $exibe_nivel <br />";
 		}
 		
 		

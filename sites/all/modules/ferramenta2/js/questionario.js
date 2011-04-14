@@ -9,15 +9,13 @@ $(function(){
 $("#salvar").button();
 $("#sair").button();
 
-
+/*
 $("#salvar").click(function(evento) {
- var html;
- html ="Questionário Salvo.";
- alert(html);
+ 
 evento.preventDefault();
 
 });
-
+*/
 $("#sair").click(function(evento) {
 
 window.location = 'http://www.avaliacao.kinghost.net';
@@ -145,5 +143,45 @@ $('select').change(function(event) {
     $("#mensagem_aviso").fadeOut("slow");   
  }
 
-
+ // tratamento do submit da avaliacao para o IE
+ $('form').submit(function() {
+  console.log($(this).serializeArray());
+  var campos = $(this).serializeArray();
+  alert(campos[0].name);
+  return false;
+});
+ /*
+  $('#FormColeta').ajaxForm(function() { 
+       var html;
+       
+        //var queryString = $('#myFormId').formSerialize();
+        html ="Questionário Salvo.";
+        
+        var texto = $('#FormColeta :text').serializeArray();
+        alert( texto.formSerialize() );
+        
+        /*jQuery.each($('#FormColeta :text').fieldValue(), function(i, val) {
+                        
+               alert(i+''+val);
+        })
+        
+        jQuery.each($('#FormColeta :radio').fieldValue(), function(i, val) {
+        alert(val);
+        })
+        
+        jQuery.each($('#FormColeta :checkbox').fieldValue(), function(i, val) {
+        alert(val);
+        })
+        jQuery.each($('select').fieldValue(), function(i, val) {
+        alert(val);
+        })
+        jQuery.each($('textarea').fieldValue(), function(i, val) {
+        alert(val);
+        })
+        
+      //alert(queryString);
+        return false;
+  });
+*/
+ 
 });//fim jquery
