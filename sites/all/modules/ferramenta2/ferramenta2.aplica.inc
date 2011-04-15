@@ -72,6 +72,7 @@ echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.or
 <head>
 <title>Sistema de Avalia&ccedil;&atilde;o Online Beta</title>";
    echo "<link rel='stylesheet' href='$url_padrao$diretorio/css/questionario/questionario.css' type='text/css' />";
+  echo "<link rel='stylesheet' href='$url_padrao$diretorio/js/css/start/jquery-ui-1.8.1.custom.css' type='text/css' />";
     echo "<script src='$url_padrao$diretorio/js/js/jquery-1.4.2.min.js' type='text/javascript'></script>";
     echo "<script src='$url_padrao$diretorio/js/js/jquery-ui-1.8.1.custom.min.js' type='text/javascript'></script>";
     echo "<script src='$url_padrao$diretorio/js/development-bundle/ui/jquery.ui.core.js' type='text/javascript'></script>";
@@ -81,11 +82,14 @@ echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.or
     echo "<script src='$url_padrao$diretorio/js/jquery.form.js' type='text/javascript'></script>";
   echo "</head>
 <body class='corpo'><a href='http://www.ambiente-virtual.net/avaliacao' >$site_name</a>";
-   echo '
-        <div id="aviso-avaliacao" title="Mensagem Avaliação.">
+   echo "
+        <div id=\"aviso-avaliacao\" title=\"Aguarde \" >
+	  <center> <p> <h4> Salvando </h4></p>
+	   <p><img src='$url_padrao$diretorio/wait20trans.gif' > </p>
+	   </center>
     	</div>
             
-        ';
+        ";
   
    $sql = "select * from ferramenta2.formulario where link='$codigo'";
    // echo $sql;
@@ -101,7 +105,7 @@ echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.or
     
     $array_linha =  str_replace('"','',$saida);
     
-   $saida = "<form id='FormColeta' method='POST'> $controle "; //variavel com os dados do usuario
+   $saida = "<form id='usuario_$email' method='POST'> $controle "; //variavel com os dados do usuario
 
  //cabecalho principal
  
@@ -109,7 +113,6 @@ $saida .= "
 
 <div id='content' class='container_12 bloco_principal'>
     <div id='' class='grid_12 '>";
-
 
     $flag_cor=0;
     $cor[0]='#d0e4fe'; //claro e0ecff
@@ -223,7 +226,7 @@ $saida .= "
 "  ;
     $saida .="</div></form>"; // fecha div principal
    
-    $saida .="<div id='mensagem_aviso' class='aviso'>Salvando...</div>";
+    $saida .="<div id='mensagem_aviso' class='aviso'>Salvando... </div>";
     echo $saida;
 
 }
@@ -460,7 +463,7 @@ function grava_valores() {
     }
  
     $sql = "insert into tabelas.usuario_$tabela(email, q$questao, alteracao) values('$email','$resposta', now())";
-  //  echo $sql;
+    echo $sql;
     $erro =db_query ($sql); 
     if ( ! $erro ){
     //erro
@@ -477,7 +480,7 @@ function grava_valores() {
     }
  
     $sql = "update tabelas.usuario_$tabela set q$questao= '$resposta', alteracao = now() where email='$email'";
-    //echo $sql;
+    echo $sql;
      $erro =db_query ($sql); 
     if ( ! $erro ){
     //erro

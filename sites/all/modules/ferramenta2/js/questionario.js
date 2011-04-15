@@ -53,6 +53,7 @@ function grava_item(acao) {
         });
 }//fim grava_item
 
+
 $('select').change(function(event) {
    var questao = $(this).attr("id");
     var resposta =  $(this).val();
@@ -143,46 +144,44 @@ $('select').change(function(event) {
     $("#mensagem_aviso").fadeOut("slow");   
  }
 
+ $("#aviso-avaliacao").dialog({
+    autoOpen: false,
+    modal: true
+  
+ });
+ 
  // tratamento do submit da avaliacao para o IE
  $('form').submit(function() {
-  //alert($(this).serializeArray());
-  var campos = $(this).serializeArray();
-  alert(campos[0].name);
-  
+
+   var formulario = $(this).serializeArray();
+   
+   var controle1, controle2, questao, resposta='';
+   var acao = $("#acao").attr("value"); //para atualizar ou inserir variavel ambiente
+   $.each(formulario, function(i, campo) {
+   
+     if (campo.name=="controle1") {
+        controle1=campo.value;
+     }else if (campo.name=="controle2") {
+        controle2=campo.value;
+     }else if (campo.name!="acao" && campo.name!="padrao" ){ // url padrao usada em algum momento pelo programa tem que ignorar
+        questao = campo.name;
+        resposta = campo.value;
+        if (resposta.length > 0 ) {
+           // $("#aviso-avaliacao").dialog('open');
+            var envia = "acao="+acao+";"+questao+";"+resposta+";"+"select"+";"+controle1+";"+controle2; 
+            grava_item(envia); //atualiza campos individualmente
+          //  $("#aviso-avaliacao").dialog('close');
+           alert(envia);
+           acao=1;
+          // $("#aviso-avaliacao").dialog('close');
+        }//fim if resposta
+     }//fim if
+       
+   });//fim each
+   
+   
   return false;
 });
- /*
-  $('#FormColeta').ajaxForm(function() { 
-       var html;
-       
-        //var queryString = $('#myFormId').formSerialize();
-        html ="Questionário Salvo.";
-        
-        var texto = $('#FormColeta :text').serializeArray();
-        alert( texto.formSerialize() );
-        
-        /*jQuery.each($('#FormColeta :text').fieldValue(), function(i, val) {
-                        
-               alert(i+''+val);
-        })
-        
-        jQuery.each($('#FormColeta :radio').fieldValue(), function(i, val) {
-        alert(val);
-        })
-        
-        jQuery.each($('#FormColeta :checkbox').fieldValue(), function(i, val) {
-        alert(val);
-        })
-        jQuery.each($('select').fieldValue(), function(i, val) {
-        alert(val);
-        })
-        jQuery.each($('textarea').fieldValue(), function(i, val) {
-        alert(val);
-        })
-        
-      //alert(queryString);
-        return false;
-  });
-*/
+ 
  
 });//fim jquery
