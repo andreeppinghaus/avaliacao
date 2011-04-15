@@ -63,7 +63,8 @@ $('select').change(function(event) {
          
     if (resposta.length > 0 ) {
        var envia = "acao="+acao+";"+questao+";"+resposta+";"+"select"+";"+controle1+";"+controle2; 
-       grava_item(envia); //atualiza campos individualmente  
+       grava_item(envia); //atualiza campos individualmente
+       $("#acao").attr("value",1);
     }   
 }); //fim
 
@@ -92,6 +93,7 @@ $('select').change(function(event) {
      //alert("codquestao"+controle+"resposta"+resposta);
      
      grava_item(envia); //atualiza campos individualmente
+     $("#acao").attr("value",1);
      
      resposta = 0;
       
@@ -107,7 +109,8 @@ $('select').change(function(event) {
          
     if (resposta.length > 0 ) {
        var envia = "acao="+acao+";"+questao+";"+resposta+";"+"select"+";"+controle1+";"+controle2; 
-       grava_item(envia); //atualiza campos individualmente  
+       grava_item(envia); //atualiza campos individualmente
+       $("#acao").attr("value",1);
     }  
  }) ; //fim atualiza
  
@@ -121,7 +124,8 @@ $('select').change(function(event) {
          
     if (resposta.length > 0 ) {
        var envia = "acao="+acao+";"+questao+";"+resposta+";"+"select"+";"+controle1+";"+controle2; 
-       grava_item(envia); //atualiza campos individualmente  
+       grava_item(envia); //atualiza campos individualmente
+       $("#acao").attr("value",1);
     }   
   }) ; //fim atualiza
  
@@ -135,7 +139,8 @@ $('select').change(function(event) {
          
     if (resposta.length > 0 ) {
        var envia = "acao="+acao+";"+questao+";"+resposta+";"+"select"+";"+controle1+";"+controle2; 
-       grava_item(envia); //atualiza campos individualmente  
+       grava_item(envia); //atualiza campos individualmente
+       $("#acao").attr("value",1);
     } 
  }) ; //fim atualiza
  
@@ -152,33 +157,48 @@ $('select').change(function(event) {
  
  // tratamento do submit da avaliacao para o IE
  $('form').submit(function() {
-
+   
    var formulario = $(this).serializeArray();
    
-   var controle1, controle2, questao, resposta='';
+   var controle1, controle2, questao, questao_anterior, resposta='';
    var acao = $("#acao").attr("value"); //para atualizar ou inserir variavel ambiente
+   
+  //$("#aviso-avaliacao").dialog('open');
+   
    $.each(formulario, function(i, campo) {
    
      if (campo.name=="controle1") {
         controle1=campo.value;
      }else if (campo.name=="controle2") {
         controle2=campo.value;
-     }else if (campo.name!="acao" && campo.name!="padrao" ){ // url padrao usada em algum momento pelo programa tem que ignorar
+     }else if (campo.name!="acao" && campo.name!="padrao" ){ // url padrao/acao usada em algum momento pelo programa tenho que ignorar
+     
         questao = campo.name;
-        resposta = campo.value;
+        
+        if (questao != questao_anterior ){
+            resposta = campo.value ;
+            questao_anterior=questao; 
+        }else {
+            resposta = resposta+","+campo.value ;
+        }
         if (resposta.length > 0 ) {
-           // $("#aviso-avaliacao").dialog('open');
+           //
             var envia = "acao="+acao+";"+questao+";"+resposta+";"+"select"+";"+controle1+";"+controle2; 
             grava_item(envia); //atualiza campos individualmente
-          //  $("#aviso-avaliacao").dialog('close');
-           alert(envia);
+            
+           //alert(envia);
            acao=1;
-          // $("#aviso-avaliacao").dialog('close');
-        }//fim if resposta
+           
+           $("#acao").attr("value", 1);
+          // 
+        } //fim if resposta
+         
+        
      }//fim if
        
    });//fim each
-   
+   $("#aviso-avaliacao").dialog('open');
+
    
   return false;
 });
