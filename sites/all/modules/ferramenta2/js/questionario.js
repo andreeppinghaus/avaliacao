@@ -145,9 +145,10 @@ $('select').change(function(event) {
 
  // tratamento do submit da avaliacao para o IE
  $('form').submit(function() {
-  console.log($(this).serializeArray());
+  //alert($(this).serializeArray());
   var campos = $(this).serializeArray();
   alert(campos[0].name);
+  
   return false;
 });
  /*

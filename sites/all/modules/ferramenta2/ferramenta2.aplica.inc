@@ -49,13 +49,14 @@ $sql = "select email from tabelas.usuario_$codigo where email='$email'";//verifi
 $ret = db_query($sql);
 
  //armazena variaveis para identificar o usuario e o codigo do questionario
-echo "<input type='hidden' id='controle1' value='$codigo' /> "; 
-echo "<input type='hidden' id='controle2' value='$email' /> ";
-echo "<input type='hidden' id='padrao' value='$url_padrao' /> ";
+ $controle ="<input type='hidden' id='controle1' name='controle1' value='$codigo' />
+	    <input type='hidden' id='controle2' name='controle2' value='$email' />
+	   <input type='hidden' id='padrao' name='padrao' value='$url_padrao' /> ";
+ 
 if ( pg_num_rows($ret) > 0 ) {
-    echo "<input type='hidden' id='acao' value='1' /> ";//1 atualizar
+    $controle .= "<input type='hidden' id='acao'  name='acao' value='1' /> ";//1 atualizar
 }else {
-    echo "<input type='hidden' id='acao' value='0' /> ";//0 inserir 
+    $controle .= "<input type='hidden' id='acao' name='acao' value='0' /> ";//0 inserir 
 }
 
 
@@ -100,7 +101,7 @@ echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.or
     
     $array_linha =  str_replace('"','',$saida);
     
-   $saida = "<form id='FormColeta' method='POST'>";
+   $saida = "<form id='FormColeta' method='POST'> $controle "; //variavel com os dados do usuario
 
  //cabecalho principal
  
