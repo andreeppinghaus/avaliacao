@@ -342,6 +342,7 @@ var exibeResposta = new Resposta(); //monta objeto para resgatar o formulario do
     });
     
     $("#dialog-tipo_resposta").dialog({
+            autoOpen: false,
             modal: true,
             buttons: {
             'Adiciona': function() {
