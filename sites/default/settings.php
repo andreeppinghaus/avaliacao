@@ -89,7 +89,7 @@
  *   $db_url = 'mysqli://username:password@localhost/databasename';
  *   $db_url = 'pgsql://username:password@localhost/databasename';
  */
-$db_url = 'pgsql://avaliacao:admlinux@pgsql.avaliacao.kinghost.net/avaliacao';
+$db_url = 'pgsql://postgres:admlinux@localhost/mestrado';
 $db_prefix = '';
 
 /**
