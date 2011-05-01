@@ -189,9 +189,9 @@ function abertura() {
     if ($user->uid<=0) { //aparece a tela principal
 
     $saida .= "<div class=container_8><div class=grid_4>";    
-    $saida .= monta_box("<a href='$url_padrao/user/register'><center><h1 class='laconic'>1 - cadastre-se</h1></center></a>", '300px','red', 'left:300px;');
+    $saida .= monta_box("<a href='$url_padrao/avaliacao/user/register'><center><h1 class='laconic'>1 - cadastre-se</h1></center></a>", '300px','red', 'left:300px;');
     $saida .="</div><div class=grid_4><br /></div><div class=grid_4>";
-    $saida .= monta_box("<a href='$url_padrao/user'><center><h1 class='laconic'> <---- 2 - conecte-se </h1></center></a>", '400px','blue'  );
+    $saida .= monta_box("<a href='$url_padrao/avaliacao/user'><center><h1 class='laconic'> <---- 2 - conecte-se </h1></center></a>", '400px','blue'  );
     $saida .="</div></div>";
       }else { //aparece o menu 
            $saida .= "<div class=container_8><div class=grid_4>";    
