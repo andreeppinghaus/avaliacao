@@ -1,4 +1,7 @@
 <?php
+/*
+Funcao para visualizar o questionario
+*/
 //header ('Content-Type: text/plain; charset=ISO-8859-2');
 //escuro
 
@@ -9,14 +12,14 @@ function visualiza() {
 
     $codigo = $_SESSION[codigo];
 
-	$sql = "select matricula from tabelas.usuario_4 where matricula='1'"; //verifica se atualiza ou insere
+	/*$sql = "select matricula from tabelas.usuario_4 where matricula='1'"; //verifica se atualiza ou insere
 	//echo $sql;
 	$ret = db_query($sql);
 	if (pg_num_rows($ret)<=0){
 	    echo "<input id='acao' type='hidden' value='insere'  /> ";
 	}else {
 	    echo "<input id='acao' type='hidden' value='atualiza'  /> ";
-	}
+	}*/
 	
 	//pega daddos de alunos
 	echo "<input id='matricula' type='hidden' value=$matricula  /> ";

@@ -1,4 +1,8 @@
 <?php
+/*
+Programa principal do modulo da ferramenta.
+*/
+
 //require_once('includes/pdf.php');
 
 function converte_utf8_html($string='') {
@@ -246,6 +250,7 @@ function cria_questionarios() {
 				<li><a href='#tabs-2'>2-Visualize</a></li>
                                 <li><a href='#tabs-3'>3-Pré-teste</a></li>
                                 <li><a href='#tabs-4'>4-Iniciar Coleta da Avaliação</a></li>
+                                <li><a href='#tabs-5'>5-Avaliações em Progresso</a></li>
 				
 			</ul>
 			<div id='tabs-1'>";
@@ -269,6 +274,13 @@ function cria_questionarios() {
                 <div id='coleta'>
                    
                     
+                </div>
+                   
+            </div>
+            <div id='tabs-5'>
+                <div id='mensagem_progresso' title='Mensagem Progresso'></div>
+                <div id='progresso'>
+                                      
                 </div>
                    
             </div>
@@ -682,5 +694,21 @@ function gerencia_questionario($titulo= '') {
         return true;
     else
         return false;
-}      
+}
+
+function mostra_ambiente_producao(){
+/*Funcao que retorna as avaliacoes em producao */
+  global $user;
+  $saida='';
+  $sql = "select titulo from  ferramenta2.formulario where uid=$user->uid and situacao=2";
+  $retorno = db_query($sql);
+  if (pg_num_rows($retorno) >0 ) {
+   $saida.= "<form id='controle'>";
+    while ($linha = pg_fetch_object($retorno) ){
+        $saida.= "<p><input type='hidden' id='$linha->titulo'> <button></button></p>";
+    }
+    $saida.= "</form>";
+  }
+  echo $saida;
+}
 ?>

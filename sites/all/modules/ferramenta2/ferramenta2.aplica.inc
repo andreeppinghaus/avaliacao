@@ -1,6 +1,8 @@
 <?php
 session_start();
-
+/*
+Programa de aplicacao do questionario
+*/
 //header ('Content-Type: text/plain; charset=ISO-8859-2');
 //escuro
 function aplica_questionario(){
@@ -11,6 +13,11 @@ $url_padrao = url('', $opts);
  
 $codigo=arg(1);
 $email=arg(2);
+if (strlen($email)<=0){
+global $user;
+$email = md5($user->mail);
+
+}
 
 if (strlen($email)<=0 or strlen($codigo)<=0 ) {
     echo "<h1> Avaliação inexistente</h1> ";

@@ -1,7 +1,7 @@
 <?php
 
 /*
-Funcao responsavel por responder a amoiria das requisicoes ajax feitas pelo sistema.
+Funcao responsavel por responder a moiria das requisicoes ajax feitas pelo sistema.
 */
 function servidor () {
 
@@ -287,7 +287,7 @@ if ($acao=='VerificaColeta'){
         }       
     }
      
-    $subject = 'Voce foi convidado para preencher uma avaliacao on-line do sistema avaliacao.kinghost.net';
+    $subject = 'Voce foi convidado para preencher uma avaliacao on-line da Ferramenta de avaliacao online';
     
     $opts = array('absolute' => TRUE);
     $url_padrao = url('', $opts);
@@ -304,6 +304,9 @@ if ($acao=='VerificaColeta'){
         $link_email = md5($respondente);
         if (mail($respondente, $subject, $mensagem.$link_email)) {
             $saida=array("email"=>"ok");
+	    //atualiza sistema para producao
+	    $sql = "update ferramenta2.formulario set situacao=2 where trim(titulo)=trim('$titulo') and uid=$user->uid ";
+	    db_query($sql);
         } else {
             $saida=array("email"=>"erro");
 	    watchdog("EmailColeta - ferramenta2.servidor.inc $respondente, $mensagem, $subject");
