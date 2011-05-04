@@ -151,7 +151,14 @@ $('select').change(function(event) {
 
  $("#aviso-avaliacao").dialog({
     autoOpen: false,
-    modal: true
+    modal: true,
+     buttons: {
+		Ok: function() {
+		$( this ).dialog( "close" );
+                                      
+                }
+     }
+
   
  });
  

@@ -90,7 +90,7 @@ echo "<!DOCTYPE html PUBLIC '-//W3C//DTD XHTML 1.0 Strict//EN' 'http://www.w3.or
   echo "</head>
 <body class='corpo'><a href='http://www.ambiente-virtual.net/avaliacao' >$site_name</a>";
    echo "
-        <div id=\"aviso-avaliacao\" title=\"Aguarde \" >
+        <div id=\"aviso-avaliacao\" title=\"Aviso\" >
 	  <center> <p> <h4> Avaliação Armazenada com sucesso. </h4></p>
 	   </center>
     	</div>

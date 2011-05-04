@@ -242,6 +242,7 @@ function cria_questionarios() {
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/visualiza.js");
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/pre_teste.js");
     drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/coleta.js");
+    drupal_add_js(drupal_get_path('module', 'ferramenta2') . "/js/progresso_avaliacao.js");
    
    //$saida .="<div id=aviso_salvar> Salv</div>";    
    $saida .= "<div id='tabs'>

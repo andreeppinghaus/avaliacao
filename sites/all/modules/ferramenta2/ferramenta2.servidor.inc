@@ -315,6 +315,43 @@ if ($acao=='VerificaColeta'){
     } //fim foreach
     echo json_encode($saida);
  }
+ 
+ if ($acao=="ConsultaAvaliacoes") {
+    $saida = array();
+    $sql=" select distinct f.uid, titulo, to_char(datainicio, 'DD/MM/YY') as datainicio,
+	    to_char(datafim, 'DD/MM/YY') as datafim, email_respondentes, link
+	    from ferramenta2.formulario f, ferramenta2.gerencia g
+	    where f.uid=g.uid and situacao=2";
+
+    $rst = db_query($sql);
+     if($rst)  {
+        if (pg_num_rows($rst)!=0 ) { //verifica se e vazio
+             while ( $gerencia = pg_fetch_object($rst) ) {
+	      $email = explode(',',$gerencia->email_respondentes);
+	      $total = count($email);
+	      
+	      $sql2="select count(1) as total from tabelas.usuario_$gerencia->link"; //busca total de respondentes
+	     
+	      $rst2 = db_query($sql2);
+	      if (pg_num_rows($rst2)!=0 ) {
+		$contagem = pg_fetch_object($rst2);
+	      }
+              $saida[]=array('codigo'=>$gerencia->uid,
+			     'titulo'=>$gerencia->titulo,
+                                    "datainicio"=> $gerencia->datainicio,
+                                    "datafim"=>$gerencia->datafim,
+                                    "total_convidados"=> $total,
+				    "total_respondentes"=>$contagem->total
+                            );
+             }
+        }else {
+            $saida=0;
+        }
+     }
+     
+    echo json_encode($saida);
+ }
+
 return;
 } //fim de servidor
 
