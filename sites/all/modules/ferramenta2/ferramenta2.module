@@ -123,6 +123,15 @@ $items['ferramenta2/criacao'] = array(                                        //
         'type' => MENU_CALLBACK,
         'file' => 'ferramenta2.aplica.inc',
     );
+     
+     $items['avaliacao/download'] = array(                                        // O endereço da página
+       'title' => 'Download Avaliacao em Producao',                                     //  Titulo do modulo
+       'page callback' =>'download_avaliacao',                          //    Como ele irá recuperar a informação para construir a página
+       'description' => 'Recebe os dados do usuario para avaliar ',     //   Um texto de explicação que será exibido
+       'access arguments' => array('Aplicar questionarios'),               //      Qual a permissão que deverá estar marcada para o usuário acessar a página
+        'type' => MENU_CALLBACK,
+        'file' => 'ferramenta2.download.inc',
+    );
 
 
 return $items;      //  retorna o menu para o controlador
@@ -168,6 +177,7 @@ function ferramenta2_carrega_variaveis_javascript(){
     $url_padrao = url('ferramenta2/configuracao', $opts);
     drupal_add_js(array('ferramenta2' => array("configuracao" => $url_padrao)), 'setting');
     
+       
     drupal_add_css(drupal_get_path('module', 'ferramenta2') . "/js/css/start/jquery-ui-1.8.1.custom.css");
     drupal_add_css(drupal_get_path('module', 'ferramenta2') . "/css/principal.css");
 

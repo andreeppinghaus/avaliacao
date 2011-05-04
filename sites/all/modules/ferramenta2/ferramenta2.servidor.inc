@@ -318,10 +318,10 @@ if ($acao=='VerificaColeta'){
  
  if ($acao=="ConsultaAvaliacoes") {
     $saida = array();
-    $sql=" select distinct f.uid, titulo, to_char(datainicio, 'DD/MM/YY') as datainicio,
-	    to_char(datafim, 'DD/MM/YY') as datafim, email_respondentes, link
-	    from ferramenta2.formulario f, ferramenta2.gerencia g
-	    where f.uid=g.uid and situacao=2";
+    $sql=" select distinct  titulo, to_char(datainicio, 'DD/MM/YY') as datainicio,
+    to_char(datafim, 'DD/MM/YY') as datafim, email_respondentes, link
+    from ferramenta2.formulario f, ferramenta2.gerencia g
+    where f.codigo_formulario=g.codigo_formulario and situacao=2";
 
     $rst = db_query($sql);
      if($rst)  {
@@ -336,7 +336,7 @@ if ($acao=='VerificaColeta'){
 	      if (pg_num_rows($rst2)!=0 ) {
 		$contagem = pg_fetch_object($rst2);
 	      }
-              $saida[]=array('codigo'=>$gerencia->uid,
+              $saida[]=array('link'=>$gerencia->link,
 			     'titulo'=>$gerencia->titulo,
                                     "datainicio"=> $gerencia->datainicio,
                                     "datafim"=>$gerencia->datafim,

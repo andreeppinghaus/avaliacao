@@ -227,7 +227,7 @@ $saida .= "
   $saida .="
     <div id='footer' class='container_12 rodape'>
 	<div id='' class='grid_12 dejavu6 '>
-	    <a href='http://avaliacao.kinghost.net'><p> Sistema de cria&ccedil;&atilde;o de Question&aacute;rios onLine Beta 1.0</p></a>
+	    <a href='http://ambiente-virtual.net/avaliacao'><p> Sistema de cria&ccedil;&atilde;o de Question&aacute;rios onLine Beta 1.0</p></a>
 	</div>
 "  ;
     $saida .="</div></form>"; // fecha div principal
