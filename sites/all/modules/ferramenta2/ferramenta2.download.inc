@@ -21,13 +21,17 @@ function download_avaliacao() {
 
 function instrumento($codigo) {
 
+ global $user;
+
   if (verifica($codigo)=="erro"){
     echo "erro";
     return;
   }
-   header("Content-type: application/csv");
-   header("Content-Disposition: \"inline; filename=instrumento.txt ");
+   //header("Content-type: application/csv");
+  // header("Content-Disposition: \"inline; filename=instrumento.txt ");
    
+    $sql = "select * from ferramenta2.formulario where link='$codigo' and uid=$user->uid"; //protegendo a avaliacao
+    $ret=db_query($sql);
     $resultado=db_fetch_object($ret);
     
     $saida= $resultado->json ;
@@ -179,12 +183,12 @@ function dados($codigo) {
 
   header("Content-type: application/csv");
   header("Content-Disposition: \"inline; filename=dados.csv");
-  $sql = "select * from tabelas.usuario_$codigo--"; //protegendo a avaliacao
+  $sql = "select * from tabelas.usuario_$codigo"; //protegendo a avaliacao
   $res=db_query($sql);
   $i = pg_num_fields($res);
   for ($j = 0; $j < $i; $j++) {
       $fieldname = pg_field_name($res, $j);
-      $saida .="$fieldname;";
+      $saida .="$fieldname,";
   }
   $saida .="\n";
   
