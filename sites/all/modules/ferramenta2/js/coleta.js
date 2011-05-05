@@ -108,7 +108,6 @@ function validateMultipleEmailsCommaSeparated(value) {
                             var datainicio=$(this).attr("value");
                             var codigo=$("#codigo_formulario").attr("value");
                             atualiza=$("#atualiza").attr("value");
-                            alert(datainicio);
                             if (datainicio.length > 0 ) {
                                 var envia = "acao=AtualizaColeta&dados="+atualiza+"&datainicio="+datainicio+"&codigo="+codigo;
                                 atualiza_coleta(envia); //atualiza campos individualmente   
