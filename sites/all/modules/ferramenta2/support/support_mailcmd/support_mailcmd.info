@@ -1,0 +1,13 @@
+; $Id: support_mailcmd.info,v 1.1.2.1 2011/01/04 00:54:21 Jeremy Exp $
+name = Support Mail Commands
+package = Support
+description = Advanced support ticket editing via emil.
+dependencies[] = support
+core = 6.x
+
+; Information added by drupal.org packaging script on 2011-02-20
+version = "6.x-1.4"
+core = "6.x"
+project = "support"
+datestamp = "1298225056"
+

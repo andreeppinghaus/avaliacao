@@ -1,0 +1,14 @@
+; $Id: support.info,v 1.1.2.2 2009/09/16 22:52:19 jeremy Exp $
+name = Support
+package = Support
+description = A simple helpdesk and support ticketing system.
+dependencies[] = comment
+dependencies[] = upload
+core = 6.x
+
+; Information added by drupal.org packaging script on 2011-02-20
+version = "6.x-1.4"
+core = "6.x"
+project = "support"
+datestamp = "1298225056"
+

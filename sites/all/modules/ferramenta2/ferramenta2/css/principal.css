@@ -1,0 +1,40 @@
+   #maincontainer{ min-width:100px;}
+   .innertube{
+             margin: 5px; /*Margins for inner DIV inside each column (to provide padding)*/
+                           margin-top: 0;
+                               }
+    table td{white-space:nowrap;}
+
+               
+ 
+.caixa_css {
+background:#8b94ec;
+color:#fff;
+margin:0 15px;
+}
+.rtop, .rbottom{
+display:block;
+background:#fff;
+}
+
+.troca{
+display:block;
+background:gray;
+}
+
+ .rtop *, .rbottom *{
+display: block;
+height: 1px;
+overflow: hidden;
+background:#8b94ec;
+ }
+ 
+.r1{margin: 0 5px}
+.r2{margin: 0 3px}
+.r3{margin: 0 2px}
+.r4{margin: 0 1px; height: 2px}
+
+#linhas li {
+display:inline;
+
+}

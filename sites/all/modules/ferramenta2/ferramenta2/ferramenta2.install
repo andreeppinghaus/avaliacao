@@ -1,0 +1,11 @@
+<?php
+/*create schema tabelas;
+
+ create schema ferramenta2;
+
+create table ferramenta2.formulario ( uid integer, codigo_formulario  integer , titulo  character varying(400),
+                                      json text,
+                                      primary key(titulo) );
+*/
+
+?>
