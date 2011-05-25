@@ -624,7 +624,7 @@ situacao = 2 - avaliacao sendo respondida
     
     $lista_email = explode(",", $email);
     
-    $subject = 'Voce foi convidado para preencher uma avaliacao on-line do sistema avaliacao.kinghost.net';
+    $subject = 'Voce foi convidado para preencher uma avaliacao on-line do sistema htpp://www.avaliacao.ambiente-virtual.net';
     
      $opts = array('absolute' => TRUE);
     $url_padrao = url('', $opts);
@@ -637,7 +637,7 @@ situacao = 2 - avaliacao sendo respondida
         \n Para responder basta clicar em  $url_padrao/$email_respondente, caso nao funcione, copie e cole no seu browser.
         \n Nao se preocupe pois sua identidade esta protegida.
         \n Muito obrigado por usar nosso sistema. :)
-        \n Equipe de desenvolvimento, \n\t\t\t\t http://www.avaliacao.kinghost.net";
+        \n Equipe de desenvolvimento, \n\t\t\t\t http://www.avaliacao.ambiente-virtual.net";
         
          $respondente = str_replace("'", "", $respondente);
         if (mail($respondente, $subject, $message)) {

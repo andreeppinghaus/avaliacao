@@ -18,7 +18,7 @@ evento.preventDefault();
 */
 $("#sair").click(function(evento) {
 
-window.location = 'http://www.avaliacao.kinghost.net';
+window.location = 'http://www.avaliacao.ambiente-virtual.net';
 evento.preventDefault();
 
 });

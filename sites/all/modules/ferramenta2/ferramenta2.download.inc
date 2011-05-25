@@ -27,8 +27,8 @@ function instrumento($codigo) {
     echo "erro";
     return;
   }
-   //header("Content-type: application/csv");
-  // header("Content-Disposition: \"inline; filename=instrumento.txt ");
+   header("Content-type: application/csv");
+   header("Content-Disposition: \"inline; filename=instrumento.txt ");
    
     $sql = "select * from ferramenta2.formulario where link='$codigo' and uid=$user->uid"; //protegendo a avaliacao
     $ret=db_query($sql);

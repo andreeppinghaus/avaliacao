@@ -156,8 +156,8 @@ if ($acao=="EnviaEmail") {
     //$to      = 'nobody@example.com';
     $subject = "Voce foi convidado para participar do preenchimento do pre-teste questionario online chamado: $titulo ";
     $message .= "\r\nLink para o pre-teste:$link";
-    $headers = 'From: avaliacao.kinghost.net' . "\r\n" .
-        'Reply-To: avaliacao.kinghost.net' . "\r\n" .
+    $headers = 'From: avaliacao.ambiente-virtual.net' . "\r\n" .
+        'Reply-To: avaliacao.ambiente-virtual.net' . "\r\n" .
         'X-Mailer: PHP/' . phpversion();
     foreach ($to as &$para) {
         mail($para, $subject, $message, $headers);
